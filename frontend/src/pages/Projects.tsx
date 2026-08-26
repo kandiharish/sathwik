@@ -58,7 +58,7 @@ export const Projects = () => {
                   
                   <div 
                     className="flex gap-3 md:gap-5 animate-marquee w-max px-4"
-                    style={{ animationDuration: \`\${project.images.length * 15}s\` }} 
+                    style={{ animationDuration: `${project.images.length * 15}s` }} 
                   >
                     {marqueeImages.map((img, i) => (
                       <div 

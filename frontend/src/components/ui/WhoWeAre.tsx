@@ -1,17 +1,17 @@
 import { motion } from 'framer-motion';
 import { Container } from '../layout/Container';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Stethoscope, Droplets, GraduationCap, Heart, Activity, Building2, Accessibility, Users } from 'lucide-react';
 import { ButtonLink } from './Button';
 
 const tags = [
-  { text: "Healthcare & Medical", color: "text-emerald-900 bg-gradient-to-br from-emerald-500/10 to-transparent border-emerald-500/30 hover:border-emerald-500/50" },
-  { text: "Water & Sanitation", color: "text-blue-900 bg-gradient-to-br from-blue-500/10 to-transparent border-blue-500/30 hover:border-blue-500/50" },
-  { text: "Education Infrastructure", color: "text-amber-900 bg-gradient-to-br from-amber-500/10 to-transparent border-amber-500/30 hover:border-amber-500/50" },
-  { text: "Nutrition & Health", color: "text-rose-900 bg-gradient-to-br from-rose-500/10 to-transparent border-rose-500/30 hover:border-rose-500/50" },
-  { text: "Sports & Wellness", color: "text-indigo-900 bg-gradient-to-br from-indigo-500/10 to-transparent border-indigo-500/30 hover:border-indigo-500/50" },
-  { text: "Community Infrastructure", color: "text-orange-900 bg-gradient-to-br from-orange-500/10 to-transparent border-orange-500/30 hover:border-orange-500/50" },
-  { text: "Disability Inclusion", color: "text-teal-900 bg-gradient-to-br from-teal-500/10 to-transparent border-teal-500/30 hover:border-teal-500/50" },
-  { text: "Community Development", color: "text-stone-900 bg-gradient-to-br from-stone-500/10 to-transparent border-stone-500/30 hover:border-stone-500/50" }
+  { text: "Healthcare & Medical", icon: Stethoscope, color: "text-emerald-600" },
+  { text: "Water & Sanitation", icon: Droplets, color: "text-blue-500" },
+  { text: "Education Infrastructure", icon: GraduationCap, color: "text-amber-500" },
+  { text: "Nutrition & Health", icon: Heart, color: "text-rose-500" },
+  { text: "Sports & Wellness", icon: Activity, color: "text-indigo-500" },
+  { text: "Community Infrastructure", icon: Building2, color: "text-orange-500" },
+  { text: "Disability Inclusion", icon: Accessibility, color: "text-teal-500" },
+  { text: "Community Development", icon: Users, color: "text-[#053e2f]" }
 ];
 
 export const WhoWeAre = () => {
@@ -99,15 +99,17 @@ export const WhoWeAre = () => {
             <div className="absolute w-[380px] h-[380px] md:w-[620px] md:h-[620px] border border-slate-100 rounded-full z-0" />
             <div className="absolute w-[460px] h-[460px] md:w-[760px] md:h-[760px] border border-slate-50 rounded-full z-0" />
 
-            {/* Orbiting Elements - Using CSS animations instead of JS for huge performance gain */}
+            {/* Orbiting Elements - Premium Glassmorphic Cards */}
             <div 
               style={{ animation: 'spin 50s linear infinite' }}
               className="absolute inset-0 z-20 will-change-transform"
             >
               {tags.map((tag, i) => {
                 const angle = (i * 360) / tags.length;
-                // Responsive radius based on screen size approximations.
-                // In CSS we'll use a clamping approach or just rely on the component size.
+                // Alternate distances slightly to make it look less perfectly circular and more organic
+                const distanceMod = i % 2 === 0 ? 'min(36vw, 270px)' : 'min(30vw, 220px)';
+                const Icon = tag.icon;
+                
                 return (
                   <div 
                     key={i}
@@ -117,8 +119,7 @@ export const WhoWeAre = () => {
                     <div 
                       className="absolute top-1/2 left-1/2"
                       style={{ 
-                        // Desktop radius ~240px, Mobile ~140px. 
-                        transform: `translate(-50%, -50%) translateX(min(32vw, 240px))` 
+                        transform: `translate(-50%, -50%) translateX(${distanceMod})` 
                       }}
                     >
                       <div
@@ -127,9 +128,12 @@ export const WhoWeAre = () => {
                       >
                         <div 
                           style={{ transform: `rotate(${-angle}deg)` }}
-                          className={`whitespace-nowrap backdrop-blur-md border shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 px-5 py-3 rounded-full text-[13px] md:text-sm font-semibold flex items-center justify-center cursor-default ${tag.color}`}
+                          className="group flex items-center gap-2.5 bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-1 px-4 py-2.5 rounded-2xl text-[13px] md:text-[14px] font-semibold cursor-pointer"
                         >
-                          {tag.text}
+                          <div className={`p-1.5 rounded-lg bg-white shadow-sm border border-slate-100 ${tag.color}`}>
+                            <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                          </div>
+                          <span className="text-slate-800 tracking-tight">{tag.text}</span>
                         </div>
                       </div>
                     </div>

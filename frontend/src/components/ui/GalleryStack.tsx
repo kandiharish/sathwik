@@ -1,206 +1,184 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Container } from '../layout/Container';
 import { ArrowRight } from 'lucide-react';
 
+// Using clean, properly formatted images from the public folder to ensure they always load
 const BLOGS = [
   {
-    image: "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg",
-    title: "Clean Water Access"
-  },
-  {
-    image: "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg",
-    title: "Rural Health Camps"
-  },
-  {
-    image: "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.19 PM.jpeg",
+    image: "/healthcare_rural.jpg",
     title: "Healthcare Access"
   },
   {
-    image: "ngo_homepage_accordion_1787718405546.jpg",
-    title: "Eco Sustainability"
-  },
-  {
-    image: "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.07 PM.jpeg",
+    image: "/education_rural.jpg",
     title: "Youth Education"
   },
   {
-    image: "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM.jpeg",
-    title: "Safe Drinking Water"
+    image: "/environment_rural.jpg",
+    title: "Eco Sustainability"
   },
   {
-    image: "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.20 PM.jpeg",
+    image: "/empowerment_rural.jpg",
+    title: "Community Empowerment"
+  },
+  {
+    image: "/abstract_watercolor.jpg",
+    title: "Clean Water Access"
+  },
+  {
+    image: "/healthcare_rural.jpg", // Reusing clean assets to maintain aesthetic
+    title: "Rural Health Camps"
+  },
+  {
+    image: "/education_rural.jpg",
     title: "Medical Equipment"
   },
   {
-    image: "premium_3d_hero_1787720558156.jpg",
+    image: "/empowerment_rural.jpg",
     title: "Community Outreach"
   }
 ];
 
-// Pre-calculate rotations and offsets for a chaotic but beautiful stack
-const CARD_OFFSETS = [
-  { rotate: 0, scale: 1, y: 0, x: 0 },
-  { rotate: -3, scale: 0.96, y: -10, x: -15 },
-  { rotate: 4, scale: 0.92, y: 5, x: 20 },
-  { rotate: -2, scale: 0.88, y: -15, x: 5 },
-  { rotate: 5, scale: 0.84, y: 10, x: -10 },
-  { rotate: -4, scale: 0.8, y: 0, x: 25 },
-  { rotate: 2, scale: 0.76, y: -5, x: -25 },
-  { rotate: 4, scale: 0.72, y: 15, x: 10 },
-];
+// Duplicate for continuous seamless scrolling (Marquee)
+const EXTENDED_BLOGS = [...BLOGS, ...BLOGS];
 
 export const GalleryStack = () => {
-  const [cards, setCards] = useState(BLOGS.map((_, i) => i));
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const handleNext = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    
-    setCards((prev) => {
-      const newArray = [...prev];
-      const top = newArray.shift();
-      if (top !== undefined) {
-        newArray.push(top);
-      }
-      return newArray;
-    });
-
-    setTimeout(() => setIsAnimating(false), 500); // Prevent spam clicking during animation
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="py-12 lg:py-16 relative overflow-hidden bg-[#FAFAF8] z-10 min-h-[100vh] max-h-[900px] flex items-center justify-center">
-      
-      {/* EXACT FITTED BACKGROUND IMAGE WITH SEAMLESS FADES */}
-      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-end flex-col">
-        {/* Massive Top Fade to create solid space for the stylish header */}
-        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
-        
+    <section className="py-24 relative overflow-hidden bg-[#FAFAF8] z-10 flex flex-col">
+      {/* Background with seamless fades */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-[#FAFAF8] to-transparent z-10" />
         <img 
           src="/image%20copy%208.png" 
           alt="Blogs Background" 
-          className="w-full h-full object-contain object-center opacity-70"
+          className="w-full h-full object-contain object-center opacity-[0.35]"
         />
-        {/* Very soft white overlay to ensure content is readable, classic Apple style */}
-        <div className="absolute inset-0 bg-white/40 z-0" />
-        
-        {/* Bottom Fade */}
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#FAFAF8] to-transparent z-10" />
       </div>
       
-      <Container className="relative z-10">
-        <div className="flex flex-col items-center">
-          
-          {/* Stylish Inter-Section Space Heading */}
-          <div className="flex flex-col items-center text-center mb-8 mt-0 w-full max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="w-full"
+      <Container className="relative z-10 pointer-events-none">
+        <div className="flex flex-col items-center text-center mb-16 mt-0 w-full max-w-2xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 
+              className="text-5xl md:text-7xl text-[#d4c8b8]/40 tracking-tight leading-none mb-3"
+              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
             >
-              <h2 
-                className="text-5xl md:text-7xl text-[#d4c8b8]/40 tracking-tight leading-none mb-3"
-                style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
-              >
-                Building Brighter Futures
-              </h2>
-              <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-8 md:-mt-10">
-                Our Latest Blogs
-              </h3>
-              <p className="text-gray-600 font-medium text-[15px] mt-4 max-w-lg mx-auto">
-                Explore our recent field activities and the real-world impact we are making across rural areas.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Stack Container */}
-          <div className="relative w-full max-w-[320px] aspect-[4/5] perspective-[1000px] mt-4">
-            <AnimatePresence mode="popLayout">
-              {cards.map((blogIndex, arrayIndex) => {
-                const isTop = arrayIndex === 0;
-                const offset = CARD_OFFSETS[Math.min(arrayIndex, CARD_OFFSETS.length - 1)];
-                const blog = BLOGS[blogIndex];
-
-                // Initial fan-out calculation
-                const fanOutX = offset.x * (Math.abs(offset.x) > 10 ? 3 : -3);
-                const fanOutRotate = offset.rotate * 3;
-
-                return (
-                  <motion.div
-                    key={blogIndex}
-                    layout
-                    initial={{
-                      rotate: fanOutRotate,
-                      scale: offset.scale,
-                      y: offset.y + 100,
-                      x: fanOutX,
-                      opacity: 0
-                    }}
-                    animate={{
-                      rotate: offset.rotate,
-                      scale: offset.scale,
-                      y: offset.y,
-                      // When it's the last card (just moved to back), we slide it slightly to the right first to look like a swipe
-                      x: arrayIndex === cards.length - 1 && isAnimating ? offset.x + 100 : offset.x,
-                      zIndex: cards.length - arrayIndex,
-                      opacity: arrayIndex < 5 ? 1 : 0
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 120,
-                      damping: 16,
-                      mass: 1,
-                    }}
-                    onClick={isTop ? handleNext : undefined}
-                    className={`absolute inset-0 bg-transparent cursor-pointer origin-center
-                      ${isTop ? 'hover:-translate-y-2 hover:scale-[1.02] transition-transform duration-300' : 'pointer-events-none'}
-                    `}
-                  >
-                    <div className="w-full h-full relative rounded-[1.2rem] shadow-[0_15px_40px_rgba(0,0,0,0.12)] bg-white overflow-hidden flex flex-col group/blog border border-gray-100">
-                      {/* Image taking up most of the card */}
-                      <div className="w-full h-full relative overflow-hidden">
-                        <div className="absolute inset-0 bg-black/5 group-hover/blog:bg-transparent transition-colors duration-500 z-10" />
-                        <img
-                          src={blog.image}
-                          alt={blog.title}
-                          className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-1000 group-hover/blog:scale-105"
-                        />
-                      </div>
-                      
-                      {/* Overlapping White Content Box at the bottom (Smaller, Shiny, Bold) */}
-                      <div className={`absolute bottom-3 left-3 right-3 bg-white/60 backdrop-blur-md rounded-[14px] p-3 shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-white/60 z-20 transition-all duration-500 group-hover/blog:bg-white/80 ${isTop ? 'opacity-100' : 'opacity-80'}`}>
-                        <div className="flex items-center justify-between gap-2">
-                          <h4 className="text-[#053e2f] font-black tracking-tight text-[15px] leading-none line-clamp-1">
-                            {blog.title}
-                          </h4>
-                          <span className="text-[#A42C25] flex-shrink-0 text-[11px] font-bold transition-colors group-hover/blog:text-red-800 flex items-center gap-1 uppercase tracking-wide">
-                            Read <ArrowRight className="w-3 h-3" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-            
-            {/* Instruction Label */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="absolute -right-12 md:-right-28 top-1/2 -translate-y-1/2 bg-[#054E38] text-white text-[10px] font-bold uppercase tracking-[0.2em] py-2 px-4 rounded-full shadow-lg rotate-90 origin-left hidden md:block"
-            >
-              Click To Next Blog
-            </motion.div>
-          </div>
-          
+              Stories of Change
+            </h2>
+            <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-8 md:-mt-10">
+              Our Latest Blogs
+            </h3>
+            <p className="text-gray-600 font-medium text-[15px] mt-4 max-w-lg mx-auto">
+              Swipe through our recent field activities and see the real-world impact we're making across rural areas.
+            </p>
+          </motion.div>
         </div>
       </Container>
+
+      {/* Global Style for high-performance GPU animations */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes gentleSway1 {
+          0%, 100% { transform: rotate(-1.5deg); }
+          50% { transform: rotate(1.5deg); }
+        }
+        @keyframes gentleSway2 {
+          0%, 100% { transform: rotate(1.5deg); }
+          50% { transform: rotate(-1.5deg); }
+        }
+        @keyframes gentleSway3 {
+          0%, 100% { transform: rotate(-2deg); }
+          50% { transform: rotate(1deg); }
+        }
+        @keyframes marqueeScroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+      `}} />
+
+      {/* Clothesline Container */}
+      <div className="relative w-full mt-10 z-20" ref={containerRef}>
+        
+        {/* The infinite horizontal line (the brown clothesline rope) */}
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-[#8b5a2b]/80 z-0 shadow-sm" />
+
+        {/* The scrollable track of hanging cards - Uses CSS marquee animation */}
+        <div 
+          className="flex gap-12 md:gap-16 px-8 pb-32 pt-0 w-max will-change-transform marquee-track"
+          style={{ animation: 'marqueeScroll 40s linear infinite' }}
+        >
+          
+          {EXTENDED_BLOGS.map((blog, idx) => {
+            const animType = (idx % 3) + 1;
+            const duration = 4.5 + (idx % 2); // 4.5s or 5.5s
+            
+            return (
+              <div key={idx} className="relative flex flex-col items-center flex-shrink-0 group">
+                
+                {/* The "Clip" and String (Brown colored) */}
+                <div className="w-[1.5px] h-8 bg-[#8b5a2b]/70 relative z-10 flex flex-col items-center transition-all duration-300 group-hover:bg-[#8b5a2b]">
+                  {/* Top ring/clip on the wire */}
+                  <div className="absolute -top-[5px] w-3 h-3 rounded-full border-[2px] border-[#8b5a2b] bg-[#FAFAF8] shadow-sm transition-all duration-300 group-hover:scale-125 group-hover:border-[#6b421a]" />
+                </div>
+                
+                {/* The Hanging Card */}
+                {/* Pauses swaying when hovered, scales up massively, and comes to front */}
+                <div
+                  style={{
+                    animation: `gentleSway${animType} ${duration}s ease-in-out infinite`,
+                    transformOrigin: 'top center'
+                  }}
+                  className="group-hover:[animation-play-state:paused] w-[240px] md:w-[280px] h-[320px] md:h-[360px] bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-slate-100 flex flex-col cursor-pointer transition-all duration-500 group-hover:z-50 group-hover:scale-110 group-hover:-translate-y-2 group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.2)] will-change-transform"
+                >
+                  
+                  {/* Decorative tape/clip at the top of the card (now matches brown theme) */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-2.5 bg-[#8b5a2b]/20 backdrop-blur-md border border-[#8b5a2b]/30 rounded-full z-20 shadow-sm" />
+
+                  {/* Blog Image */}
+                  <div className="w-full h-[60%] relative overflow-hidden bg-slate-100 rounded-t-2xl">
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+                  </div>
+                  
+                  {/* Blog Content */}
+                  <div className="flex-1 p-5 flex flex-col justify-between bg-white relative rounded-b-2xl">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[9px] font-bold tracking-widest uppercase text-[#054E38]/70 bg-[#054E38]/5 px-2 py-1 rounded-sm">
+                          Impact Story
+                        </span>
+                      </div>
+                      <h4 className="text-lg font-serif font-black text-slate-900 tracking-tight leading-tight line-clamp-2">
+                        {blog.title}
+                      </h4>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-[#cc4a14] font-bold text-[11px] uppercase tracking-widest group-hover:text-[#a3380e] transition-colors">
+                      Read Article <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-2 transition-transform" />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            );
+          })}
+          
+        </div>
+      </div>
     </section>
   );
 };

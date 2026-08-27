@@ -1,41 +1,49 @@
-import { motion } from 'framer-motion';
 import { Container } from '../layout/Container';
+import { motion } from 'framer-motion';
 
-// Reduced array sizes for performance (12 per row instead of 24)
 const TOP_IMAGES = [
-  "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (1).jpeg",
-  "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM.jpeg",
-  "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.48 PM (1).jpeg",
-  "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM (1).jpeg",
-  "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.50 PM.jpeg",
-  "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM (1).jpeg",
-  "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM.jpeg",
-  "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.30 PM.jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM (1).jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.48 PM (1).jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM.jpeg",
+  encodeURI("/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (1).jpeg"),
+  encodeURI("/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM.jpeg"),
+  encodeURI("/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.48 PM (1).jpeg"),
+  encodeURI("/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM (1).jpeg"),
+  encodeURI("/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.50 PM.jpeg"),
+  encodeURI("/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM (1).jpeg"),
+  encodeURI("/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM.jpeg"),
+  encodeURI("/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.30 PM.jpeg"),
+  encodeURI("/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg"),
+  encodeURI("/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM (1).jpeg"),
+  encodeURI("/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.48 PM (1).jpeg"),
+  encodeURI("/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM.jpeg"),
 ];
 
 const BOTTOM_IMAGES = [
-  "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg",
-  "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM (1).jpeg",
-  "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM.jpeg",
-  "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.22 PM.jpeg",
-  "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM (1).jpeg",
-  "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM.jpeg",
-  "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.53 PM.jpeg",
-  "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg",
-  "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (1).jpeg",
-  "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM (1).jpeg",
-  "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg",
-  "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.54 PM.jpeg",
+  encodeURI("/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg"),
+  encodeURI("/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM (1).jpeg"),
+  encodeURI("/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM.jpeg"),
+  encodeURI("/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.22 PM.jpeg"),
+  encodeURI("/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM (1).jpeg"),
+  encodeURI("/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM.jpeg"),
+  encodeURI("/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.53 PM.jpeg"),
+  encodeURI("/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg"),
+  encodeURI("/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (1).jpeg"),
+  encodeURI("/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM (1).jpeg"),
+  encodeURI("/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg"),
+  encodeURI("/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.54 PM.jpeg"),
 ];
 
+// Double the arrays to pack more items onto a massively wide cylinder
+const EXTENDED_TOP = [...TOP_IMAGES, ...TOP_IMAGES];
+const EXTENDED_BOTTOM = [...BOTTOM_IMAGES, ...BOTTOM_IMAGES];
+
 export const CurvedGallery = () => {
+  // Constants for massive 3D Geometry to span the entire screen
+  // Radius of 1300px creates a 2600px wide cylinder, spanning ultra-wide monitors effortlessly.
+  const radius = 1300;
+  const numItems = 24; // 24 items in the circle
+
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      <Container className="relative z-10 mb-12">
+    <section className="py-24 bg-white relative overflow-hidden w-full">
+      <Container className="relative z-10 mb-8">
         <div className="flex flex-col items-center text-center w-full max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -57,57 +65,99 @@ export const CurvedGallery = () => {
         </div>
       </Container>
 
-      {/* 2D Performant Marquee Rows */}
-      <div className="flex flex-col gap-6 lg:gap-8 w-full overflow-hidden will-change-transform">
-        
-        {/* TOP ROW - Moves Right to Left */}
-        <motion.div 
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 40, ease: "linear", repeat: Infinity }}
-          className="flex gap-4 lg:gap-6 w-max"
-        >
-          {/* Double the array to ensure smooth continuous visuals without snapping */}
-          {[...TOP_IMAGES, ...TOP_IMAGES].map((src, i) => (
-            <div 
-              key={`top-${i}`} 
-              className="relative w-[280px] h-[200px] md:w-[350px] md:h-[250px] rounded-2xl overflow-hidden shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.06)] bg-slate-50"
-            >
-              <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 z-10 cursor-pointer" />
-              <img 
-                src={src} 
-                alt={`Gallery Top ${i}`} 
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 will-change-transform" 
-              />
-            </div>
-          ))}
-        </motion.div>
+      {/* Global CSS for 3D animations */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes rotateCylinderRight {
+          from { transform: translateZ(-${radius}px) rotateY(0deg); }
+          to { transform: translateZ(-${radius}px) rotateY(-360deg); }
+        }
+        @keyframes rotateCylinderLeft {
+          from { transform: translateZ(-${radius}px) rotateY(0deg); }
+          to { transform: translateZ(-${radius}px) rotateY(360deg); }
+        }
+        .preserve-3d {
+          transform-style: preserve-3d;
+        }
+        .cylinder-track-right {
+          animation: rotateCylinderRight 80s infinite linear;
+        }
+        .cylinder-track-left {
+          animation: rotateCylinderLeft 80s infinite linear;
+        }
+        .cylinder-track-right:hover, .cylinder-track-left:hover {
+          animation-play-state: paused;
+        }
+        /* Fade the extreme left and right edges smoothly into the background */
+        .edge-mask {
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+      `}} />
 
-        {/* BOTTOM ROW - Moves Left to Right */}
-        <motion.div 
-          animate={{ x: ["-50%", "0%"] }}
-          transition={{ duration: 45, ease: "linear", repeat: Infinity }}
-          className="flex gap-4 lg:gap-6 w-max"
-        >
-          {[...BOTTOM_IMAGES, ...BOTTOM_IMAGES].map((src, i) => (
-            <div 
-              key={`bottom-${i}`} 
-              className="relative w-[280px] h-[200px] md:w-[350px] md:h-[250px] rounded-2xl overflow-hidden shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.06)] bg-slate-50"
-            >
-              <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 z-10 cursor-pointer" />
-              <img 
-                src={src} 
-                alt={`Gallery Bottom ${i}`} 
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 will-change-transform" 
-              />
-            </div>
-          ))}
-        </motion.div>
+      {/* 3D Scene Container - Covers full window */}
+      <div className="relative w-full overflow-hidden edge-mask pt-10 pb-10">
         
+        {/* Perspective wrapper: Deep perspective to make the distant cards look correct */}
+        <div className="w-full flex flex-col gap-10 md:gap-14 items-center" style={{ perspective: '2000px' }}>
+          
+          {/* TOP ROW - 3D Cylinder */}
+          <div className="relative w-[280px] h-[200px] preserve-3d cylinder-track-right will-change-transform">
+            {EXTENDED_TOP.map((src, i) => {
+              const angle = i * (360 / numItems);
+              return (
+                <div 
+                  key={`top-${i}`}
+                  style={{
+                    transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                    // Hide the back of the cylinder so it's strictly convex facing the viewer
+                    backfaceVisibility: 'hidden', 
+                    WebkitBackfaceVisibility: 'hidden'
+                  }}
+                  className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden shadow-[0_15px_40px_rgb(0,0,0,0.12)] border border-slate-100/50 bg-slate-50 cursor-pointer group"
+                >
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 z-10" />
+                  <img 
+                    src={src} 
+                    alt={`Gallery Top ${i}`} 
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 will-change-transform" 
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* BOTTOM ROW - 3D Cylinder */}
+          <div className="relative w-[280px] h-[200px] preserve-3d cylinder-track-left will-change-transform">
+            {EXTENDED_BOTTOM.map((src, i) => {
+              const angle = i * (360 / numItems);
+              return (
+                <div 
+                  key={`bottom-${i}`}
+                  style={{
+                    transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden'
+                  }}
+                  className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden shadow-[0_15px_40px_rgb(0,0,0,0.12)] border border-slate-100/50 bg-slate-50 cursor-pointer group"
+                >
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 z-10" />
+                  <img 
+                    src={src} 
+                    alt={`Gallery Bottom ${i}`} 
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 will-change-transform" 
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
       </div>
+
     </section>
   );
 };

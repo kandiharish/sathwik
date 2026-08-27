@@ -36,7 +36,7 @@ const cards = [
 
 export const CommitmentCards = () => {
   return (
-    <section className="relative w-full py-24 lg:py-32 bg-[#FAFAF8] overflow-hidden flex flex-col items-center justify-center min-h-screen z-10">
+    <section className="relative w-full py-24 lg:py-32 bg-[#FAFAF8] overflow-hidden flex flex-col items-center justify-center z-10">
       
       <style>{`
         .perspective-1000 { perspective: 1000px; }

@@ -12,8 +12,8 @@ export const Footer = () => {
           {/* Brand & About */}
           <div className="flex flex-col gap-6">
             <Link to="/" className="flex items-center gap-3">
-              <img src="/logo.png" alt="SRYIA Logo" className="w-12 h-12 object-contain bg-white rounded-full p-1" />
-              <span className="font-serif font-bold text-2xl tracking-wide">SRYIA</span>
+              <img src="/logo.png" alt="SRYIA Logo" className="w-24 h-24 object-contain" />
+              <span className="font-serif font-bold text-3xl tracking-wide">SRYIA</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               Dedicated to uplifting rural communities through youth empowerment, education, and sustainable growth initiatives. Join us in building brighter futures.

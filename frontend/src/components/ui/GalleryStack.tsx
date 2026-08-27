@@ -22,7 +22,7 @@ const BLOGS = [
     title: "Community Empowerment"
   },
   {
-    image: "/abstract_watercolor.jpg",
+    image: "/clean_water.jpg",
     title: "Clean Water Access"
   },
   {

@@ -1,23 +1,149 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 
-const images = [
-  // Pulled in closer to the center to create a tight "box" that you fly through
-  { src: '/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg', x: -25, y: -10, z: -500, tag: 'Nutrition Drive' },
-  { src: '/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg', x: 25, y: 15, z: -1500, tag: 'RO Water Plant' },
-  { src: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg', x: -10, y: 25, z: -2500, tag: 'Inclusive Education' },
-  { src: '/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg', x: 15, y: -25, z: -3500, tag: 'Community Gym' },
-  { src: '/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.17 PM (1).jpeg', x: -25, y: 15, z: -4500, tag: 'Medical Equipment' },
-  { src: '/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.50 PM.jpeg', x: 25, y: -15, z: -5500, tag: 'Health Support' },
-  { src: '/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.53 PM.jpeg', x: 10, y: 25, z: -6500, tag: 'Clean Drinking Water' },
-  { src: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.23 PM.jpeg', x: -15, y: -25, z: -7500, tag: 'School Infrastructure' },
-  { src: '/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.19 PM.jpeg', x: -25, y: -5, z: -8500, tag: 'Hospital Upgrades' },
-  { src: '/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM.jpeg', x: 25, y: 10, z: -9500, tag: 'Fitness Initiatives' },
-  { src: '/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg', x: 0, y: 25, z: -10500, tag: 'Rural Outreach' },
-  { src: '/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg', x: 20, y: -25, z: -11500, tag: 'Sustainability' },
-  { src: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg', x: -25, y: 15, z: -12500, tag: 'Youth Empowerment' },
-  { src: '/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg', x: 25, y: -15, z: -13500, tag: 'Health & Wellness' },
+const FOCUS_AREAS = [
+  {
+    tag: "HEALTHCARE",
+    title: "Healthcare & Medical Infrastructure",
+    subtitle: "Healing communities from within.",
+    description: "We believe that access to quality healthcare is a fundamental human right. Our initiatives focus on equipping rural hospitals with life-saving medical devices, establishing local health camps, and building robust infrastructure that can serve generations.",
+    img: "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.17 PM (1).jpeg"
+  },
+  {
+    tag: "WASH",
+    title: "Water, Sanitation & Hygiene",
+    subtitle: "The foundation of a healthy life.",
+    description: "Clean water is the starting point for all community development. We install advanced RO water plants and build modern sanitation facilities in underserved villages, drastically reducing waterborne diseases and improving overall public health.",
+    img: "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg"
+  },
+  {
+    tag: "EDUCATION",
+    title: "Education & School Infrastructure",
+    subtitle: "Empowering the minds of tomorrow.",
+    description: "Education is the most powerful tool to break the cycle of poverty. We reconstruct dilapidated rural schools, provide essential learning materials, and create safe, inspiring environments where every child has the opportunity to thrive.",
+    img: "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg"
+  },
+  {
+    tag: "NUTRITION",
+    title: "Nutrition & Maternal Health",
+    subtitle: "Nourishing mothers, protecting futures.",
+    description: "A community cannot grow if its people are undernourished. Our targeted nutrition drives provide essential sustenance to expecting mothers and young children, ensuring they receive the vital vitamins and calories needed for healthy development.",
+    img: "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg"
+  },
+  {
+    tag: "WELLNESS",
+    title: "Sports & Community Wellness",
+    subtitle: "Building strength and solidarity.",
+    description: "Physical fitness is crucial for a vibrant community. By constructing open-air gyms and sports facilities in rural areas, we provide youth with healthy outlets for their energy, fostering teamwork, discipline, and long-term physical well-being.",
+    img: "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg"
+  },
+  {
+    tag: "INFRASTRUCTURE",
+    title: "Infrastructure Development",
+    subtitle: "Paving the way to progress.",
+    description: "We lay the groundwork for economic growth by developing essential community infrastructure. From community halls to skill development centers, we build the physical spaces where communities can gather, learn, and grow together.",
+    img: "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg"
+  },
+  {
+    tag: "INCLUSION",
+    title: "Disability Inclusion",
+    subtitle: "Ensuring no one is left behind.",
+    description: "A truly developed society is measured by how it treats its most vulnerable. We provide specialized support, medical equipment, and accessible infrastructure for individuals with disabilities, ensuring they can participate fully in community life.",
+    img: "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM (1).jpeg"
+  },
+  {
+    tag: "HOLISTIC",
+    title: "Holistic Development",
+    subtitle: "Integrating all facets of life.",
+    description: "True development requires a multi-dimensional approach. We integrate economic, social, and environmental strategies to create self-sustaining rural ecosystems where every individual has the resources and agency to build a better life.",
+    img: "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (1).jpeg"
+  }
 ];
+
+// Helper component for individual cards in the stack
+const StackCard = ({ 
+  item, 
+  index, 
+  total, 
+  scrollYProgress 
+}: { 
+  item: typeof FOCUS_AREAS[0]; 
+  index: number; 
+  total: number; 
+  scrollYProgress: MotionValue<number>;
+}) => {
+  // Define the scroll range for this specific card
+  // Cards enter one by one. 
+  // Card 0 enters immediately. Card 1 enters after.
+  const startEntry = index / total;
+  const endEntry = (index + 0.5) / total;
+  
+  // As subsequent cards enter, this card scales down and moves up slightly
+  const startExit = (index + 1) / total;
+  const endExit = (index + 2) / total;
+
+  // Transformations
+  // Fly in from bottom (100vh) to center (0)
+  const yEntry = useTransform(scrollYProgress, [startEntry, endEntry], ["100vh", "0vh"]);
+  
+  // When next card comes in, move this one up slightly for a stacking effect
+  const yExit = useTransform(scrollYProgress, [startExit, endExit], ["0vh", "-4vh"]);
+  
+  // Combine Y movements
+  const y = useTransform(() => {
+    if (scrollYProgress.get() < endEntry) return yEntry.get();
+    return yExit.get();
+  });
+
+  // Scale down as newer cards stack on top
+  const scale = useTransform(scrollYProgress, [startExit, endExit], [1, 0.95 - (total - index) * 0.01]);
+  
+  // Dim slightly as newer cards stack on top
+  const opacity = useTransform(scrollYProgress, [startExit, endExit], [1, 1]);
+
+  return (
+    <motion.div
+      style={{
+        y,
+        scale,
+        opacity,
+        zIndex: index + 10,
+        // willChange forces GPU acceleration
+        willChange: "transform"
+      }}
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90%] md:max-w-5xl h-[70vh] md:h-[500px] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col md:flex-row border border-slate-100"
+    >
+      {/* Left Half - Image */}
+      <div className="w-full md:w-1/2 h-[40%] md:h-full relative overflow-hidden bg-slate-100">
+        <img 
+          src={item.img} 
+          alt={item.title} 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent pointer-events-none" />
+      </div>
+
+      {/* Right Half - Content */}
+      <div className="w-full md:w-1/2 h-[60%] md:h-full p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-[#FAFAF8]">
+        <div className="inline-block bg-[#ebf2ed] text-[#164626] text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase px-3 py-1.5 rounded-sm mb-6 w-max">
+          {item.tag}
+        </div>
+        
+        <h3 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-slate-900 leading-tight mb-4">
+          {item.title}
+        </h3>
+        
+        <p className="font-serif italic text-lg md:text-xl text-[#054E38] mb-6">
+          "{item.subtitle}"
+        </p>
+        
+        <p className="text-slate-600 text-sm md:text-[15px] leading-relaxed">
+          {item.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+};
 
 export const InteractiveTunnel = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,13 +153,13 @@ export const InteractiveTunnel = () => {
     offset: ["start start", "end end"]
   });
 
-  // The camera moves up exactly past the last image to prevent blank scrolling space
-  const cameraZ = useTransform(scrollYProgress, [0, 1], [0, 13800]);
-
   return (
-    <section ref={containerRef} className="relative h-[400vh] bg-black z-40">
+    // Total height determines how long it takes to scroll through the whole stack
+    <section ref={containerRef} className="relative h-[600vh] bg-[#FAFAF8] z-40">
+      
+      {/* Sticky Viewport */}
       <div 
-        className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"
+        className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center"
         style={{
           backgroundImage: `url('/image%20copy.png')`,
           backgroundSize: 'cover',
@@ -41,68 +167,36 @@ export const InteractiveTunnel = () => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Section Heading Badge - Animated Spinning Border */}
+        {/* Soft white overlay for premium aesthetic */}
+        <div className="absolute inset-0 bg-white/60 pointer-events-none z-0" />
+
+        {/* Section Heading Badge */}
         <div className="absolute top-10 lg:top-14 left-1/2 -translate-x-1/2 z-50 pointer-events-none text-center">
-          <div className="relative inline-block rounded-full shadow-lg overflow-hidden bg-gray-100 p-[3px]">
-            {/* Spinning lines */}
-            <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(transparent_0%,transparent_85%,#009966_100%)] opacity-90" />
-            <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite_2s] bg-[conic-gradient(transparent_0%,transparent_85%,#f59e0b_100%)] opacity-90" />
-            
-            {/* Inner Box */}
-            <div className="relative bg-white/95 backdrop-blur-xl px-12 py-3 rounded-full flex items-center justify-center">
+          <div className="relative inline-block rounded-full shadow-sm overflow-hidden bg-white/40 backdrop-blur-md border border-white p-[3px]">
+            <div className="relative bg-white/90 backdrop-blur-xl px-12 py-3 rounded-full flex items-center justify-center">
               <h2 
                 className="text-3xl md:text-[42px] text-[#054E38] tracking-wide m-0 leading-none"
                 style={{ fontFamily: '"Brush Script MT", cursive' }}
               >
-                Our Story
+                Our Core Focus Areas
               </h2>
             </div>
           </div>
         </div>
 
-        {/* Perspective Viewport */}
-        <div 
-          className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10"
-          style={{ perspective: '1000px', perspectiveOrigin: 'center center' }}
-        >
-          {/* The Moving Tunnel World */}
-          <motion.div 
-            className="w-full h-full relative"
-            style={{ transformStyle: 'preserve-3d', z: cameraZ }}
-          >
-            
-            {/* Image Panels placed strictly in the corners along the Z-axis */}
-            {images.map((img, idx) => {
-              const tagColors = [
-                "text-amber-700 bg-amber-50/95 border-amber-200/60 shadow-amber-900/10",
-                "text-emerald-700 bg-emerald-50/95 border-emerald-200/60 shadow-emerald-900/10",
-                "text-blue-700 bg-blue-50/95 border-blue-200/60 shadow-blue-900/10",
-                "text-rose-700 bg-rose-50/95 border-rose-200/60 shadow-rose-900/10",
-                "text-purple-700 bg-purple-50/95 border-purple-200/60 shadow-purple-900/10",
-              ];
-              const colorClass = tagColors[idx % tagColors.length];
-
-              return (
-                <div
-                  key={idx}
-                  className="absolute flex flex-col items-center"
-                  style={{
-                    left: `calc(50% + ${img.x}vw)`,
-                    top: `calc(50% + ${img.y}vh)`,
-                    transform: `translate3d(-50%, -50%, ${img.z}px)`,
-                  }}
-                >
-                  <div className="w-56 md:w-80 lg:w-96 aspect-video bg-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[4px] border-white rounded-xl overflow-hidden mb-4">
-                    <img src={img.src} alt={img.tag} className="w-full h-full object-cover" />
-                  </div>
-                  <span className={`text-[10px] md:text-xs font-black tracking-widest uppercase px-5 py-2.5 rounded-full shadow-xl border backdrop-blur-md ${colorClass}`}>
-                    {img.tag}
-                  </span>
-                </div>
-              );
-            })}
-          </motion.div>
+        {/* The Card Stack Viewport */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center z-10 perspective-1000">
+          {FOCUS_AREAS.map((item, idx) => (
+            <StackCard 
+              key={idx} 
+              item={item} 
+              index={idx} 
+              total={FOCUS_AREAS.length} 
+              scrollYProgress={scrollYProgress} 
+            />
+          ))}
         </div>
+        
       </div>
     </section>
   );

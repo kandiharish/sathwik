@@ -33,7 +33,13 @@ export const InteractiveTunnel = () => {
   return (
     <section ref={containerRef} className="relative h-[400vh] bg-black z-40">
       <div 
-        className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-slate-900"
+        className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"
+        style={{
+          backgroundImage: `url('/image%20copy.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
       >
         {/* Section Heading Badge - Animated Spinning Border */}
         <div className="absolute top-10 lg:top-14 left-1/2 -translate-x-1/2 z-50 pointer-events-none text-center">

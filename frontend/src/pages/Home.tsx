@@ -45,6 +45,15 @@ export const Home = () => {
       </Suspense>
       {/* IMPACT DASHBOARD - REDESIGNED */}
       <section id="impact" className="py-12 lg:py-16 relative bg-[#FAFAF8] overflow-hidden min-h-[100vh] max-h-[900px] flex items-center justify-center">
+        {/* Background Image - Perfectly fitted */}
+        <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
+          <img 
+            src="/image%20copy%209.png" 
+            alt="Impact Background" 
+            className="w-full h-full object-cover object-center opacity-80"
+          />
+          <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
+        </div>
 
         <Container className="relative z-10 w-full">
           <div className="text-center mb-16 w-full flex flex-col items-center">

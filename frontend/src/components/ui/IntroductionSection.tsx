@@ -6,11 +6,38 @@ import { Container } from '../layout/Container';
 
 
 export const IntroductionSection = () => {
+  
+  const textRef = useRef(null);
+  const isInView = useInView(textRef, { once: true, margin: "-100px" });
 
+  const p1Segments = [
+    { text: "Founded in ", className: "" },
+    { text: "2015, Sathwik Rural and Youth Integrated Association (SRYIA)", className: "font-serif font-black text-[#053e2f]" },
+    { text: " is committed to uplifting rural communities by improving socio-economic conditions. Through initiatives in education, skill development, and healthcare, SRYIA has been a driving force for change, empowering youth and ensuring sustainable progress.", className: "" }
+  ];
+  
+  const p2Segments = [
+    { text: "Over the past six months, we have focused on enhancing rural healthcare and infrastructure, ensuring access to clean drinking water and improved medical facilities. Our key initiatives include:", className: "" }
+  ];
 
   return (
     <section className="pt-24 pb-8 lg:pt-32 lg:pb-0 relative overflow-hidden bg-[#FAFAF8] z-10">
-
+      {/* EXACT FITTED BACKGROUND IMAGE WITH SEAMLESS FADES */}
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-end flex-col">
+        {/* Massive Top Fade to create solid space for the stylish header */}
+        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+        
+        <img 
+          src="/image%20copy%206.png" 
+          alt="Introduction Background" 
+          className="w-full h-full object-contain object-center opacity-85"
+        />
+        {/* Very soft white overlay to ensure content is readable, classic Apple style */}
+        <div className="absolute inset-0 bg-white/40 z-0" />
+        
+        {/* Bottom Fade */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+      </div>
 
       <Container className="relative z-10">
         
@@ -41,14 +68,21 @@ export const IntroductionSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           
           {/* Content Side */}
-          <div className="relative z-10 lg:pr-8">
+          <div className="relative z-10 lg:pr-8" ref={textRef}>
 
             <div className="space-y-5 text-gray-700 font-medium text-[16px] leading-relaxed mb-8 relative">
               <div className="absolute -left-5 top-2 bottom-2 w-[3px] bg-gradient-to-b from-secondary via-[#053e2f]/30 to-transparent rounded-full hidden md:block" />
               
-              <p className="mb-4">
-                Founded in <span className="font-serif font-black text-[#053e2f]">2015, Sathwik Rural and Youth Integrated Association (SRYIA)</span> is committed to uplifting rural communities by improving socio-economic conditions. Through initiatives in education, skill development, and healthcare, SRYIA has been a driving force for change, empowering youth and ensuring sustainable progress.
-              </p>
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                {p1Segments.map((seg, i) => (
+                  <span key={i} className={seg.className}>{seg.text}</span>
+                ))}
+              </motion.p>
               
               <div className="flex items-center gap-4 py-1 opacity-40">
                 <div className="h-px w-12 bg-current" />
@@ -56,17 +90,24 @@ export const IntroductionSection = () => {
                 <div className="h-px w-12 bg-current" />
               </div>
 
-              <p className="mt-4">
-                Over the past six months, we have focused on enhancing rural healthcare and infrastructure, ensuring access to clean drinking water and improved medical facilities. Our key initiatives include:
-              </p>
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                {p2Segments.map((seg, i) => (
+                  <span key={i} className={seg.className}>{seg.text}</span>
+                ))}
+              </motion.p>
             </div>
 
-              <div className="flex flex-wrap gap-4 mb-10">
+            {/* Initiative Tags (Apple Premium Inline Style) */}
+            <div className="flex flex-wrap gap-4 mb-10">
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}
-                  viewport={{ once: true }}
                   className="group flex items-center gap-3 bg-white/60 backdrop-blur-md border border-white shadow-[0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 rounded-full p-2 pr-5 cursor-pointer"
                 >
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#053e2f] to-[#0a7a5c] flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
@@ -79,9 +120,8 @@ export const IntroductionSection = () => {
 
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.15, duration: 0.4 }}
-                  viewport={{ once: true }}
                   className="group flex items-center gap-3 bg-white/60 backdrop-blur-md border border-white shadow-[0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 rounded-full p-2 pr-5 cursor-pointer"
                 >
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
@@ -91,7 +131,7 @@ export const IntroductionSection = () => {
                     Healthcare Access
                   </span>
                 </motion.div>
-              </div>
+            </div>
 
             {/* Read More button removed per user request */}
           </div>

@@ -1,6 +1,6 @@
 
 import { CinematicHero } from '../components/ui/CinematicHero';
-import { InteractiveTunnel } from '../components/ui/InteractiveTunnel';
+import { WhoWeAre } from '../components/ui/WhoWeAre';
 import { CommitmentCards } from '../components/ui/CommitmentCards';
 import { IntroductionSection } from '../components/ui/IntroductionSection';
 import { AreasOfFocus } from '../components/ui/AreasOfFocus';
@@ -23,8 +23,8 @@ export const Home = () => {
       {/* HERO SECTION */}
       <CinematicHero />
 
-      {/* 3D INTERACTIVE TUNNEL (About Us) */}
-      <InteractiveTunnel />
+      {/* WHO WE ARE SECTION */}
+      <WhoWeAre />
 
       {/* COMMITMENT CARDS */}
       <CommitmentCards />

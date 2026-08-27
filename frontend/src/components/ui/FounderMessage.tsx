@@ -21,7 +21,7 @@ export const FounderMessage = () => {
             viewport={{ once: true }}
             transition={{ duration: 1, ease: "easeOut" }}
             src="/Gemini_Generated_Image_kxdjsfkxdjsfkxdj-removebg-preview.png"
-            alt="Raghuveer Reddy"
+            alt="CH. RAMESH"
             className="w-[110%] h-[110%] object-contain object-bottom -translate-y-8 md:-translate-y-12 grayscale contrast-125 hover:grayscale-0 hover:contrast-100 transition-all duration-500 cursor-pointer"
           />
         </div>
@@ -38,7 +38,7 @@ export const FounderMessage = () => {
             {/* Header / Overline */}
             <div className="mb-4">
               <h2 className="text-sm font-bold tracking-[0.15em] text-[#333] uppercase">
-                Raghuveer Reddy
+                CH. RAMESH
               </h2>
               <div className="w-12 h-[2px] bg-[#333] mt-2" />
             </div>
@@ -73,14 +73,11 @@ export const FounderMessage = () => {
                 className="text-4xl text-[#111] inline-block -rotate-2 mb-3 drop-shadow-sm" 
                 style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
               >
-                Raghuveer Reddy
+                CH. RAMESH
               </span>
               <div className="flex flex-col items-start border-l-2 border-amber-600 pl-3">
                 <p className="text-[10px] font-bold tracking-[0.2em] text-[#111] uppercase mb-0.5">
-                  Raghuveer Reddy
-                </p>
-                <p className="text-[11px] font-serif italic tracking-wide text-[#555]">
-                  Member of Parliament Nalgonda
+                  CH. RAMESH
                 </p>
               </div>
             </div>

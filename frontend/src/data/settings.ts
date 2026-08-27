@@ -4,7 +4,7 @@ export const siteSettings: SiteSettings = {
   contact: {
     address: '1-10-1/21, St. no. 5, Ashok Nagar, Hyderabad - 500 020',
     phone: '+91 9000088422',
-    email: 'admin@sathwik.org',
+    email: 'srayiassociation.ngo@gmail.com',
     workingHours: 'Mon - Fri, 9:00 AM - 5:00 PM',
   },
   social: {

@@ -127,7 +127,7 @@ export const JoinUsCTA = () => {
                 className="relative z-10 w-[200px] h-[200px] sm:w-[260px] sm:h-[260px] rounded-full border-[6px] sm:border-[8px] border-white shadow-2xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg" 
+                  src="/images/ai/hopeful_rural_child.jpg" 
                   alt="Happy smiling child" 
                   className="w-full h-full object-cover"
                 />
@@ -142,8 +142,8 @@ export const JoinUsCTA = () => {
                 className="absolute top-0 left-4 sm:left-10 z-20 w-[100px] h-[100px] sm:w-[130px] sm:h-[130px] rounded-full border-[4px] sm:border-[6px] border-white shadow-xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/education_rural.jpg" 
-                  alt="Rural education" 
+                  src="/images/ai/rural_volunteers.jpg" 
+                  alt="Rural volunteers" 
                   className="w-full h-full object-cover object-center"
                 />
               </motion.div>
@@ -157,9 +157,9 @@ export const JoinUsCTA = () => {
                 className="absolute top-4 right-4 sm:right-12 z-20 w-[110px] h-[110px] sm:w-[140px] sm:h-[140px] rounded-full border-[4px] sm:border-[6px] border-white shadow-xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg" 
-                  alt="Child studying" 
-                  className="w-full h-full object-cover object-top"
+                  src="/images/ai/rural_healthcare.jpg" 
+                  alt="Rural healthcare" 
+                  className="w-full h-full object-cover object-center"
                 />
               </motion.div>
 
@@ -172,8 +172,8 @@ export const JoinUsCTA = () => {
                 className="absolute -bottom-2 sm:bottom-4 right-8 sm:right-16 z-20 w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] rounded-full border-[4px] sm:border-[6px] border-white shadow-xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).jpeg" 
-                  alt="Doctor and patient" 
+                  src="/images/ai/rural_women_empowerment.jpg" 
+                  alt="Women empowerment" 
                   className="w-full h-full object-cover"
                 />
               </motion.div>

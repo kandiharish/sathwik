@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Container } from '../layout/Container';
 
 // Reduced array sizes for performance (12 per row instead of 24)
@@ -34,18 +33,8 @@ const BOTTOM_IMAGES = [
 ];
 
 export const CurvedGallery = () => {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Parallax scroll effect attached to page scroll, drastically cheaper than continuous requestAnimationFrame
-  const topX = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const bottomX = useTransform(scrollYProgress, [0, 1], ["-30%", "0%"]);
-
   return (
-    <section ref={containerRef} className="py-24 bg-white relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden">
       <Container className="relative z-10 mb-12">
         <div className="flex flex-col items-center text-center w-full max-w-2xl mx-auto">
           <motion.div
@@ -71,10 +60,11 @@ export const CurvedGallery = () => {
       {/* 2D Performant Marquee Rows */}
       <div className="flex flex-col gap-6 lg:gap-8 w-full overflow-hidden will-change-transform">
         
-        {/* TOP ROW */}
+        {/* TOP ROW - Moves Right to Left */}
         <motion.div 
-          style={{ x: topX }}
-          className="flex gap-4 lg:gap-6 w-max pl-4"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+          className="flex gap-4 lg:gap-6 w-max"
         >
           {/* Double the array to ensure smooth continuous visuals without snapping */}
           {[...TOP_IMAGES, ...TOP_IMAGES].map((src, i) => (
@@ -94,10 +84,11 @@ export const CurvedGallery = () => {
           ))}
         </motion.div>
 
-        {/* BOTTOM ROW */}
+        {/* BOTTOM ROW - Moves Left to Right */}
         <motion.div 
-          style={{ x: bottomX }}
-          className="flex gap-4 lg:gap-6 w-max pl-4 ml-[-20vw]" // Offset start position
+          animate={{ x: ["-50%", "0%"] }}
+          transition={{ duration: 45, ease: "linear", repeat: Infinity }}
+          className="flex gap-4 lg:gap-6 w-max"
         >
           {[...BOTTOM_IMAGES, ...BOTTOM_IMAGES].map((src, i) => (
             <div 

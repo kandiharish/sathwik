@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Droplets, HeartPulse } from 'lucide-react';
 import { Container } from '../layout/Container';
 
@@ -8,7 +8,6 @@ import { Container } from '../layout/Container';
 export const IntroductionSection = () => {
   
   const textRef = useRef(null);
-  const isInView = useInView(textRef, { once: true, margin: "-100px" });
 
   const p1Segments = [
     { text: "Founded in ", className: "" },

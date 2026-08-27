@@ -66,38 +66,38 @@ export const JoinUsCTA = () => {
               </div>
 
               {/* Stats */}
-              <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="bg-[#ebf2ed] p-2.5 rounded-xl text-[#154625]">
+              <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-x-6 gap-y-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="bg-[#ebf2ed] p-2 rounded-lg text-[#154625]">
                     <Users className="w-4 h-4" />
                   </div>
-                  <div>
-                    <div className="font-bold text-[15px] text-slate-900 leading-none mb-1">1000+</div>
-                    <div className="text-[11px] text-slate-500 font-medium leading-none">Lives Impacted</div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-bold text-[15px] text-slate-900">1000+</span>
+                    <span className="text-[12px] text-slate-500 font-medium">Lives Impacted</span>
                   </div>
                 </div>
 
-                <div className="hidden md:block w-px h-8 bg-slate-200" />
+                <div className="hidden sm:block w-px h-6 bg-slate-200" />
 
-                <div className="flex items-center gap-2">
-                  <div className="bg-[#ebf2ed] p-2.5 rounded-xl text-[#154625]">
+                <div className="flex items-center gap-2.5">
+                  <div className="bg-[#ebf2ed] p-2 rounded-lg text-[#154625]">
                     <BookOpen className="w-4 h-4" />
                   </div>
-                  <div>
-                    <div className="font-bold text-[15px] text-slate-900 leading-none mb-1">50+</div>
-                    <div className="text-[11px] text-slate-500 font-medium leading-none">Education Programs</div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-bold text-[15px] text-slate-900">50+</span>
+                    <span className="text-[12px] text-slate-500 font-medium">Education Programs</span>
                   </div>
                 </div>
 
-                <div className="hidden lg:block w-px h-8 bg-slate-200" />
+                <div className="hidden sm:block w-px h-6 bg-slate-200" />
 
-                <div className="flex items-center gap-2">
-                  <div className="bg-[#ebf2ed] p-2.5 rounded-xl text-[#154625]">
+                <div className="flex items-center gap-2.5">
+                  <div className="bg-[#ebf2ed] p-2 rounded-lg text-[#154625]">
                     <HeartPulse className="w-4 h-4" />
                   </div>
-                  <div>
-                    <div className="font-bold text-[15px] text-slate-900 leading-none mb-1">20+</div>
-                    <div className="text-[11px] text-slate-500 font-medium leading-none">Healthcare Camps</div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="font-bold text-[15px] text-slate-900">20+</span>
+                    <span className="text-[12px] text-slate-500 font-medium">Healthcare Camps</span>
                   </div>
                 </div>
               </div>

@@ -60,7 +60,7 @@ function App() {
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
+      syncTouch: false,
       touchMultiplier: 2,
     });
 

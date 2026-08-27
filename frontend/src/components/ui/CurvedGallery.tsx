@@ -1,113 +1,57 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useAnimationFrame, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Container } from '../layout/Container';
 
-// 24 unique images for the top row
+// Reduced array sizes for performance (12 per row instead of 24)
 const TOP_IMAGES = [
   "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (1).jpeg",
-  "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (2).jpeg",
   "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM.jpeg",
   "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.48 PM (1).jpeg",
-  "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.48 PM.jpeg",
   "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM (1).jpeg",
-  "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM (2).jpeg",
-  "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM.jpeg",
-  "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.50 PM (1).jpeg",
   "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.50 PM.jpeg",
   "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM (1).jpeg",
-  "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM (2).jpeg",
   "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM.jpeg",
-  "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.30 PM (1).jpeg",
   "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.30 PM.jpeg",
   "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg",
   "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM (1).jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM (2).jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM.jpeg",
   "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.48 PM (1).jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.48 PM.jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM (1).jpeg",
-  "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM (2).jpeg",
   "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM.jpeg",
 ];
 
-// 24 unique images for the bottom row
 const BOTTOM_IMAGES = [
   "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg",
-  "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM.jpeg",
   "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM (1).jpeg",
-  "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM (2).jpeg",
   "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM.jpeg",
-  "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.22 PM (1).jpeg",
   "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.22 PM.jpeg",
   "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM (1).jpeg",
-  "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM (2).jpeg",
   "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM.jpeg",
-  "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.52 PM (1).jpeg",
-  "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.52 PM.jpeg",
   "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.53 PM.jpeg",
-  "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.54 PM.jpeg",
   "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg",
   "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (1).jpeg",
-  "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (2).jpeg",
-  "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (3).jpeg",
   "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM (1).jpeg",
-  "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM.jpeg",
-  "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.09 PM.jpeg",
   "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg",
-  "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.54 PM (1).jpeg",
   "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.54 PM.jpeg",
 ];
 
-const CYLINDER_FACES = 24;
-const ANGLE_PER_FACE = 360 / CYLINDER_FACES;
-
 export const CurvedGallery = () => {
-  const [layout, setLayout] = useState({ width: 220, radius: 835, height: 300 });
-  const isDragging = useRef(false);
-  
-  const rotation = useMotionValue(0);
-  const smoothRotation = useSpring(rotation, { damping: 30, stiffness: 150, mass: 0.8 });
-  
-  // Bottom row rotates in opposite direction, staggered by half a card width
-  const invertedRotation = useTransform(smoothRotation, r => -r + (ANGLE_PER_FACE / 2));
-
-  // Handle responsiveness for the 3D cylinder
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        // Mobile sizes
-        const w = 140;
-        const r = Math.round((w / 2) / Math.tan(Math.PI / CYLINDER_FACES));
-        setLayout({ width: w, radius: r, height: 200 });
-      } else {
-        // Desktop sizes (smaller cards, wider radius for 24 items)
-        const w = 220;
-        const r = Math.round((w / 2) / Math.tan(Math.PI / CYLINDER_FACES));
-        setLayout({ width: w, radius: r, height: 300 });
-      }
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Continuous auto-rotation
-  useAnimationFrame((_, delta) => {
-    if (!isDragging.current) {
-      rotation.set(rotation.get() - (delta * 0.015)); // Slow, premium movement
-    }
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
   });
 
+  // Parallax scroll effect attached to page scroll, drastically cheaper than continuous requestAnimationFrame
+  const topX = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const bottomX = useTransform(scrollYProgress, [0, 1], ["-30%", "0%"]);
+
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      
-      <Container className="relative z-10">
-        {/* Stylish Inter-Section Space Heading */}
-        <div className="flex flex-col items-center text-center mb-8 mt-0 w-full max-w-2xl mx-auto">
+    <section ref={containerRef} className="py-24 bg-white relative overflow-hidden">
+      <Container className="relative z-10 mb-12">
+        <div className="flex flex-col items-center text-center w-full max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8 }}
             className="w-full"
           >
@@ -124,93 +68,55 @@ export const CurvedGallery = () => {
         </div>
       </Container>
 
-      {/* 3D Curved Carousel Container */}
-      <motion.div 
-        className="relative w-full overflow-hidden flex items-center justify-center mt-6 select-none cursor-grab active:cursor-grabbing"
-        style={{ perspective: "1000px", height: (layout.height * 2) + 60 }}
-        onPanStart={() => { isDragging.current = true; }}
-        onPan={(_, info) => {
-          rotation.set(rotation.get() + info.delta.x * 0.15); // Adjust sensitivity for 24 faces
-        }}
-        onPanEnd={() => { isDragging.current = false; }}
-      >
-
+      {/* 2D Performant Marquee Rows */}
+      <div className="flex flex-col gap-6 lg:gap-8 w-full overflow-hidden will-change-transform">
+        
         {/* TOP ROW */}
-        <motion.div
-          className="absolute top-1/2 left-1/2"
-          style={{
-            width: layout.width,
-            height: layout.height,
-            transformStyle: "preserve-3d",
-            x: "-50%",
-            y: `calc(-50% - ${layout.height / 2 + 15}px)`, // Shift up with proper space
-            rotateY: smoothRotation,
-            // Zoomed out by 350px so we see more of the curve
-            z: layout.radius - 350 
-          }}
+        <motion.div 
+          style={{ x: topX }}
+          className="flex gap-4 lg:gap-6 w-max pl-4"
         >
-          {TOP_IMAGES.map((src, i) => (
-            <div
-              key={i}
-              className="absolute inset-0"
-              style={{
-                // Position each card on the surface of the cylinder, facing inward (concave)
-                transform: `rotateY(${i * ANGLE_PER_FACE}deg) translateZ(${-layout.radius}px)`,
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-              }}
+          {/* Double the array to ensure smooth continuous visuals without snapping */}
+          {[...TOP_IMAGES, ...TOP_IMAGES].map((src, i) => (
+            <div 
+              key={`top-${i}`} 
+              className="relative w-[280px] h-[200px] md:w-[350px] md:h-[250px] rounded-2xl overflow-hidden shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.06)] bg-slate-50"
             >
-              {/* Inner div to provide the visual gap without breaking 3D math */}
-              <div className="absolute inset-x-2 inset-y-0 overflow-hidden rounded-[1.5rem] shadow-sm group">
-                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-500 z-10 pointer-events-none" />
-                <img 
-                  src={src} 
-                  alt={`Gallery Top ${i}`} 
-                  className="w-full h-full object-cover pointer-events-none transition-transform duration-700 group-hover:scale-110" 
-                />
-              </div>
+              <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 z-10 cursor-pointer" />
+              <img 
+                src={src} 
+                alt={`Gallery Top ${i}`} 
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 will-change-transform" 
+              />
             </div>
           ))}
         </motion.div>
 
         {/* BOTTOM ROW */}
-        <motion.div
-          className="absolute top-1/2 left-1/2"
-          style={{
-            width: layout.width,
-            height: layout.height,
-            transformStyle: "preserve-3d",
-            x: "-50%",
-            y: `calc(-50% + ${layout.height / 2 + 15}px)`, // Shift down with proper space
-            rotateY: invertedRotation,
-            // Zoomed out identically
-            z: layout.radius - 350 
-          }}
+        <motion.div 
+          style={{ x: bottomX }}
+          className="flex gap-4 lg:gap-6 w-max pl-4 ml-[-20vw]" // Offset start position
         >
-          {BOTTOM_IMAGES.map((src, i) => (
-            <div
-              key={i}
-              className="absolute inset-0"
-              style={{
-                transform: `rotateY(${i * ANGLE_PER_FACE}deg) translateZ(${-layout.radius}px)`,
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-              }}
+          {[...BOTTOM_IMAGES, ...BOTTOM_IMAGES].map((src, i) => (
+            <div 
+              key={`bottom-${i}`} 
+              className="relative w-[280px] h-[200px] md:w-[350px] md:h-[250px] rounded-2xl overflow-hidden shrink-0 shadow-[0_8px_30px_rgb(0,0,0,0.06)] bg-slate-50"
             >
-              {/* Inner div to provide the visual gap */}
-              <div className="absolute inset-x-2 inset-y-0 overflow-hidden rounded-[1.5rem] shadow-sm group">
-                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-500 z-10 pointer-events-none" />
-                <img 
-                  src={src} 
-                  alt={`Gallery Bottom ${i}`} 
-                  className="w-full h-full object-cover pointer-events-none transition-transform duration-700 group-hover:scale-110" 
-                />
-              </div>
+              <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300 z-10 cursor-pointer" />
+              <img 
+                src={src} 
+                alt={`Gallery Bottom ${i}`} 
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 will-change-transform" 
+              />
             </div>
           ))}
         </motion.div>
-
-      </motion.div>
+        
+      </div>
     </section>
   );
 };

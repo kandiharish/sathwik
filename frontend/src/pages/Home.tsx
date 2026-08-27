@@ -1,14 +1,18 @@
 
+import { lazy, Suspense } from 'react';
 import { CinematicHero } from '../components/ui/CinematicHero';
-import { WhoWeAre } from '../components/ui/WhoWeAre';
-import { CommitmentCards } from '../components/ui/CommitmentCards';
-import { IntroductionSection } from '../components/ui/IntroductionSection';
-import { AreasOfFocus } from '../components/ui/AreasOfFocus';
-import { CurvedGallery } from '../components/ui/CurvedGallery';
-import { GalleryStack } from '../components/ui/GalleryStack';
-import { EditorialCarousel } from '../components/ui/EditorialCarousel';
-import { FounderMessage } from '../components/ui/FounderMessage';
-import { PartnerLogos } from '../components/ui/PartnerLogos';
+
+// Lazy load heavy components
+const InteractiveTunnel = lazy(() => import('../components/ui/InteractiveTunnel').then(m => ({ default: m.InteractiveTunnel })));
+const WhoWeAre = lazy(() => import('../components/ui/WhoWeAre').then(m => ({ default: m.WhoWeAre })));
+const CommitmentCards = lazy(() => import('../components/ui/CommitmentCards').then(m => ({ default: m.CommitmentCards })));
+const IntroductionSection = lazy(() => import('../components/ui/IntroductionSection').then(m => ({ default: m.IntroductionSection })));
+const AreasOfFocus = lazy(() => import('../components/ui/AreasOfFocus').then(m => ({ default: m.AreasOfFocus })));
+const CurvedGallery = lazy(() => import('../components/ui/CurvedGallery').then(m => ({ default: m.CurvedGallery })));
+const GalleryStack = lazy(() => import('../components/ui/GalleryStack').then(m => ({ default: m.GalleryStack })));
+const EditorialCarousel = lazy(() => import('../components/ui/EditorialCarousel').then(m => ({ default: m.EditorialCarousel })));
+const FounderMessage = lazy(() => import('../components/ui/FounderMessage').then(m => ({ default: m.FounderMessage })));
+const PartnerLogos = lazy(() => import('../components/ui/PartnerLogos').then(m => ({ default: m.PartnerLogos })));
 
 import { Container } from '../components/layout/Container';
 import { ButtonLink } from '../components/ui/Button';
@@ -23,17 +27,22 @@ export const Home = () => {
       {/* HERO SECTION */}
       <CinematicHero />
 
-      {/* WHO WE ARE SECTION */}
-      <WhoWeAre />
+      <Suspense fallback={<div className="h-screen bg-black" />}>
+        {/* 3D INTERACTIVE TUNNEL (About Us) */}
+        <InteractiveTunnel />
+        
+        {/* WHO WE ARE SECTION */}
+        <WhoWeAre />
 
-      {/* COMMITMENT CARDS */}
-      <CommitmentCards />
+        {/* COMMITMENT CARDS */}
+        <CommitmentCards />
 
-      {/* INTRODUCTION SECTION */}
-      <IntroductionSection />
-      <AreasOfFocus />
-      <GalleryStack />
-      <CurvedGallery />
+        {/* INTRODUCTION SECTION */}
+        <IntroductionSection />
+        <AreasOfFocus />
+        <GalleryStack />
+        <CurvedGallery />
+      </Suspense>
       {/* IMPACT DASHBOARD - REDESIGNED */}
       <section id="impact" className="py-12 lg:py-16 relative bg-[#FAFAF8] overflow-hidden min-h-[100vh] max-h-[900px] flex items-center justify-center">
         {/* Background Image - Perfectly fitted */}
@@ -103,16 +112,20 @@ export const Home = () => {
           </div>
           
           <div className="pb-12">
-            <EditorialCarousel projects={projects} />
+            <Suspense fallback={<div className="h-[400px]" />}>
+              <EditorialCarousel projects={projects} />
+            </Suspense>
           </div>
         </Container>
       </div>
 
       {/* FOUNDER MESSAGE */}
-      <FounderMessage />
-
-      {/* CSR PARTNERS */}
-      <PartnerLogos />
+      <Suspense fallback={<div className="h-[500px]" />}>
+        <FounderMessage />
+        
+        {/* CSR PARTNERS */}
+        <PartnerLogos />
+      </Suspense>
 
       {/* FINAL CTA */}
       <JoinUsCTA />

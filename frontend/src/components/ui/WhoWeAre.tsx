@@ -1,128 +1,125 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Container } from '../layout/Container';
-import { Target, Heart, Sprout } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { ButtonLink } from './Button';
+
+const tags = [
+  "Healthcare & Medical Infrastructure",
+  "Water, Sanitation & Hygiene",
+  "Education & School Infrastructure",
+  "Nutrition & Maternal Health",
+  "Sports & Community Wellness",
+  "Community Infrastructure",
+  "Disability Inclusion",
+  "Community Development"
+];
 
 export const WhoWeAre = () => {
-  const containerRef = useRef(null);
-  const textRef = useRef(null);
-  const isInView = useInView(textRef, { once: true, margin: "-100px" });
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
-  const stats = [
-    { label: "Vision", value: "Sustainable", icon: Sprout, color: "text-emerald-500", bg: "bg-emerald-50" },
-    { label: "Mission", value: "Grassroots", icon: Target, color: "text-amber-500", bg: "bg-amber-50" },
-    { label: "Focus", value: "Community", icon: Heart, color: "text-rose-500", bg: "bg-rose-50" }
-  ];
-
   return (
-    <section 
-      ref={containerRef}
-      className="py-24 md:py-32 bg-white relative overflow-hidden selection:bg-[#054E38] selection:text-white"
-    >
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-50/30 rounded-full blur-[120px] -z-10 translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-50/30 rounded-full blur-[100px] -z-10 -translate-x-1/3 translate-y-1/3" />
+    <section className="py-24 bg-white relative overflow-hidden">
+      {/* Background Soft Glows */}
+      <div className="absolute top-0 right-0 -mr-40 -mt-40 w-[600px] h-[600px] bg-emerald-50/50 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute bottom-0 left-0 -ml-40 -mb-40 w-[600px] h-[600px] bg-rose-50/50 rounded-full blur-[100px] pointer-events-none z-0" />
 
-      <Container>
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
+      <Container className="relative z-10">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 xl:gap-8 items-center">
           
-          {/* Left Side: Typography & Content */}
-          <div className="w-full lg:w-1/2 relative z-10" ref={textRef}>
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 mb-8">
-                <span className="w-2 h-2 rounded-full bg-[#054E38] animate-pulse" />
-                <span className="text-sm font-bold tracking-widest uppercase text-slate-500">Discover SRYIA</span>
-              </div>
-
-              <h2 className="text-5xl md:text-7xl font-serif font-black text-slate-900 leading-[1.1] tracking-tight mb-8">
-                Who <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#054E38] to-[#0a7a5c]">We Are</span>
-              </h2>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="space-y-6"
-            >
-              <p className="text-xl md:text-2xl text-slate-700 leading-relaxed font-medium">
-                The Sathwik Rural and Youth Integrated Association (SRYIA) was founded with a singular vision: to bring <span className="text-[#054E38] font-bold">sustainable development</span> to the grassroots of India.
-              </p>
-              
-              <p className="text-lg text-slate-600 leading-relaxed border-l-4 border-amber-400 pl-6 my-8 italic">
-                "We recognize that true progress is impossible without addressing the fundamental needs of our rural communities."
-              </p>
-
-              <p className="text-lg text-slate-600 leading-relaxed">
-                Through collaborative efforts, innovative solutions, and unwavering dedication, we empower individuals to become architects of their own future. From healthcare and education to skill development and environmental sustainability, our holistic approach ensures no community is left behind.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Right Side: Interactive Visuals */}
-          <div className="w-full lg:w-1/2 relative h-[600px] flex items-center justify-center">
+          {/* Left Side: Content */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col pr-0 xl:pr-12"
+          >
+            <div className="inline-flex items-center gap-2 bg-emerald-50 text-[#054E38] px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase mb-6 w-max">
+              About Us
+            </div>
             
-            {/* Central Floating Image Frame */}
-            <motion.div 
-              style={{ y, opacity }}
-              className="absolute z-20 w-[80%] h-[70%] rounded-3xl overflow-hidden shadow-2xl border-8 border-white"
-            >
-              <div className="absolute inset-0 bg-[#054E38]/10 mix-blend-overlay z-10" />
-              <img 
-                src="/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).jpeg" 
-                alt="Community Empowerment" 
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-black text-slate-900 tracking-tight leading-[1.1] mb-8">
+              Who We <span className="text-[#054E38]">Are</span>
+            </h2>
 
-            {/* Orbiting / Floating Stat Cards */}
-            <div className="absolute inset-0 z-30 pointer-events-none">
-              {stats.map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                  transition={{ delay: 0.5 + (idx * 0.2), type: "spring", stiffness: 100 }}
-                  className={`absolute bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/50 flex items-center gap-4 pointer-events-auto hover:scale-105 transition-transform cursor-default`}
-                  style={{
-                    top: idx === 0 ? '10%' : idx === 1 ? '70%' : '40%',
-                    left: idx === 0 ? '0%' : idx === 1 ? '10%' : '75%',
-                    zIndex: 40 + idx
-                  }}
-                >
-                  <div className={`w-12 h-12 rounded-full ${stat.bg} ${stat.color} flex items-center justify-center`}>
-                    <stat.icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">{stat.label}</div>
-                    <div className="text-lg font-bold text-slate-900">{stat.value}</div>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="space-y-6 text-lg text-slate-600 font-medium leading-relaxed">
+              <p>
+                The <strong className="text-slate-900">Sathwik Rural and Youth Integrated Association (SRYIA)</strong> was founded with a singular vision: to bring sustainable development to the grassroots of India. 
+              </p>
+              <p>
+                We recognize that true progress is impossible without addressing the fundamental needs of our rural communities. What started as a small initiative has blossomed into a comprehensive force for change.
+              </p>
+              <p>
+                Our approach is deeply rooted in the belief that empowering individuals—especially youth and women—creates a ripple effect that transforms entire communities. We work tirelessly across multiple sectors to build resilient, self-sustaining ecosystems where every individual has the opportunity to thrive.
+              </p>
             </div>
 
-            {/* Background Pattern */}
-            <svg className="absolute inset-0 w-full h-full text-slate-100 -z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <defs>
-                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                  <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
+            <div className="mt-10">
+              <ButtonLink to="/about" variant="primary" className="inline-flex items-center">
+                Read Our Full Story <ArrowRight className="w-4 h-4 ml-2" />
+              </ButtonLink>
+            </div>
+          </motion.div>
 
+          {/* Right Side: Orbiting Tags */}
+          <div className="relative w-full h-[500px] md:h-[700px] flex items-center justify-center overflow-hidden xl:overflow-visible">
+            {/* Center Logo */}
+            <motion.div 
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
+              className="absolute z-30 w-32 h-32 md:w-40 md:h-40 bg-white rounded-full shadow-[0_20px_60px_rgb(0,0,0,0.1)] flex items-center justify-center p-6 border-4 border-white"
+            >
+              <img src="/logo.png" alt="SRYIA" className="w-full h-full object-contain" />
+              {/* Pulsing ring behind logo */}
+              <div className="absolute inset-0 rounded-full border-2 border-[#054E38]/20 animate-ping" style={{ animationDuration: '3s' }} />
+            </motion.div>
+
+            {/* Orbital Rings */}
+            <div className="absolute w-[280px] h-[280px] md:w-[480px] md:h-[480px] border border-slate-200/60 rounded-full z-10" />
+            <div className="absolute w-[380px] h-[380px] md:w-[680px] md:h-[680px] border border-slate-100 rounded-full z-0" />
+
+            {/* Orbiting Elements - Using CSS animations instead of JS for huge performance gain */}
+            <div 
+              style={{ animation: 'spin 50s linear infinite' }}
+              className="absolute inset-0 z-20 will-change-transform"
+            >
+              {tags.map((tag, i) => {
+                const angle = (i * 360) / tags.length;
+                // Responsive radius based on screen size approximations.
+                // In CSS we'll use a clamping approach or just rely on the component size.
+                return (
+                  <div 
+                    key={i}
+                    className="absolute top-1/2 left-1/2 w-0 h-0"
+                    style={{ transform: `rotate(${angle}deg)` }}
+                  >
+                    <div 
+                      className="absolute top-1/2 left-1/2"
+                      style={{ 
+                        // Desktop radius ~240px, Mobile ~140px. 
+                        transform: `translate(-50%, -50%) translateX(min(32vw, 240px))` 
+                      }}
+                    >
+                      <div
+                        style={{ animation: 'spin 50s linear infinite reverse' }}
+                        className="will-change-transform"
+                      >
+                        <div 
+                          style={{ transform: `rotate(${-angle}deg)` }}
+                          className="whitespace-nowrap bg-white/90 backdrop-blur-sm border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgb(5,78,56,0.15)] hover:border-[#054E38]/30 transition-all duration-300 px-5 py-3 rounded-full text-[13px] md:text-sm font-bold text-slate-700 flex items-center gap-2.5 cursor-default"
+                        >
+                          <div className="w-2 h-2 rounded-full bg-[#054E38] animate-pulse"></div>
+                          {tag}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Very faint gradient overlay to ensure tags don't get cut off harshly if they overflow slightly on mobile */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_60%,white_95%)] pointer-events-none z-30 xl:hidden" />
           </div>
 
         </div>

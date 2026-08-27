@@ -31,19 +31,38 @@ export const InteractiveTunnel = () => {
   const cameraZ = useTransform(scrollYProgress, [0, 1], [0, 13800]);
 
   return (
-    <section ref={containerRef} className="relative h-[400vh] bg-[#FAFAF9] z-40">
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#FAFAF9]">
-        
-        {/* Section Heading Badge */}
-        <div className="absolute top-10 lg:top-14 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-          <h3 className="text-sm md:text-base font-black tracking-[0.3em] uppercase text-white bg-gradient-to-r from-primary via-[#0000B3] to-primary bg-[length:200%_auto] px-8 py-3 rounded-full shadow-[0_8px_30px_rgba(0,0,179,0.25)] border border-white/20">
-            Our Story
-          </h3>
+    <section ref={containerRef} className="relative h-[400vh] bg-black z-40">
+      <div 
+        className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"
+        style={{
+          backgroundImage: `url('/image%20copy.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Section Heading Badge - Animated Spinning Border */}
+        <div className="absolute top-10 lg:top-14 left-1/2 -translate-x-1/2 z-50 pointer-events-none text-center">
+          <div className="relative inline-block rounded-full shadow-lg overflow-hidden bg-gray-100 p-[3px]">
+            {/* Spinning lines */}
+            <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(transparent_0%,transparent_85%,#009966_100%)] opacity-90" />
+            <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite_2s] bg-[conic-gradient(transparent_0%,transparent_85%,#f59e0b_100%)] opacity-90" />
+            
+            {/* Inner Box */}
+            <div className="relative bg-white/95 backdrop-blur-xl px-12 py-3 rounded-full flex items-center justify-center">
+              <h2 
+                className="text-3xl md:text-[42px] text-[#054E38] tracking-wide m-0 leading-none"
+                style={{ fontFamily: '"Brush Script MT", cursive' }}
+              >
+                Our Story
+              </h2>
+            </div>
+          </div>
         </div>
 
         {/* Perspective Viewport */}
         <div 
-          className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none"
+          className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10"
           style={{ perspective: '1000px', perspectiveOrigin: 'center center' }}
         >
           {/* The Moving Tunnel World */}
@@ -52,48 +71,38 @@ export const InteractiveTunnel = () => {
             style={{ transformStyle: 'preserve-3d', z: cameraZ }}
           >
             
-            {/* Simple infinite zooming grid background */}
-            <div className="absolute left-1/2 top-1/2 w-[300vw] h-[300vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                 style={{ 
-                   transform: 'translateZ(-15000px)',
-                   backgroundImage: 'linear-gradient(rgba(0,0,0,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(0,0,0,0.04) 2px, transparent 2px)',
-                   backgroundSize: '100px 100px',
-                 }}
-            />
-            <div className="absolute left-1/2 top-1/2 w-[300vw] h-[300vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                 style={{ 
-                   transform: 'translateZ(-7000px)',
-                   backgroundImage: 'linear-gradient(rgba(0,0,0,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(0,0,0,0.04) 2px, transparent 2px)',
-                   backgroundSize: '200px 200px',
-                 }}
-            />
-
             {/* Image Panels placed strictly in the corners along the Z-axis */}
-            {images.map((img, idx) => (
-              <div
-                key={idx}
-                className="absolute flex flex-col items-center"
-                style={{
-                  left: `calc(50% + ${img.x}vw)`,
-                  top: `calc(50% + ${img.y}vh)`,
-                  transform: `translate3d(-50%, -50%, ${img.z}px)`,
-                }}
-              >
-                <div className="w-56 md:w-80 lg:w-96 aspect-video bg-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[4px] border-white rounded-xl overflow-hidden mb-3">
-                  <img src={img.src} alt={img.tag} className="w-full h-full object-cover" />
+            {images.map((img, idx) => {
+              const tagColors = [
+                "text-amber-700 bg-amber-50/95 border-amber-200/60 shadow-amber-900/10",
+                "text-emerald-700 bg-emerald-50/95 border-emerald-200/60 shadow-emerald-900/10",
+                "text-blue-700 bg-blue-50/95 border-blue-200/60 shadow-blue-900/10",
+                "text-rose-700 bg-rose-50/95 border-rose-200/60 shadow-rose-900/10",
+                "text-purple-700 bg-purple-50/95 border-purple-200/60 shadow-purple-900/10",
+              ];
+              const colorClass = tagColors[idx % tagColors.length];
+
+              return (
+                <div
+                  key={idx}
+                  className="absolute flex flex-col items-center"
+                  style={{
+                    left: `calc(50% + ${img.x}vw)`,
+                    top: `calc(50% + ${img.y}vh)`,
+                    transform: `translate3d(-50%, -50%, ${img.z}px)`,
+                  }}
+                >
+                  <div className="w-56 md:w-80 lg:w-96 aspect-video bg-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[4px] border-white rounded-xl overflow-hidden mb-4">
+                    <img src={img.src} alt={img.tag} className="w-full h-full object-cover" />
+                  </div>
+                  <span className={`text-[10px] md:text-xs font-black tracking-widest uppercase px-5 py-2.5 rounded-full shadow-xl border backdrop-blur-md ${colorClass}`}>
+                    {img.tag}
+                  </span>
                 </div>
-                <span className="text-[9px] md:text-[11px] font-bold tracking-widest uppercase text-gray-500 bg-white/60 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-sm border border-white/50">
-                  {img.tag}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </motion.div>
         </div>
-
-        {/* Screen-Space UI removed as per request */}
-
-        {/* Ambient Overlay for depth */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(250,250,249,0.9)_100%)] z-10"></div>
       </div>
     </section>
   );

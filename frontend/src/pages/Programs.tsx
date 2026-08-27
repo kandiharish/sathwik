@@ -70,7 +70,7 @@ export const Programs = () => {
                           >
                             <div className="h-48 bg-gray-200 relative overflow-hidden">
                               <img 
-                                src={project.coverImage || "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop"} 
+                                src={project.images?.[0] || "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg"} 
                                 alt={project.title}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                               />
@@ -83,7 +83,7 @@ export const Programs = () => {
                                 {project.title}
                               </h4>
                               <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                                {project.objective}
+                                {project.response}
                               </p>
                               <Link to={`/projects/${project.slug}`} className="text-sm font-bold text-primary hover:text-secondary transition-colors">
                                 Read More &rarr;

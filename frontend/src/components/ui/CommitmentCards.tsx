@@ -1,147 +1,134 @@
 import { motion } from 'framer-motion';
 import { Users, ShieldPlus, FileSearch, Heart } from 'lucide-react';
-import { Container } from '../layout/Container';
 
 const cards = [
   {
     title: "Community-Centric Approach",
     desc: "SRYIA prioritizes empowerment, offering skills and resources that enable individuals to achieve lasting self-reliance rather than dependency.",
     color: "text-orange-500",
+    hoverBg: "group-hover:bg-orange-500 group-hover:text-white",
+    hoverShadow: "hover:shadow-[0_12px_40px_rgba(249,115,22,0.2)]",
     borderColor: "border-orange-500",
-    borderBottom: "border-b-orange-500",
-    icon: <Users className="w-8 h-8" />,
-    image: "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg"
+    Icon: Users,
+    symbol: "/symbols/community.jpg",
   },
   {
-    title: "Improving Health Through Water & Infrastructure",
-    desc: "SRYIA is improving public health by installing RO plants in schools, developing healthcare facilities, and providing essential medical equipment to enhance healthcare access in underserved regions.",
+    title: "Improving Health Through Water",
+    desc: "SRYIA is improving public health by installing RO plants in schools, developing healthcare facilities, and providing essential medical equipment.",
     color: "text-green-600",
+    hoverBg: "group-hover:bg-green-600 group-hover:text-white",
+    hoverShadow: "hover:shadow-[0_12px_40px_rgba(22,163,74,0.2)]",
     borderColor: "border-green-600",
-    borderBottom: "border-b-green-600",
-    icon: <ShieldPlus className="w-8 h-8" />,
-    image: "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.19 PM.jpeg"
+    Icon: ShieldPlus,
+    symbol: "/symbols/health.jpg",
   },
   {
-    title: "Transparency and Accountability",
-    desc: "With a commitment to integrity, SRYIA maintains transparency across all operations, ensuring stakeholders are well-informed about program impacts and resource allocations.",
+    title: "Transparency & Accountability",
+    desc: "With a commitment to integrity, SRYIA maintains transparency across operations, ensuring stakeholders are well-informed about program impacts.",
     color: "text-blue-600",
+    hoverBg: "group-hover:bg-blue-600 group-hover:text-white",
+    hoverShadow: "hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)]",
     borderColor: "border-blue-600",
-    borderBottom: "border-b-blue-600",
-    icon: <FileSearch className="w-8 h-8" />,
-    image: "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg"
+    Icon: FileSearch,
+    symbol: "/symbols/transparency.jpg",
   }
 ];
 
 export const CommitmentCards = () => {
   return (
-    <section className="py-24 bg-[#FAFAF9] relative overflow-hidden">
-      {/* Subtle dotted background pattern */}
-      <div className="absolute inset-0 pointer-events-none opacity-40" 
-           style={{ backgroundImage: 'radial-gradient(#e5e7eb 2px, transparent 2px)', backgroundSize: '30px 30px' }} />
+    <section className="relative w-full py-24 lg:py-32 bg-[#FAFAF8] overflow-hidden flex flex-col items-center justify-center min-h-screen z-10">
+      
+      <style>{`
+        .perspective-1000 { perspective: 1000px; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+      `}</style>
 
-      <Container>
-        {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
-          <motion.h4 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-orange-500 font-bold tracking-widest uppercase text-sm mb-4"
-          >
-            Our Commitment
-          </motion.h4>
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-serif font-black text-[#1A202C] mb-6"
-          >
-            Building a Stronger, Healthier Tomorrow
-          </motion.h2>
-          
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
+      {/* FITTED BACKGROUND IMAGE WITH SEAMLESS FADES */}
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-end flex-col bg-[#FAFAF8]">
+        {/* Massive Top Fade to create solid space for the stylish header */}
+        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+        
+        <img 
+          src="/image%20copy%205.png" 
+          alt="SATHWIK Background" 
+          className="w-full h-full object-contain object-center opacity-70"
+        />
+        {/* Soft, clean fade to ensure text is readable but keeps image bright */}
+        <div className="absolute inset-0 bg-white/40 z-0" />
+
+        {/* Bottom Fade */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+      </div>
+
+      {/* FOREGROUND CONTENT */}
+      <div className="relative w-full max-w-[1000px] mx-auto px-6 md:px-8 z-10 flex flex-col items-center h-full">
+        
+        {/* Stylish Inter-Section Space Heading */}
+        <div className="flex flex-col items-center text-center mb-24 mt-0 w-full">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center justify-center gap-4 mb-4"
+            transition={{ duration: 0.8 }}
+            className="w-full"
           >
-            <div className="h-px bg-gray-300 w-16" />
-            <Heart className="w-5 h-5 text-orange-500 fill-orange-500" />
-            <div className="h-px bg-gray-300 w-16" />
+            <h2 
+              className="text-6xl md:text-8xl text-[#d4c8b8]/40 tracking-tight leading-none mb-4"
+              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
+            >
+              Our Commitment
+            </h2>
+            <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-bold text-[#1d1d1f] tracking-tight -mt-10 md:-mt-12">
+              Building a Stronger, Healthier Tomorrow
+            </h3>
           </motion.div>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="text-gray-500 font-medium"
-          >
-            Driven by values, focused on impact.
-          </motion.p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+        {/* Centered Cards Grid at the Bottom with 3D Flip */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full mt-auto pb-8">
           {cards.map((card, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 + idx * 0.1, duration: 0.5 }}
-              className="relative h-[240px] md:h-[260px] max-w-[260px] mx-auto w-full group cursor-pointer"
-              style={{ perspective: '1000px' }}
+              transition={{ delay: 0.3 + (idx * 0.1), duration: 0.5 }}
+              className="relative group w-full"
             >
-              {/* Flip Container */}
-              <div 
-                className="w-full h-full relative transition-transform duration-700 ease-out group-hover:[transform:rotateY(180deg)]"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
+              <div className={`w-full h-full relative transition-all duration-700 bg-white rounded-xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center group ${card.hoverShadow} overflow-hidden`}>
                 
-                {/* Front Side (White Card) */}
+                {/* Transparent AI-generated watermark symbol */}
                 <div 
-                  className={`absolute inset-0 bg-white rounded-[20px] p-5 shadow-xl border-b-[4px] ${card.borderBottom} flex flex-col items-center text-center`}
-                  style={{ backfaceVisibility: 'hidden' }}
-                >
-                  <div className={`w-12 h-12 rounded-full border-[2px] border-dotted ${card.borderColor} flex items-center justify-center mb-4 bg-white`}>
-                    <div className={`${card.color} scale-75`}>
-                      {card.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-base font-serif font-bold text-text-main mb-2 leading-snug">
-                    {card.title}
-                  </h3>
-                  <div className="w-8 h-[1px] bg-gray-200 mb-2" />
-                  <p className="text-[11px] text-gray-500 leading-tight font-medium line-clamp-4">
-                    {card.desc}
-                  </p>
-                </div>
+                  className="absolute inset-0 z-0 opacity-5 group-hover:opacity-10 transition-opacity duration-700 mix-blend-multiply pointer-events-none"
+                  style={{
+                    backgroundImage: `url(${card.symbol})`,
+                    backgroundSize: '150%',
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
 
-                {/* Back Side (Image) */}
-                <div 
-                  className={`absolute inset-0 rounded-3xl shadow-2xl border-b-[8px] ${card.borderBottom} overflow-hidden`}
-                  style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-                >
-                  <img 
-                    src={card.image} 
-                    alt={card.title} 
-                    className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" 
-                  />
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200">
-                    <span className="text-white font-bold tracking-widest uppercase text-xs border border-white/50 bg-black/40 backdrop-blur-md px-6 py-2 rounded-full">
-                      View Project
-                    </span>
-                  </div>
+                {/* Classic Thin Circle Icon */}
+                <div className={`relative z-10 w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center mb-6 transition-colors duration-500 ${card.color} ${card.hoverBg}`}>
+                  <card.Icon className="w-6 h-6 transition-colors duration-500" strokeWidth={1.5} />
                 </div>
+                
+                <h3 className="relative z-10 text-lg md:text-xl font-serif font-bold text-[#1d1d1f] leading-snug mb-3">
+                  {card.title}
+                </h3>
 
+                <div className="w-8 h-[1px] bg-gray-300 mb-4 transition-all duration-500 group-hover:w-16 group-hover:bg-gray-800" />
+                
+                <p className="relative z-10 text-gray-500 text-sm leading-relaxed font-medium">
+                  {card.desc}
+                </p>
               </div>
             </motion.div>
           ))}
         </div>
-      </Container>
+
+      </div>
     </section>
   );
 };

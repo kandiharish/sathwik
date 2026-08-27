@@ -12,7 +12,7 @@ const areas = [
     textColor: "text-[#054E38]",
     glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#054E38]/80 group-hover:to-[#054E38]/20 group-hover:scale-110",
     icon: <Users className="w-5 h-5" />,
-    image: "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg"
+    image: "/empowerment_rural.jpg"
   },
   {
     num: "02",
@@ -22,7 +22,7 @@ const areas = [
     textColor: "text-[#B84018]",
     glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#B84018]/80 group-hover:to-[#B84018]/20 group-hover:scale-110",
     icon: <BookOpen className="w-5 h-5" />,
-    image: "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg"
+    image: "/education_rural.jpg"
   },
   {
     num: "03",
@@ -32,7 +32,7 @@ const areas = [
     textColor: "text-[#1C4E52]",
     glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#1C4E52]/80 group-hover:to-[#1C4E52]/20 group-hover:scale-110",
     icon: <HeartPulse className="w-5 h-5" />,
-    image: "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.19 PM.jpeg"
+    image: "/healthcare_rural.jpg"
   },
   {
     num: "04",
@@ -42,7 +42,7 @@ const areas = [
     textColor: "text-[#064E3B]",
     glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#064E3B]/80 group-hover:to-[#064E3B]/20 group-hover:scale-110",
     icon: <Leaf className="w-5 h-5" />,
-    image: "ngo_homepage_accordion_1787718405546.jpg"
+    image: "/environment_rural.jpg"
   }
 ];
 
@@ -72,46 +72,47 @@ export const AreasOfFocus = () => {
     : [0, 1, 2].map(i => areas[(startIndex + i) % areas.length]);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#FAFAF9]">
-      <div className="absolute top-0 right-0 w-full h-[400px] opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+    <section className="py-24 lg:py-32 relative overflow-hidden bg-[#FAFAF8] z-10">
+      {/* ABSTRACT BACKGROUND IMAGE WITH SEAMLESS FADES */}
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-end flex-col">
+        {/* Massive Top Fade to create solid space for the stylish header */}
+        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+        
+        <img 
+          src="/image%20copy%207.png" 
+          alt="Abstract Areas of Focus Background" 
+          className="w-full h-full object-cover object-center opacity-80"
+        />
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-0" />
+        
+        {/* Bottom Fade */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+      </div>
       
-      <Container>
-        {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+      <Container className="relative z-10">
+        {/* Stylish Inter-Section Space Heading */}
+        <div className="flex flex-col items-center text-center mb-20 mt-0 w-full relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="flex items-center justify-center gap-4 mb-4"
+            transition={{ duration: 0.8 }}
+            className="w-full"
           >
-            <div className="h-px bg-green-700 w-12" />
-            <div className="flex items-center gap-2 text-green-700 font-bold tracking-[0.2em] uppercase text-xs">
-              <Leaf className="w-4 h-4 fill-green-700" />
+            <h2 
+              className="text-6xl md:text-8xl text-green-700/10 tracking-tight leading-none mb-4"
+              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
+            >
               Key Areas of Focus
-            </div>
-            <div className="h-px bg-green-700 w-12" />
+            </h2>
+            <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-10 md:-mt-12 mb-4">
+              Promoting Rural <span className="text-[#B84018]">Growth & Development</span>
+            </h3>
+            <p className="text-gray-600 font-medium text-[15px] max-w-2xl mx-auto">
+              Sathwik Rural and Youth Integrated Association (SRYIA) works across
+              key sectors to build stronger, self-reliant rural communities.
+            </p>
           </motion.div>
-
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-serif font-black text-text-main mb-6"
-          >
-            Promoting Rural <span className="text-[#B84018]">Growth & Development</span>
-          </motion.h2>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-600 font-medium text-[15px]"
-          >
-            Sathwik Rural and Youth Integrated Association (SRYIA) works across
-            key sectors to build stronger, self-reliant rural communities.
-          </motion.p>
         </div>
 
         {/* Dynamic Grid Layout with Side Controls */}

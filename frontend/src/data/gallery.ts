@@ -1,32 +1,43 @@
-export const galleryImages = [
+export interface GalleryImage {
+  url: string;
+  caption: string;
+  category: string;
+  projectSlug?: string;
+}
+
+export const galleryImages: GalleryImage[] = [
   {
-    url: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=800&auto=format&fit=crop",
+    url: "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.09 PM (1).jpeg",
     caption: "Students in a newly furnished digital classroom.",
-    category: "Education"
+    category: "Education",
+    projectSlug: "blind-school-project"
   },
   {
-    url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&auto=format&fit=crop",
+    url: "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.11 PM.jpeg",
     caption: "RO water plant installation at a primary school.",
-    category: "Healthcare"
+    category: "Healthcare",
+    projectSlug: "bihar-ro-plant"
   },
   {
-    url: "https://images.unsplash.com/photo-1601662528567-526cd06f6582?q=80&w=800&auto=format&fit=crop",
+    url: "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.06 PM (2).jpeg",
     caption: "Women's tailoring vocational training center.",
-    category: "Empowerment"
+    category: "Community"
   },
   {
-    url: "https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=800&auto=format&fit=crop",
+    url: "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg",
     caption: "Distribution of medical equipment to rural PHC.",
-    category: "Healthcare"
+    category: "Healthcare",
+    projectSlug: "medical-equipment-ghatkesar"
   },
   {
-    url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop",
+    url: "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg",
     caption: "Children utilizing new school desks.",
-    category: "Education"
+    category: "Education",
+    projectSlug: "cycle-project-karimnagar"
   },
   {
-    url: "https://images.unsplash.com/photo-1544465544-1b71aee9dfa3?q=80&w=800&auto=format&fit=crop",
+    url: "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg",
     caption: "Community health awareness camp.",
-    category: "Healthcare"
+    category: "People"
   }
 ];

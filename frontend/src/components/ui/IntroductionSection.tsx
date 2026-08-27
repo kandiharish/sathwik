@@ -1,66 +1,120 @@
-import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Droplets, HeartPulse } from 'lucide-react';
 import { Container } from '../layout/Container';
 import { ButtonLink } from './Button';
 
-export const IntroductionSection = () => {
+type Segment = { text: string; className?: string };
+
+const TypewriterParagraph = ({ segments, delay = 0, onComplete, isInView }: { segments: Segment[], delay?: number, onComplete?: () => void, isInView: boolean }) => {
   return (
-    <section className="py-20 relative overflow-hidden bg-white">
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#053e2f]/5 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-orange-100/40 to-transparent rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
-
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          
-          {/* Content Side */}
-          <div className="relative z-10 lg:pr-8">
-            
-            {/* Animated Traveling Border Label */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative inline-block mb-8 rounded shadow-sm overflow-hidden bg-gray-100"
+    <motion.p
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={{
+        hidden: { opacity: 1 },
+        visible: {
+          opacity: 1,
+          transition: { delayChildren: delay, staggerChildren: 0.012 },
+        },
+      }}
+      onAnimationComplete={onComplete}
+    >
+      {segments.map((segment, sIdx) => (
+        <span key={sIdx} className={segment.className}>
+          {segment.text.split("").map((char, cIdx) => (
+            <motion.span
+              key={`${sIdx}-${cIdx}`}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1 }
+              }}
             >
-              {/* Spinning lines */}
-              <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(transparent_0%,transparent_85%,#053e2f_100%)] opacity-70" />
-              <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite_2s] bg-[conic-gradient(transparent_0%,transparent_85%,#C2410C_100%)] opacity-70" />
-              
-              {/* Classic Inner Box */}
-              <div className="m-[2px] relative bg-white px-8 py-3.5 z-10 rounded-[2px] flex items-center justify-center">
-                <span className="text-sm md:text-base font-serif font-black tracking-[0.2em] uppercase">
-                  <span className="text-[#053e2f]">Introduction to</span>{' '}
-                  <span className="text-[#C2410C]">SRYIA</span>
-                </span>
-              </div>
-            </motion.div>
+              {char}
+            </motion.span>
+          ))}
+        </span>
+      ))}
+    </motion.p>
+  );
+};
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-text-main mb-6 leading-[1.2]"
+export const IntroductionSection = () => {
+  const [isP1Done, setIsP1Done] = useState(false);
+  const [isP2Done, setIsP2Done] = useState(false);
+  
+  const textRef = useRef(null);
+  const isInView = useInView(textRef, { once: true, margin: "-100px" });
+
+  const p1Segments = [
+    { text: "Founded in " },
+    { text: "2015, Sathwik Rural and Youth Integrated Association (SRYIA)", className: "font-serif font-black text-[#053e2f]" },
+    { text: " is committed to uplifting rural communities by improving socio-economic conditions. Through initiatives in education, skill development, and healthcare, SRYIA has been a driving force for change, empowering youth and ensuring sustainable progress." }
+  ];
+  
+  const p2Segments = [
+    { text: "Over the past six months, we have focused on enhancing rural healthcare and infrastructure, ensuring access to clean drinking water and improved medical facilities. Our key initiatives include:" }
+  ];
+
+  return (
+    <section className="pt-24 pb-8 lg:pt-32 lg:pb-0 relative overflow-hidden bg-[#FAFAF8] z-10">
+      {/* EXACT FITTED BACKGROUND IMAGE WITH SEAMLESS FADES */}
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-end flex-col">
+        {/* Massive Top Fade to create solid space for the stylish header */}
+        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+        
+        <img 
+          src="/image%20copy%206.png" 
+          alt="Introduction Background" 
+          className="w-full h-full object-contain object-center opacity-85"
+        />
+        {/* Very soft white overlay to ensure content is readable, classic Apple style */}
+        <div className="absolute inset-0 bg-white/40 z-0" />
+        
+        {/* Bottom Fade */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
+      </div>
+
+      <Container className="relative z-10">
+        
+        {/* Stylish Inter-Section Space Heading */}
+        <div className="flex flex-col items-center text-center mb-24 mt-0 w-full">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full"
+          >
+            <h2 
+              className="text-6xl md:text-8xl text-[#053e2f]/10 tracking-tight leading-none mb-4"
+              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
             >
+              Introduction to SRYIA
+            </h2>
+            <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-10 md:-mt-12">
               Transforming Rural Lives <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#053e2f] to-[#0a7a5c]">
                 Through Development
               </span>
-            </motion.h2>
+            </h3>
+          </motion.div>
+        </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="space-y-5 text-gray-600 font-medium text-[15px] leading-relaxed mb-8 relative"
-            >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          
+          {/* Content Side */}
+          <div className="relative z-10 lg:pr-8" ref={textRef}>
+
+            <div className="space-y-5 text-gray-700 font-medium text-[16px] leading-relaxed mb-8 relative">
               <div className="absolute -left-5 top-2 bottom-2 w-[3px] bg-gradient-to-b from-secondary via-[#053e2f]/30 to-transparent rounded-full hidden md:block" />
               
-              <p>
-                Founded in 2015, <strong className="text-text-main">Sathwik Rural and Youth Integrated Association (SRYIA)</strong> is committed to uplifting rural communities by improving socio-economic conditions. Through initiatives in education, skill development, and healthcare, SRYIA has been a driving force for change, empowering youth and ensuring sustainable progress.
-              </p>
+              <TypewriterParagraph 
+                segments={p1Segments} 
+                delay={0.2} 
+                isInView={isInView} 
+                onComplete={() => setIsP1Done(true)} 
+              />
               
               <div className="flex items-center gap-4 py-1 opacity-40">
                 <div className="h-px w-12 bg-current" />
@@ -68,71 +122,56 @@ export const IntroductionSection = () => {
                 <div className="h-px w-12 bg-current" />
               </div>
 
-              <p>
-                Over the past six months, we have focused on enhancing rural healthcare and infrastructure, ensuring access to clean drinking water and improved medical facilities. Our key initiatives include:
-              </p>
-            </motion.div>
-
-            {/* Initiative Cards (Sleek & Zoomed Out) */}
-            <div className="space-y-3 mb-8">
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="group flex items-start gap-5 p-5 rounded-2xl bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(5,62,47,0.08)] transition-all cursor-pointer relative overflow-hidden"
-              >
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#053e2f] opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#053e2f]/5 group-hover:bg-[#053e2f] flex items-center justify-center transition-colors duration-300">
-                  <Droplets className="w-5 h-5 text-[#053e2f] group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="text-[10px] font-black text-gray-400 font-serif">01</span>
-                    <h4 className="text-[15px] font-bold text-text-main">RO Plants in Government Schools</h4>
-                  </div>
-                  <p className="text-[13px] text-gray-500">Providing clean and safe drinking water to students.</p>
-                </div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="group flex items-start gap-5 p-5 rounded-2xl bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(194,65,12,0.08)] transition-all cursor-pointer relative overflow-hidden"
-              >
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-secondary/5 group-hover:bg-secondary flex items-center justify-center transition-colors duration-300">
-                  <HeartPulse className="w-5 h-5 text-secondary group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="text-[10px] font-black text-gray-400 font-serif">02</span>
-                    <h4 className="text-[15px] font-bold text-text-main">Healthcare Infrastructure</h4>
-                  </div>
-                  <p className="text-[13px] text-gray-500">Creating better access to quality healthcare facilities.</p>
-                </div>
-              </motion.div>
+              {isP1Done && (
+                <TypewriterParagraph 
+                  segments={p2Segments} 
+                  delay={0} 
+                  isInView={isInView} 
+                  onComplete={() => setIsP2Done(true)} 
+                />
+              )}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-            >
-              <ButtonLink to="/about" variant="primary" className="group text-sm px-6 py-2.5">
-                Read More <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </ButtonLink>
-            </motion.div>
+            {/* Initiative Tags (Apple Premium Inline Style) - Only show after typing completes */}
+            {isP2Done && (
+              <div className="flex flex-wrap gap-4 mb-10">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="group flex items-center gap-3 bg-white/60 backdrop-blur-md border border-white shadow-[0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 rounded-full p-2 pr-5 cursor-pointer"
+                >
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#053e2f] to-[#0a7a5c] flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                    <Droplets className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="font-semibold text-[15px] text-[#1d1d1f] tracking-tight group-hover:text-[#053e2f] transition-colors">
+                    Clean Water (RO)
+                  </span>
+                </motion.div>
+
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.15, duration: 0.4 }}
+                  className="group flex items-center gap-3 bg-white/60 backdrop-blur-md border border-white shadow-[0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 rounded-full p-2 pr-5 cursor-pointer"
+                >
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                    <HeartPulse className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="font-semibold text-[15px] text-[#1d1d1f] tracking-tight group-hover:text-amber-600 transition-colors">
+                    Healthcare Access
+                  </span>
+                </motion.div>
+              </div>
+            )}
+
+            {/* Read More button removed per user request */}
           </div>
 
           {/* Image Side (Properly Designed) */}
           <div className="relative h-[500px] w-full hidden lg:block">
-            
-            {/* Soft decorative background */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-[#053e2f]/5 rounded-full blur-3xl pointer-events-none" />
+            {/* Simple & Elegant Soft Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] bg-gradient-to-tr from-[#053e2f]/5 to-[#0a7a5c]/5 rounded-full blur-[80px] pointer-events-none" />
 
             {/* Main Proper Image Frame */}
             <motion.div 

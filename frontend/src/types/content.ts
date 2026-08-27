@@ -29,22 +29,23 @@ export interface Program {
 export interface Project {
   id: string;
   slug: string;
-  programId: string;
+  programId: string; // Keeping this for relationships
   title: string;
   category: string;
-  location: string;
+  location?: string;
+  state?: string;
   year?: string;
+  investment?: string;
   summary: string;
-  challenge: string;
-  objective: string;
-  approach: string;
+  problem?: string;
+  response?: string;
   implementation?: string;
-  beneficiaries: string;
-  impact: string;
-  outcomes?: string[];
-  coverImage?: string;
-  galleryImages?: string[];
-  requiresConfirmation?: boolean;
+  impact?: string[];
+  images: string[];
+  beforeImage?: string;
+  video?: string;
+  tags?: string[];
+  requiresConfirmation?: boolean; // Keep for safety
 }
 
 export interface Story {

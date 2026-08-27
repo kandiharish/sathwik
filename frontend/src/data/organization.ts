@@ -45,7 +45,7 @@ export const organizationInfo: OrganizationInfo = {
     {
       year: '2023',
       title: 'Major Milestone',
-      description: 'Surpassed 20,000 lives transformed through combined initiatives.'
+      description: 'Surpassed 10,000 lives transformed through combined initiatives.'
     }
   ]
 };

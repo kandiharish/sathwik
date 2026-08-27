@@ -103,32 +103,38 @@ export const CurvedGallery = () => {
     <section className="py-24 bg-white relative overflow-hidden">
       
       <Container className="relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-sans font-bold tracking-tight mb-4 text-black capitalize">
-            Our Impressive Works
-          </h2>
-          <p className="text-gray-500 font-bold text-[14px] uppercase tracking-widest">
-            Gallery
-          </p>
+        {/* Stylish Inter-Section Space Heading */}
+        <div className="flex flex-col items-center text-center mb-8 mt-0 w-full max-w-2xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full"
+          >
+            <h2 
+              className="text-5xl md:text-7xl text-[#d4c8b8]/40 tracking-tight leading-none mb-3"
+              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
+            >
+              Our Impressive Works
+            </h2>
+            <h3 className="text-5xl md:text-6xl lg:text-[72px] font-serif font-black text-[#054E38] tracking-tighter -mt-6 md:-mt-8 drop-shadow-sm">
+              Gallery
+            </h3>
+          </motion.div>
         </div>
       </Container>
 
       {/* 3D Curved Carousel Container */}
-      <div 
-        className="relative w-full overflow-hidden flex items-center justify-center mt-6 select-none"
-        // Height is enough for 2 rows plus a gap
-        style={{ perspective: "1000px", height: (layout.height * 2) + 40 }}
+      <motion.div 
+        className="relative w-full overflow-hidden flex items-center justify-center mt-6 select-none cursor-grab active:cursor-grabbing"
+        style={{ perspective: "1000px", height: (layout.height * 2) + 60 }}
+        onPanStart={() => { isDragging.current = true; }}
+        onPan={(_, info) => {
+          rotation.set(rotation.get() + info.delta.x * 0.15); // Adjust sensitivity for 24 faces
+        }}
+        onPanEnd={() => { isDragging.current = false; }}
       >
-        
-        {/* Drag overlay to capture pan gestures anywhere over the carousel */}
-        <motion.div 
-          className="absolute inset-0 z-30 cursor-grab active:cursor-grabbing"
-          onPanStart={() => { isDragging.current = true; }}
-          onPan={(_, info) => {
-            rotation.set(rotation.get() + info.delta.x * 0.15); // Adjust sensitivity for 24 faces
-          }}
-          onPanEnd={() => { isDragging.current = false; }}
-        />
 
         {/* TOP ROW */}
         <motion.div
@@ -138,7 +144,7 @@ export const CurvedGallery = () => {
             height: layout.height,
             transformStyle: "preserve-3d",
             x: "-50%",
-            y: `calc(-50% - ${layout.height / 2 + 10}px)`, // Shift up
+            y: `calc(-50% - ${layout.height / 2 + 15}px)`, // Shift up with proper space
             rotateY: smoothRotation,
             // Zoomed out by 350px so we see more of the curve
             z: layout.radius - 350 
@@ -156,11 +162,12 @@ export const CurvedGallery = () => {
               }}
             >
               {/* Inner div to provide the visual gap without breaking 3D math */}
-              <div className="absolute inset-x-2 inset-y-0 overflow-hidden rounded-[1.5rem] shadow-sm">
+              <div className="absolute inset-x-2 inset-y-0 overflow-hidden rounded-[1.5rem] shadow-sm group">
+                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-500 z-10 pointer-events-none" />
                 <img 
                   src={src} 
                   alt={`Gallery Top ${i}`} 
-                  className="w-full h-full object-cover pointer-events-none" 
+                  className="w-full h-full object-cover pointer-events-none transition-transform duration-700 group-hover:scale-110" 
                 />
               </div>
             </div>
@@ -175,7 +182,7 @@ export const CurvedGallery = () => {
             height: layout.height,
             transformStyle: "preserve-3d",
             x: "-50%",
-            y: `calc(-50% + ${layout.height / 2 + 10}px)`, // Shift down
+            y: `calc(-50% + ${layout.height / 2 + 15}px)`, // Shift down with proper space
             rotateY: invertedRotation,
             // Zoomed out identically
             z: layout.radius - 350 
@@ -192,24 +199,19 @@ export const CurvedGallery = () => {
               }}
             >
               {/* Inner div to provide the visual gap */}
-              <div className="absolute inset-x-2 inset-y-0 overflow-hidden rounded-[1.5rem] shadow-sm">
+              <div className="absolute inset-x-2 inset-y-0 overflow-hidden rounded-[1.5rem] shadow-sm group">
+                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-500 z-10 pointer-events-none" />
                 <img 
                   src={src} 
                   alt={`Gallery Bottom ${i}`} 
-                  className="w-full h-full object-cover pointer-events-none" 
+                  className="w-full h-full object-cover pointer-events-none transition-transform duration-700 group-hover:scale-110" 
                 />
               </div>
             </div>
           ))}
         </motion.div>
 
-        {/* Floating "Drag to Explore" label */}
-        <div className="absolute bottom-6 left-6 md:bottom-12 md:left-24 z-40 bg-black/60 backdrop-blur-md border border-white/10 text-white px-5 py-2.5 rounded-full flex items-center gap-3 pointer-events-none shadow-xl">
-          <MoveHorizontal className="w-4 h-4 text-white" />
-          <span className="text-[11px] font-bold tracking-wide uppercase">Drag to Explore</span>
-        </div>
-
-      </div>
+      </motion.div>
     </section>
   );
 };

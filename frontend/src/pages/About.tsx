@@ -12,7 +12,7 @@ export const About = () => {
       <section className="relative pt-32 pb-20 bg-gray-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[#064E3B] opacity-90 z-10"></div>
         <img 
-          src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=2070&auto=format&fit=crop" 
+          src="/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg" 
           alt="About SRYIA" 
           className="absolute inset-0 w-full h-full object-cover z-0 grayscale"
         />
@@ -88,6 +88,44 @@ export const About = () => {
                 <p className="text-gray-600">{value.desc}</p>
               </motion.div>
             ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-[#FAFAF8] py-24">
+        <Container>
+          <SectionHeading title="Milestones of Impact" subtitle="Our Journey Since Foundation" alignment="center" />
+          
+          <div className="max-w-4xl mx-auto mt-16 relative">
+            {/* Vertical Line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 transform md:-translate-x-1/2"></div>
+            
+            <div className="space-y-12">
+              {organizationInfo.timeline.map((item, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className={`relative flex flex-col md:flex-row items-start ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                >
+                  {/* Timeline Dot */}
+                  <div className="absolute left-4 md:left-1/2 w-8 h-8 rounded-full bg-white border-4 border-[#054E38] transform -translate-x-1/2 mt-1.5 z-10"></div>
+                  
+                  {/* Content Box */}
+                  <div className={`ml-12 md:ml-0 md:w-1/2 ${idx % 2 === 0 ? 'md:pl-12' : 'md:pr-12 text-left md:text-right'}`}>
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <span className="inline-block px-3 py-1 bg-[#054E38]/10 text-[#054E38] font-bold text-sm rounded-full mb-3">
+                        {item.year}
+                      </span>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
+                      <p className="text-gray-600">{item.description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </Container>
       </Section>

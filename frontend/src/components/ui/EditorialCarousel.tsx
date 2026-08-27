@@ -12,7 +12,7 @@ export const EditorialCarousel: React.FC<EditorialCarouselProps> = ({ projects }
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="w-full h-[500px] md:h-[650px] flex gap-2 md:gap-4 overflow-hidden">
+    <div className="w-full h-[350px] md:h-[450px] lg:h-[500px] flex gap-2 md:gap-4 overflow-hidden">
       {projects.map((project, index) => {
         const isActive = index === activeIndex;
 
@@ -29,7 +29,7 @@ export const EditorialCarousel: React.FC<EditorialCarouselProps> = ({ projects }
           >
             {/* Background Image */}
             <motion.img 
-              src={project.coverImage || "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2013&auto=format&fit=crop"} 
+              src={project.images?.[0] || "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg"} 
               alt={project.title}
               className="absolute inset-0 w-full h-full object-cover origin-center"
               animate={{ 
@@ -87,7 +87,7 @@ export const EditorialCarousel: React.FC<EditorialCarouselProps> = ({ projects }
                     </div>
                     
                     <p className="text-sm md:text-lg text-white/80 mb-8 max-w-2xl leading-relaxed line-clamp-2 md:line-clamp-none">
-                      {project.objective}
+                      {project.response}
                     </p>
                     
                     <Link to={`/projects/${project.id}`} className="inline-flex items-center gap-2 px-5 py-2 md:px-6 md:py-2.5 border border-white/30 rounded-sm hover:bg-white hover:text-black transition-colors text-xs md:text-sm font-medium uppercase tracking-wider backdrop-blur-sm w-max">

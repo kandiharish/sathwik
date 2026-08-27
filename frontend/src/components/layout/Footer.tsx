@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Container } from './Container';
 import { siteSettings } from '../../data/settings';
-import { MapPin, Phone, Mail, Globe } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 
 export const Footer = () => {
   return (
@@ -11,20 +11,18 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand & About */}
           <div className="flex flex-col gap-6">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary font-serif font-bold text-xl">
-                S
-              </div>
+            <Link to="/" className="flex items-center gap-3">
+              <img src="/logo.png" alt="SRYIA Logo" className="w-12 h-12 object-contain bg-white rounded-full p-1" />
               <span className="font-serif font-bold text-2xl tracking-wide">SRYIA</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               Dedicated to uplifting rural communities through youth empowerment, education, and sustainable growth initiatives. Join us in building brighter futures.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"><Globe className="w-5 h-5" /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"><Globe className="w-5 h-5" /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"><Globe className="w-5 h-5" /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"><Globe className="w-5 h-5" /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#1877F2] transition-colors"><Facebook className="w-5 h-5" /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#E4405F] transition-colors"><Instagram className="w-5 h-5" /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#0A66C2] transition-colors"><Linkedin className="w-5 h-5" /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#1DA1F2] transition-colors"><Twitter className="w-5 h-5" /></a>
             </div>
           </div>
 
@@ -36,6 +34,7 @@ export const Footer = () => {
               <li><Link to="/programs" className="text-gray-400 hover:text-white transition-colors">Programs & Projects</Link></li>
               <li><Link to="/stories" className="text-gray-400 hover:text-white transition-colors">Stories of Change</Link></li>
               <li><Link to="/gallery" className="text-gray-400 hover:text-white transition-colors">Gallery</Link></li>
+              <li><Link to="/faq" className="text-gray-400 hover:text-white transition-colors">FAQ</Link></li>
               <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>

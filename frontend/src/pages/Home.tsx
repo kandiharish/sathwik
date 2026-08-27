@@ -7,6 +7,8 @@ import { AreasOfFocus } from '../components/ui/AreasOfFocus';
 import { CurvedGallery } from '../components/ui/CurvedGallery';
 import { GalleryStack } from '../components/ui/GalleryStack';
 import { EditorialCarousel } from '../components/ui/EditorialCarousel';
+import { FounderMessage } from '../components/ui/FounderMessage';
+import { PartnerLogos } from '../components/ui/PartnerLogos';
 
 import { Container } from '../components/layout/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
@@ -15,7 +17,7 @@ import { ImpactCounter } from '../components/ui/ImpactCounter';
 import { programs } from '../data/programs';
 import { projects } from '../data/projects';
 import { impactStats } from '../data/impact';
-import { ArrowRight, Droplets, BookOpen, Users } from 'lucide-react';
+import { ArrowRight, Droplets, BookOpen, Users, HandCoins, CalendarDays } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { JoinUsCTA } from '../components/ui/JoinUsCTA';
 export const Home = () => {
@@ -36,133 +38,84 @@ export const Home = () => {
       <GalleryStack />
       <CurvedGallery />
       {/* IMPACT DASHBOARD - REDESIGNED */}
-      <section className="py-32 relative bg-white overflow-hidden border-y border-slate-100">
-        {/* Subtle light background texture/glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-50/60 rounded-full blur-3xl mix-blend-multiply pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-50/60 rounded-full blur-3xl mix-blend-multiply pointer-events-none" />
+      <section id="impact" className="py-12 lg:py-16 relative bg-[#FAFAF8] overflow-hidden min-h-[100vh] max-h-[900px] flex items-center justify-center">
+        {/* Background Image - Perfectly fitted */}
+        <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
+          <img 
+            src="/image%20copy%209.png" 
+            alt="Impact Background" 
+            className="w-full h-full object-cover object-center opacity-80"
+          />
+          <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
         </div>
 
-        <Container className="relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-amber-600 mb-4">
+        <Container className="relative z-10 w-full">
+          <div className="text-center mb-16 w-full flex flex-col items-center">
+            <h2 className="text-5xl md:text-7xl text-[#d97706]/15 tracking-tight leading-none mb-3" style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}>
               By the Numbers
             </h2>
-            <p className="text-5xl md:text-6xl font-serif font-medium text-slate-900 mb-6">
-              Our Collective Impact
-            </p>
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent mx-auto" />
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black text-[#1d1d1f] tracking-tight -mt-6 md:-mt-8">
+              Our Collective <span className="text-[#054E38]">Impact</span>
+            </h3>
+            
+            <div className="w-24 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent mx-auto mt-6" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {impactStats.slice(0, 4).map((stat, idx) => (
-              <ImpactCounter 
-                key={idx} 
-                value={stat.value} 
-                suffix={stat.suffix}
-                label={stat.label} 
-              />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {impactStats.slice(0, 4).map((stat, idx) => {
+              let Icon;
+              if (idx === 0) Icon = <HandCoins className="w-7 h-7 text-[#d97706]" strokeWidth={1.5} />;
+              if (idx === 1) Icon = <Users className="w-7 h-7 text-[#054E38]" strokeWidth={1.5} />;
+              if (idx === 2) Icon = (
+                <svg className="w-7 h-7 text-[#054E38]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+              ); 
+              if (idx === 3) Icon = <CalendarDays className="w-7 h-7 text-[#d97706]" strokeWidth={1.5} />;
+              
+              return (
+                <ImpactCounter 
+                  key={idx} 
+                  value={stat.value} 
+                  suffix={stat.suffix}
+                  label={stat.label} 
+                  icon={Icon}
+                />
+              );
+            })}
           </div>
         </Container>
       </section>
 
-      {/* AREAS OF WORK - CLOTHESLINE THEME */}
-      <div className="py-32 bg-[#FAFAF8] relative overflow-hidden">
+      {/* FEATURED INITIATIVES - CONTENT CAROUSEL */}
+      <div className="py-24 lg:py-32 bg-white relative overflow-hidden">
         <Container className="relative z-10">
-          
-          <SectionHeading 
-            title="Areas of Focus" 
-            subtitle="How We Create Change" 
-            alignment="left"
-            dark={false}
-          />
-          
-          {/* Areas of Focus - Hanging Cards */}
-          <div className="relative mt-24 mb-32 pt-12">
-            {/* The Rope - perfectly aligned to the top of this container */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-[#d2c4b4] shadow-sm hidden lg:block z-0" />
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-              {programs.map((program, idx) => (
-                <motion.div 
-                  key={program.id}
-                  className="relative -mt-12 pt-12 flex flex-col items-center cursor-pointer group z-10 h-full"
-                  style={{ transformOrigin: "top center" }}
-                  // Continuous breeze animation
-                  animate={{ rotate: idx % 2 === 0 ? [-1.5, 1.5, -1.5] : [1.5, -1.5, 1.5] }}
-                  transition={{ repeat: Infinity, duration: 6 + idx, ease: "easeInOut" }}
-                >
-                  {/* Strings from the rope (top-0) to the card (top-12) */}
-                  <div className="absolute top-0 left-1/3 w-[1px] h-12 bg-[#a39485] hidden lg:block" />
-                  <div className="absolute top-0 right-1/3 w-[1px] h-12 bg-[#a39485] hidden lg:block" />
-                  
-                  {/* Clips perfectly biting the rope (-translate-y-1/2 centers it on the top-0 edge) */}
-                  <div className="absolute top-0 left-1/3 -translate-x-1/2 -translate-y-1/2 w-2 h-4 bg-[#7a6452] shadow-sm hidden lg:block rounded-[2px] z-20" />
-                  <div className="absolute top-0 right-1/3 translate-x-1/2 -translate-y-1/2 w-2 h-4 bg-[#7a6452] shadow-sm hidden lg:block rounded-[2px] z-20" />
-
-                  {/* Premium Apple Style Minimal Card - Smaller Size */}
-                  <div className="bg-white/90 backdrop-blur-xl rounded-[24px] p-6 w-[95%] max-w-[260px] mx-auto h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/[0.04] transition-all duration-500 group-hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] group-hover:-translate-y-1">
-                    <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center mb-5 shadow-inner">
-                      {program.title.includes('Health') ? <Droplets className="w-5 h-5" /> : program.title.includes('Empowerment') ? <Users className="w-5 h-5" /> : <BookOpen className="w-5 h-5" />}
-                    </div>
-                    <h3 className="text-[17px] font-semibold tracking-tight text-[#1d1d1f] mb-2">{program.title}</h3>
-                    <p className="text-[#86868b] mb-6 flex-grow leading-relaxed text-[13px] font-medium">
-                      {program.overview}
-                    </p>
-                    <Link to={`/programs/${program.slug}`} className="inline-flex items-center gap-1.5 font-medium text-[#0066cc] text-[13px] hover:underline transition-colors mt-auto">
-                      Learn more <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-
-              {/* 4th Card for 4-column layout */}
-              <motion.div 
-                className="relative -mt-12 pt-12 flex flex-col items-center cursor-pointer group z-10 h-full"
-                style={{ transformOrigin: "top center" }}
-                animate={{ rotate: [-2, 2, -2] }}
-                transition={{ repeat: Infinity, duration: 7.5, ease: "easeInOut" }}
-              >
-                <div className="absolute top-0 left-1/3 w-[1px] h-12 bg-[#a39485] hidden lg:block" />
-                <div className="absolute top-0 right-1/3 w-[1px] h-12 bg-[#a39485] hidden lg:block" />
-                <div className="absolute top-0 left-1/3 -translate-x-1/2 -translate-y-1/2 w-2 h-4 bg-[#7a6452] shadow-sm hidden lg:block rounded-[2px] z-20" />
-                <div className="absolute top-0 right-1/3 translate-x-1/2 -translate-y-1/2 w-2 h-4 bg-[#7a6452] shadow-sm hidden lg:block rounded-[2px] z-20" />
-
-                <div className="bg-white/90 backdrop-blur-xl rounded-[24px] p-6 w-[95%] max-w-[260px] mx-auto h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/[0.04] transition-all duration-500 group-hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] group-hover:-translate-y-1">
-                  <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-emerald-500 to-emerald-600 text-white flex items-center justify-center mb-5 shadow-inner">
-                    <Droplets className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-[17px] font-semibold tracking-tight text-[#1d1d1f] mb-2">Community Dev</h3>
-                  <p className="text-[#86868b] mb-6 flex-grow leading-relaxed text-[13px] font-medium">
-                    Building robust community infrastructure and fostering sustainable livelihood practices across villages.
-                  </p>
-                  <Link to={`/programs`} className="inline-flex items-center gap-1.5 font-medium text-[#0066cc] text-[13px] hover:underline transition-colors mt-auto">
-                    Learn more <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              </motion.div>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div className="flex flex-col mb-6 md:mb-0">
+              <h2 className="text-5xl md:text-7xl text-[#d4c8b8]/40 tracking-tight leading-none mb-3" style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}>
+                Action On The Ground
+              </h2>
+              <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-6 md:-mt-8">
+                Featured <span className="text-[#054E38]">Initiatives</span>
+              </h3>
             </div>
-          </div>
-
-          {/* FEATURED INITIATIVES - CONTENT CAROUSEL */}
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 pt-16 border-t border-[#eae5dd]">
-            <SectionHeading 
-              title="Featured Initiatives" 
-              subtitle="Action On The Ground" 
-              alignment="left"
-              dark={false}
-            />
             <ButtonLink to="/programs" variant="ghost" className="hidden md:flex mb-6 text-amber-800 hover:bg-amber-50/50 border border-amber-200/50 transition-colors">
               View All Projects <ArrowRight className="w-4 h-4 ml-2" />
             </ButtonLink>
           </div>
           
-          <div className="pb-24">
+          <div className="pb-12">
             <EditorialCarousel projects={projects} />
           </div>
         </Container>
       </div>
+
+      {/* FOUNDER MESSAGE */}
+      <FounderMessage />
+
+      {/* CSR PARTNERS */}
+      <PartnerLogos />
 
       {/* FINAL CTA */}
       <JoinUsCTA />

@@ -2,59 +2,33 @@ import type { ImpactStat } from '../types/content';
 
 export const impactStats: ImpactStat[] = [
   {
-    label: 'Years of Experience',
-    value: 9,
-    suffix: '+',
-    category: 'Organization',
-    requiresConfirmation: true
+    label: 'Total Project Value',
+    value: 30,
+    prefix: '₹',
+    suffix: '+ Crore',
+    category: 'Financial',
+    description: 'Across selected CSR initiatives',
+    requiresConfirmation: false
   },
   {
-    label: 'Lives Transformed',
-    value: '20,000',
-    suffix: '+',
-    category: 'Overall Impact',
-    requiresConfirmation: true
-  },
-  {
-    label: 'Children Educated',
+    label: 'Beneficiaries Reached',
     value: '10,000',
     suffix: '+',
-    category: 'Education',
-    requiresConfirmation: true
+    category: 'People',
+    requiresConfirmation: false
   },
   {
-    label: 'Youth Trained',
-    value: 500,
-    suffix: '+',
-    category: 'Empowerment',
-    requiresConfirmation: true
+    label: 'States Reached',
+    value: 7,
+    category: 'Geographic',
+    description: 'Telangana, Andhra Pradesh, Gujarat, Karnataka, Bihar, Jharkhand, Uttar Pradesh',
+    requiresConfirmation: false
   },
   {
-    label: 'Volunteers Engaged',
-    value: 500,
-    suffix: '+',
-    category: 'Community',
-    requiresConfirmation: true
-  },
-  {
-    label: 'Entrepreneurs Supported',
-    value: 100,
-    suffix: '+',
-    category: 'Empowerment',
-    requiresConfirmation: true
-  },
-  {
-    label: 'Disaster Relief Ops',
-    value: 50,
-    suffix: '+',
-    category: 'Relief',
-    requiresConfirmation: true
-  },
-  {
-    label: 'Successful Projects',
-    value: 50,
-    suffix: '+',
+    label: 'Decade of Impact',
+    value: 10,
+    suffix: '+ Years',
     category: 'Organization',
-    requiresConfirmation: true
+    requiresConfirmation: false
   }
 ];

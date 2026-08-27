@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
-import { MapPin, Mail, Phone, Clock, Send, MessageSquare, ArrowRight } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, MessageSquare, ArrowRight } from 'lucide-react';
 
 export const Contact = () => {
   return (

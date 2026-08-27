@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 
 const partners = [
-  { name: 'GAIL', type: 'Public Sector Undertaking' },
-  { name: 'ONGC', type: 'Public Sector Undertaking' },
-  { name: 'NTPC', type: 'Public Sector Undertaking' },
-  { name: 'BPCL', type: 'Public Sector Undertaking' },
-  { name: 'NMDC', type: 'Public Sector Undertaking' },
-  { name: 'IOCL', type: 'Public Sector Undertaking' },
-  { name: 'HPCL', type: 'Public Sector Undertaking' },
+  { name: 'GAIL', type: 'Public Sector Undertaking', image: '/gail_logo.jpg' },
+  { name: 'ONGC', type: 'Public Sector Undertaking', image: '/ongc_logo.jpg' },
+  { name: 'NTPC', type: 'Public Sector Undertaking', image: '/ntpc_logo.jpg' },
+  { name: 'BPCL', type: 'Public Sector Undertaking', image: '/bpcl_logo.jpg' },
+  { name: 'NMDC', type: 'Public Sector Undertaking', image: '/nmdc_logo.jpg' },
+  { name: 'IOCL', type: 'Public Sector Undertaking', image: '/iocl_logo.jpg' },
+  { name: 'HPCL', type: 'Public Sector Undertaking', image: '/hpcl_logo.jpg' },
 ];
 
 export const PartnerLogos = () => {
@@ -36,11 +36,11 @@ export const PartnerLogos = () => {
       </div>
 
       {/* Infinite Marquee Container */}
-      <div className="relative w-full overflow-hidden flex items-center mt-12 bg-white py-16 shadow-[0_4px_30px_rgba(0,0,0,0.02)] border-y border-[#eae5dd]">
+      <div className="relative w-full overflow-hidden flex items-center mt-8 py-4">
         
         {/* Fading gradients at edges to make them smoothly appear/disappear */}
-        <div className="absolute left-0 top-0 w-24 md:w-48 h-full bg-gradient-to-r from-white to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 w-24 md:w-48 h-full bg-gradient-to-l from-white to-transparent z-20 pointer-events-none" />
+        <div className="absolute left-0 top-0 w-24 md:w-48 h-full bg-gradient-to-r from-[#FAFAF8] to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 w-24 md:w-48 h-full bg-gradient-to-l from-[#FAFAF8] to-transparent z-20 pointer-events-none" />
 
         {/* The scrolling track */}
         <div className="flex w-max animate-marquee">
@@ -50,10 +50,14 @@ export const PartnerLogos = () => {
               className="flex flex-col items-center justify-center mx-12 md:mx-20 group cursor-pointer relative"
             >
               {/* Logo / Name Placeholder */}
-              <div className="flex items-center justify-center transition-all duration-500 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 group-hover:-translate-y-2">
-                <span className="font-serif font-black text-4xl md:text-6xl text-[#333] tracking-tighter">
-                  {partner.name}
-                </span>
+              <div className="flex items-center justify-center transition-all duration-500 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:-translate-y-2 w-32 h-32 md:w-40 md:h-40 mix-blend-multiply">
+                {partner.image ? (
+                  <img src={partner.image} alt={partner.name} className="w-full h-full object-contain mix-blend-multiply" />
+                ) : (
+                  <span className="font-serif font-black text-4xl md:text-6xl text-[#333] tracking-tighter">
+                    {partner.name}
+                  </span>
+                )}
               </div>
               
               {/* Subtle Partner Type Tooltip below */}

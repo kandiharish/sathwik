@@ -35,13 +35,7 @@ export const FounderMessage = () => {
             transition={{ duration: 1, delay: 0.2 }}
             className="max-w-xl"
           >
-            {/* Header / Overline */}
-            <div className="mb-4">
-              <h2 className="text-sm font-bold tracking-[0.15em] text-[#333] uppercase">
-                CH. RAMESH
-              </h2>
-              <div className="w-12 h-[2px] bg-[#333] mt-2" />
-            </div>
+            {/* Removed Header / Overline as per request */}
 
             {/* Title with Shiny Animation */}
             <h3 className="text-5xl md:text-6xl font-serif leading-tight mb-2 relative group">
@@ -68,18 +62,13 @@ export const FounderMessage = () => {
             </div>
             
             {/* Signature at bottom left */}
-            <div className="mt-10 flex flex-col items-start opacity-100">
+            <div className="mt-8 flex flex-col items-start opacity-100">
               <span 
-                className="text-4xl text-[#111] inline-block -rotate-2 mb-3 drop-shadow-sm" 
+                className="text-4xl text-[#111] inline-block -rotate-2 drop-shadow-sm" 
                 style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
               >
                 CH. RAMESH
               </span>
-              <div className="flex flex-col items-start border-l-2 border-amber-600 pl-3">
-                <p className="text-[10px] font-bold tracking-[0.2em] text-[#111] uppercase mb-0.5">
-                  CH. RAMESH
-                </p>
-              </div>
             </div>
           </motion.div>
         </div>

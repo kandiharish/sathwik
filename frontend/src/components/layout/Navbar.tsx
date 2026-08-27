@@ -30,11 +30,9 @@ export const Navbar = () => {
       path: '/programs', 
       hasDropdown: true,
       dropdownItems: [
-        { name: 'Education & Infrastructure', path: '/programs' },
-        { name: 'Healthcare & Wellness', path: '/programs' },
-        { name: 'Youth & Women Empowerment', path: '/programs' },
-        { name: 'Water, Sanitation & Hygiene', path: '/programs' },
-        { name: 'Community Development', path: '/programs' }
+        { name: 'Education & Infrastructure', path: '/programs?tab=prog-education' },
+        { name: 'Healthcare & Wellness', path: '/programs?tab=prog-health' },
+        { name: 'Youth & Women Empowerment', path: '/programs?tab=prog-empowerment' }
       ]
     },
     { name: 'Projects', path: '/projects' },

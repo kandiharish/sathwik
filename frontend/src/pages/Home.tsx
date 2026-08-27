@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+
 import { CinematicHero } from '../components/ui/CinematicHero';
 import { InteractiveTunnel } from '../components/ui/InteractiveTunnel';
 import { CommitmentCards } from '../components/ui/CommitmentCards';
@@ -11,14 +11,11 @@ import { FounderMessage } from '../components/ui/FounderMessage';
 import { PartnerLogos } from '../components/ui/PartnerLogos';
 
 import { Container } from '../components/layout/Container';
-import { SectionHeading } from '../components/ui/SectionHeading';
 import { ButtonLink } from '../components/ui/Button';
 import { ImpactCounter } from '../components/ui/ImpactCounter';
-import { programs } from '../data/programs';
 import { projects } from '../data/projects';
 import { impactStats } from '../data/impact';
-import { ArrowRight, Droplets, BookOpen, Users, HandCoins, CalendarDays } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ArrowRight, Users, HandCoins, CalendarDays } from 'lucide-react';
 import { JoinUsCTA } from '../components/ui/JoinUsCTA';
 export const Home = () => {
   return (

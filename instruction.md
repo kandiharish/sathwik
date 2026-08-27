@@ -1,469 +1,822 @@
-APPROVED — PROCEED WITH THE FRONTEND-ONLY ARCHITECTURE.
+SATHWIK WEBSITE — HOMEPAGE CONTENT & DESIGN UPDATE
+CLIENT-REQUESTED CHANGES
 
-The SRYIA website is confirmed to be a frontend-only application.
+IMPORTANT:
+This is an update to the CURRENT FRONTEND APPLICATION.
 
-Remove the backend from the active project.
+DO NOT rebuild the application.
 
-However, before deleting c:\sathwik\backend permanently:
+DO NOT change the existing technical architecture.
 
-1. Confirm the project is committed to Git or create a safe backup.
-2. Then remove the backend directory and all backend-related dependencies/configuration.
-3. Verify that the frontend has ZERO dependency on:
-   - Express
-   - Node backend
-   - MongoDB
-   - Mongoose
-   - JWT
-   - REST APIs
-   - API clients
-   - backend environment variables
-   - admin authentication
+DO NOT add a backend.
 
-The final application must run completely independently as a frontend application.
+DO NOT remove working functionality.
 
-==================================================
-IMPORTANT — CONTENT ARCHITECTURE
-==================================================
+DO NOT unnecessarily redesign the entire homepage.
 
-Do NOT limit the content architecture to only:
+Keep the existing premium visual language and animations where they
+already work well, but make the homepage MORE SIMPLE, PROFESSIONAL,
+CONTENT-RICH, CREDIBLE AND CLIENT-FOCUSED.
 
-programs.ts
-projects.ts
-stories.ts
-impact.ts
-organization.ts
-gallery.ts
-events.ts
+The client specifically said:
 
-Because this project is intentionally CONTENT-RICH, also create structured data where required for:
+"Home page koncham sodhi kakunda perfect and simple undali."
 
-- navigation
-- site settings
-- focus areas
-- testimonials/voices
-- FAQs
-- reports/resources
-- partners
-- volunteer opportunities
-- donation information
-- team/leadership
-- timeline/journey
-- contact information
-- social links
-- homepage sections
+Therefore, avoid excessive animations, excessive cards, excessive
+text blocks, decorative elements and unnecessary visual noise.
 
-Only create files that are actually needed, but design the content model comprehensively.
+The homepage should communicate the organization's credibility within
+the first few seconds.
 
-==================================================
-CONTENT MUST BE SEPARATED FROM UI
-==================================================
+============================================================
+1. IMPORTANT BRANDING
+============================================================
 
-Do not put large amounts of text directly inside JSX.
+Organization:
+
+Sathwik Rural and Youth Integrated Association
+
+Brand name:
+
+SATHWIK
+
+Use the existing official SATHWIK logo.
+
+Do not replace the logo with a newly designed logo.
+
+Do not use unrelated NGO imagery or generic foreign stock imagery.
+
+The website should feel Indian, authentic, professional and grounded
+in real community work.
+
+============================================================
+2. HERO / FIRST SECTION
+============================================================
+
+KEEP THE CURRENT HERO FUNCTIONALITY.
+
+The existing hero has image/video transitions.
+
+Do not destroy the current hero.
+
+However, improve its content presentation if necessary.
+
+The hero should communicate:
+
+SATHWIK
+Creating meaningful change across communities.
+
+Use authentic SATHWIK project photography and videos supplied by the
+client.
+
+The hero media can transition between different areas of work.
+
+Possible hero themes:
+
+Healthcare
+Clean Water
+Education
+Nutrition
+Community Wellness
+
+Each media transition should have:
+
+- short heading
+- one concise supporting sentence
+- CTA
+
+Keep the text short.
+
+Do NOT put huge paragraphs in the hero.
+
+============================================================
+3. REMOVE THE FOREIGN-FACE / GENERIC VISUAL
+============================================================
+
+The current section containing:
+
+"20,000+ Lives Transformed"
+
+has unrelated/foreign-looking faces.
+
+REMOVE those images.
+
+Replace them with:
+
+- authentic SATHWIK project photographs
+OR
+- clean premium visual treatment
+OR
+- real community/project imagery supplied by the client.
+
+The homepage must visually represent the actual organization.
+
+No generic foreign stock photography.
+
+============================================================
+4. NEW "OUR WORK" SECTION
+============================================================
+
+Create a clear section immediately after the introductory content.
+
+Heading:
+
+WHERE WE WORK. WHAT WE DO. WHO WE SERVE.
+
+or a similarly strong simple heading.
+
+Supporting text:
+
+SATHWIK works with communities through focused CSR initiatives
+across healthcare, education, water, nutrition, wellness,
+infrastructure and inclusion.
+
+Then show the organization's key areas of work.
+
+Use these EXACT categories:
+
+1. Healthcare & Medical Infrastructure
+
+2. Water, Sanitation & Hygiene (WASH)
+
+3. Education & School Infrastructure
+
+4. Nutrition & Maternal Health
+
+5. Sports, Fitness & Community Wellness
+
+6. Community Infrastructure Development
+
+7. Disability Inclusion & Livelihood Support
+
+8. Community Development
+
+Do not add random categories.
+
+Do not invent additional program areas.
+
+============================================================
+5. "WE WORK ON" VISUAL SECTION
+============================================================
+
+Create a visually clean section:
+
+WE WORK ON
+
+Display the 8 focus areas.
+
+Each area should have:
+
+- small authentic image where available
+- simple icon
+- title
+- 1–2 line description
+- Explore → interaction
+
+Keep cards clean.
+
+Do not put financial information inside these program cards.
+
+The client specifically said:
+
+"Programs lo money avasaram ledhu."
+
+Therefore:
+
+DO NOT show project cost inside program cards.
+
+Programs should focus on:
+
+WHAT WE DO
+WHY WE DO IT
+WHO IT HELPS
+
+============================================================
+6. TRACK RECORD — IMPORTANT
+============================================================
+
+Create a strong "Track Record" section.
+
+This section should communicate credibility.
+
+Heading:
+
+A DECADE OF DELIVERING IMPACT
+
+Supporting text should be based on the official Track Record document.
+
+The document states that SATHWIK has a proven track record of over
+a decade implementing CSR projects in association with multiple
+Public Sector Undertakings and has executed diverse CSR initiatives
+across sectors. 
+
+Do not exaggerate beyond the document.
+
+Use animated counters.
+
+============================================================
+7. TOTAL PROJECT VALUE / OVERALL BUDGET
+============================================================
+
+The client specifically requested:
+
+"Project cost ani undi kada... home page lo total amount spent ani...
+should write that overall budget."
+
+Create a prominent metric:
+
+₹30+ CRORE
+
+TOTAL PROJECT VALUE
+
+or:
+
+₹30.05 CRORE
+
+TOTAL PROJECT VALUE
+
+IMPORTANT:
+
+Calculate this from the project costs in the provided Track Record
+document.
+
+The 21 listed project costs add up to approximately ₹30.0458 crore.
+
+Display the rounded public-facing figure as:
+
+₹30+ CRORE
+
+with a supporting label such as:
+
+Project value across selected CSR initiatives
+
+Do NOT call it:
+
+"Money donated"
+
+Do NOT call it:
+
+"Personal spending"
+
+Do NOT call it:
+
+"Total money raised"
+
+Use accurate terminology such as:
+
+TOTAL PROJECT VALUE
+or
+CSR PROJECT VALUE
+
+because the document provides project costs, not a statement that
+SATHWIK personally spent this money.
+
+============================================================
+8. STATES / GEOGRAPHIC REACH
+============================================================
+
+Add a metric:
+
+6+ STATES
+
+STATES REACHED
+
+or:
+
+6+ STATES
+WHERE WE WORK
+
+The Track Record includes projects in:
+
+Telangana
+Andhra Pradesh
+Gujarat
+Karnataka
+Bihar
+Jharkhand
+Uttar Pradesh
+
+IMPORTANT:
+
+The document actually contains projects across these seven states.
+
+Therefore, if counting unique states from the Track Record,
+the data supports:
+
+7 STATES
+
+Do not blindly use "6+".
+
+Calculate unique states from the actual project data.
+
+If the client has another official number elsewhere, prefer the
+client-approved number.
+
+Create a simple India-inspired visual treatment or clean geographic
+indicator.
+
+Do NOT make the map overly complicated.
+
+============================================================
+9. BENEFICIARIES
+============================================================
+
+Add a prominent metric:
+
+10,000+ BENEFICIARIES
+
+BUT:
+
+Before displaying this exact number as a calculated total,
+verify it against the complete beneficiary data.
+
+The Track Record contains beneficiary figures for selected projects,
+including:
+
+9,000+ students from 16 schools plus pregnant women and local people
+for one Hyderabad project. :contentReference[oaicite:4]{index=4}
+
+9,890+ beneficiaries from 10 schools for the Amreli Gujarat RO
+project. :contentReference[oaicite:5]{index=5}
+
+500+ patients per day at health centers for some medical equipment
+projects. :contentReference[oaicite:6]{index=6}
+
+1,000+ patients per day at some healthcare projects. :contentReference[oaicite:7]{index=7}
+
+IMPORTANT:
+
+Do not sum "patients per day" together with one-time beneficiaries.
+
+Do not create a fake total.
+
+If the client has approved "10,000+" as the homepage beneficiary
+figure, use:
+
+10,000+
+BENEFICIARIES REACHED
+
+Otherwise use a safer wording:
+
+10,000+
+PEOPLE REACHED
+
+only after validating the source data.
+
+============================================================
+10. CSR PARTNERS / FUNDING ORGANIZATIONS
+============================================================
+
+Create a premium section:
+
+TRUSTED CSR PARTNERS
+
+or:
+
+CSR PARTNERS WHO SUPPORT THE WORK
+
+Display the logos of:
+
+GAIL
+ONGC
+NTPC
+BPCL
+NMDC
+IOCL
+HPCL
+
+The Track Record document explicitly identifies these organizations
+as CSR funding organizations across the listed projects. :contentReference[oaicite:8]{index=8} :contentReference[oaicite:9]{index=9} :contentReference[oaicite:10]{index=10} :contentReference[oaicite:11]{index=11}
+
+The client specifically requested these logos on the homepage.
+
+Design:
+
+GAIL    ONGC    NTPC    BPCL
+NMDC    IOCL    HPCL
+
+Use monochrome/subtle logo treatment if appropriate.
+
+Do not make the logos visually overpower the SATHWIK brand.
+
+Use the wording carefully:
+
+"CSR Partners"
+
+Do NOT imply that every company is currently funding SATHWIK unless
+that is verified.
+
+============================================================
+11. PROJECTS — REAL PROJECTS, NOT GENERIC PROGRAM CARDS
+============================================================
+
+Create a section:
+
+SELECTED PROJECTS
+
+or:
+
+OUR WORK IN ACTION
+
+Use authentic project photographs supplied by the client.
+
+Show approximately 4–6 featured projects on the homepage.
+
+Each card should include:
+
+Project title
+Location
+Category
+Short description
+View Project →
+
+Do NOT display money on these homepage cards unless specifically
+useful.
+
+The detailed project page can contain:
+
+Project Cost
+Year
+CSR Funding Organization
+Beneficiaries
+Location
+Project Description
+
+============================================================
+12. PROJECT EXAMPLES FROM TRACK RECORD
+============================================================
+
+Where verified, examples can include:
+
+Bio-Medical Equipment & Infrastructure —
+MGM Hospital, Warangal
+
+Open Gyms —
+Secunderabad
+
+Poshan Kits —
+Ranchi, Jharkhand
+
+RO Plants & School Furniture —
+Hyderabad
+
+RO Water Plants —
+Amreli, Gujarat
+
+RO Plants —
+Bagalkot, Karnataka
+
+RO Plants —
+Banka, Bihar
+
+Clean Water & Medical Equipment —
+Sattenapalli, Andhra Pradesh
+
+Medical Equipment —
+Karimnagar
+
+Open Gyms —
+Mahabubabad
+
+Ambulances —
+21 PHCs
+
+Disability support through scooters and auto rickshaws —
+Dharmavaram, Andhra Pradesh
+
+All project information must be taken from verified project data.
+
+============================================================
+13. FOUNDER MESSAGE
+============================================================
+
+Add a new section:
+
+MESSAGE FROM THE FOUNDER
+
+Use a premium editorial layout.
+
+Left:
+
+Authentic founder photograph
+
+Right:
+
+Founder message
+
+Founder name
+
+Designation
+
+Do NOT invent the message.
+
+If the founder message has not yet been supplied,
+create the UI with clearly marked editable content/data fields.
+
+Do not generate a fake quote.
+
+The section should feel personal and trustworthy.
+
+============================================================
+14. MEMBER OF PARLIAMENT FEATURE
+============================================================
+
+Add a separate credibility/recognition section.
+
+Display:
+
+KUNDURU RAGHUVEER REDDY
+
+Member of Parliament – Nalgonda
+
+Use the authentic photograph supplied by the client.
+
+Do not invent additional titles, quotes or claims.
+
+Create a simple premium profile card.
+
+Possible layout:
+
+[PHOTO]
+
+Kunduru Raghuveer Reddy
+Member of Parliament – Nalgonda
+
+Keep it respectful and professional.
+
+============================================================
+15. SIMPLE CONTENT-RICH FLOW
+============================================================
+
+The homepage should now follow this structure:
+
+1. HERO
+   ↓
+2. SHORT INTRODUCTION
+   ↓
+3. IMPACT / TRACK RECORD
+   ↓
+4. TOTAL PROJECT VALUE
+   ↓
+5. STATES REACHED
+   ↓
+6. BENEFICIARIES
+   ↓
+7. WE WORK ON — 8 AREAS
+   ↓
+8. SELECTED PROJECTS
+   ↓
+9. FOUNDER MESSAGE
+   ↓
+10. CSR PARTNERS
+   ↓
+11. MEMBER OF PARLIAMENT / RECOGNITION
+   ↓
+12. FINAL CTA
+
+Do not force every section to be visually huge.
+
+Use different layouts to create rhythm.
+
+============================================================
+16. CONTENT SHOULD BE SHORT BUT INFORMATIVE
+============================================================
+
+The client wants MORE INFORMATION.
+
+This does NOT mean:
+
+huge paragraphs everywhere.
+
+Instead:
 
 Use:
 
-src/data/
-
-for structured content.
-
-Components should consume the data.
-
-For example:
-
-data/projects.ts
-        ↓
-ProjectCard
-        ↓
-Projects page
-
-and:
-
-data/projects.ts
-        ↓
-slug lookup
-        ↓
-ProjectDetail
-        ↓
-Project case study
-
-This keeps the frontend maintainable.
-
-==================================================
-CONTENT DEPTH
-==================================================
-
-The client specifically requested MORE CONTENT.
-
-Therefore, each major program/project/story should contain meaningful structured information.
-
-For example, a project should support fields such as:
-
-- title
-- slug
-- category
-- location
-- year
-- summary
-- challenge
-- objective
-- approach
-- implementation
-- beneficiaries
-- impact
-- outcomes
-- images
-- gallery
-- related projects
-- related program
-- story
-- CTA
-
-Only populate fields where factual information is available.
-
-Do NOT invent missing information.
-
-Use:
-
-[CLIENT CONFIRMATION REQUIRED]
-
-where necessary.
-
-==================================================
-PROGRAM CONTENT
-==================================================
-
-Programs should support:
-
-- title
-- slug
-- overview
-- whyItMatters
-- challenge
-- approach
-- activities
-- communitiesServed
-- projects
-- impact
-- stories
-- gallery
-- FAQs
-- relatedPrograms
-- CTA
-
-This allows program detail pages to feel substantially richer than the old website.
-
-==================================================
-STORY CONTENT
-==================================================
-
-Stories should support:
-
-- title
-- slug
-- category
-- date
-- location
-- hero image
-- introduction
-- situation
-- challenge
-- action
-- change
-- impact
-- quote
-- gallery
-- related project
-- related program
-
-Do not fabricate beneficiary quotes.
-
-Only use genuine quotes supplied by the organization.
-
-==================================================
-IMPACT CONTENT
-==================================================
-
-Impact data should be structured.
+Strong heading
+Short explanation
+Real statistic
+Real photograph
+Clear CTA
 
 Example:
 
-{
-  value: 10000,
-  suffix: "+",
-  label: "Children Educated",
-  description: "...",
-  category: "Education"
-}
+HEALTHCARE & MEDICAL INFRASTRUCTURE
 
-Statistics extracted from screenshots must be treated as existing organizational claims and should be verified with the client before final publication.
+Strengthening healthcare delivery by supporting hospitals and health
+centers with essential medical equipment and infrastructure.
 
-Do not create impressive-looking fake statistics.
+[Explore Healthcare →]
 
-==================================================
-IMAGE ARCHITECTURE
-==================================================
+This is better than a 200-word paragraph.
 
-Because the organization has many authentic photographs:
+============================================================
+17. REMOVE UNNECESSARY CONTENT
+============================================================
 
-Create a clean asset structure such as:
+Remove or avoid:
 
-src/assets/images/
-├── organization/
-├── programs/
-├── projects/
-├── stories/
-├── events/
-├── gallery/
-└── team/
+- generic foreign faces
+- unnecessary decorative illustrations
+- fake testimonials
+- fake statistics
+- fake beneficiary quotes
+- fake partner logos
+- excessive card grids
+- unnecessary pricing information
+- unnecessary project costs in program sections
+- random stock images
+- excessive animation
+- meaningless counters
 
-Use descriptive filenames.
+Every element must answer:
 
-Avoid names like:
+"Does this help the visitor understand SATHWIK?"
 
-IMG_1234.jpg
+If not, remove it.
 
-where possible.
+============================================================
+18. VISUAL STYLE
+============================================================
+
+Keep:
+
+CLASSIC
+PREMIUM
+CLEAN
+TRUSTWORTHY
+HUMAN
+EDITORIAL
+
+Avoid:
+
+overly futuristic UI
+neon gradients
+excessive glassmorphism
+overly rounded SaaS cards
+gaming-style effects
+excessive parallax
+too many floating objects
 
 Use:
 
-ro-drinking-water-school.jpg
+large photography
+clean typography
+generous whitespace
+subtle borders
+premium cards
+soft transitions
+strong editorial layouts
 
-education-classroom.jpg
+============================================================
+19. ANIMATION RULE
+============================================================
 
-etc.
+Animations should support content.
 
-Do not use generic stock photography when authentic SRYIA photographs are available.
+Use:
 
-==================================================
-ROUTING
-==================================================
+- number count-up
+- image reveal
+- subtle fade
+- soft slide
+- hover image zoom
+- horizontal logo movement
+- smooth section transitions
 
-Implement:
+Do NOT animate every component.
 
-/
- /about
- /impact
- /programs
- /programs/:slug
- /projects
- /projects/:slug
- /stories
- /stories/:slug
- /events
- /events/:slug
- /gallery
- /resources
- /volunteer
- /partner
- /donate
- /contact
- /404
+The user should notice the CONTENT first,
+not the animation.
 
-Use lazy-loaded routes where appropriate.
+============================================================
+20. RESPONSIVE DESIGN
+============================================================
 
-==================================================
-NO FAKE BACKEND BEHAVIOR
-==================================================
+Ensure the new sections work perfectly on:
 
-Forms must NOT pretend that information has been stored.
+320px
+375px
+425px
+768px
+1024px
+1280px
+1440px
+1920px
 
-If no external submission service is configured:
+On mobile:
 
-- provide a clear frontend form
-- validate inputs
-- provide appropriate contact options
-- structure the code so an external form provider can be integrated later
+- metrics become stacked
+- partner logos become a responsive grid
+- project cards become single-column
+- founder section becomes vertical
+- project images remain high quality
+- typography scales correctly
 
-Do not show:
+============================================================
+21. DATA ARCHITECTURE
+============================================================
 
-"Your message has been saved successfully"
+Keep all content in frontend TypeScript data.
 
-unless an actual submission service confirms it.
+Example:
 
-Similarly, do not implement fake payment processing.
+src/data/
+  organization.ts
+  impact.ts
+  programs.ts
+  projects.ts
+  partners.ts
+  founder.ts
+  leadership.ts
 
-==================================================
-DESIGN REQUIREMENT
-==================================================
+Do NOT hardcode large amounts of content directly inside JSX.
 
-The final design must be COMPLETELY DIFFERENT from the old website.
+Use reusable components.
 
-The screenshots are used only to understand:
+============================================================
+22. DO NOT BREAK CURRENT IMPLEMENTATION
+============================================================
 
-- existing content
-- existing pages
-- projects
-- programs
-- statistics
-- organization information
-- photographs
+Before modifying anything:
 
-Do not copy their:
+INSPECT THE CURRENT CODEBASE.
 
-- layout
-- colors
-- typography
-- navbar
-- hero
-- cards
-- footer
-- section structure
-- visual hierarchy
+Identify:
 
-Build a completely new premium experience.
+- existing homepage
+- existing hero
+- existing navigation
+- existing project components
+- existing animation components
+- existing data files
+- existing asset structure
 
-==================================================
-HOMEPAGE QUALITY
-==================================================
+Reuse existing components whenever possible.
 
-The homepage is the flagship page.
+Do not duplicate functionality.
 
-Do not create a generic NGO template.
+Do not rewrite working components without a reason.
 
-Use a storytelling structure such as:
+============================================================
+23. VALIDATION
+============================================================
 
-Hero
-↓
-Human Story
-↓
-Who We Are
-↓
-The Challenge
-↓
-Our Response
-↓
-Areas of Work
-↓
-Featured Projects
-↓
-Impact
-↓
-Stories of Change
-↓
-Photo Story
-↓
-Our Journey
-↓
-Transparency
-↓
-Get Involved
-↓
-Final CTA
-↓
-Footer
-
-Use varied layouts.
-
-Do NOT turn every section into three cards.
-
-==================================================
-ANIMATION
-==================================================
-
-Use Framer Motion strategically.
-
-Include:
-
-- hero entrance
-- scroll reveals
-- image reveals
-- staggered sections
-- counters
-- hover interactions
-- page transitions
-- gallery transitions
-
-Keep animations:
-
-- smooth
-- subtle
-- premium
-- performant
-
-Support prefers-reduced-motion.
-
-==================================================
-QUALITY CHECK BEFORE COMPLETION
-==================================================
+After implementation:
 
 Run:
 
 npm run build
 
-Then verify:
+Then manually verify:
 
-- zero TypeScript errors
-- zero API dependencies
-- zero backend imports
-- zero console errors
-- all routes work
-- all dynamic routes work
-- all images resolve
-- no broken links
-- mobile layouts work
-- desktop layouts work
-- keyboard navigation works
-- no horizontal overflow
-- animations work smoothly
-- loading states work
-- 404 page works
+✓ Hero still works
+✓ Hero videos still work
+✓ Hero image transitions still work
+✓ Navigation works
+✓ Existing routes work
+✓ New content displays correctly
+✓ No broken images
+✓ All project images load
+✓ Partner logos load
+✓ Founder image works
+✓ MP image works
+✓ Counters work
+✓ Mobile layout works
+✓ No console errors
+✓ No backend dependency
+✓ No fake information
+✓ No invented statistics
 
-Also search the frontend codebase for:
+============================================================
+FINAL DESIGN GOAL
+============================================================
 
-Express
-MongoDB
-Mongoose
-JWT
-axios
-/api/
-localhost backend URLs
+The homepage should feel like:
 
-and remove anything that is no longer required.
+"Here is who SATHWIK is.
+Here is what we work on.
+Here is where we work.
+Here is the scale of our work.
+Here are the real projects.
+Here are the organizations that have supported the work.
+Here is the leadership.
+Now explore further."
 
-==================================================
-FINAL ARCHITECTURE
-==================================================
+NOT:
 
-The finished application should be:
+"Look how many animations our website has."
 
-React
-+
-Vite
-+
-TypeScript
-+
-Tailwind CSS
-+
-Framer Motion
-+
-React Router
-+
-Static TypeScript Content
-+
-Authentic SRYIA Assets
+The final homepage must be:
 
-No backend.
+SIMPLE + CREDIBLE + CONTENT-RICH + PREMIUM + HUMAN.
 
-No database.
+Use the client's real project information and photographs wherever
+possible.
 
-No API.
+Accuracy > decoration.
 
-No CMS.
+Clarity > excessive animation.
 
-No authentication.
+Real project evidence > stock imagery.
 
-Keep the architecture simple.
-
-Put the engineering effort into:
-
-CONTENT
-DESIGN
-STORYTELLING
-ANIMATIONS
-RESPONSIVENESS
-ACCESSIBILITY
-SEO
-PERFORMANCE
-USER EXPERIENCE
-
-Proceed with the implementation.
+Professional presentation > visual clutter.

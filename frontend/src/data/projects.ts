@@ -206,19 +206,19 @@ export const projects: Project[] = [
   {
     id: 'proj-11',
     slug: 'nutrition-kits-hyderabad',
-    programId: 'prog-health',
-    title: 'Nutrition Kits Hyderabad',
-    category: 'Nutrition',
+    programId: 'prog-empowerment',
+    title: 'Nutrition Kits for Women',
+    category: 'Women Empowerment',
     location: 'Hyderabad',
     state: 'Telangana',
-    summary: 'A key initiative to improve nutrition infrastructure in Telangana.',
-    problem: '[Information to be confirmed] Insufficient access to quality nutrition resources in the region.',
-    response: 'To provide essential nutrition support and infrastructure to underserved communities.',
+    summary: 'Empowering pregnant and lactating women through essential nutrition and health support.',
+    problem: '[Information to be confirmed] Insufficient access to quality nutrition resources affecting women\'s health.',
+    response: 'To provide essential nutrition kits to women, empowering them to lead healthier lives and support their families.',
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
     images: getImages(['Nutrition kits in hyd']),
-    tags: ['Nutrition', 'Health', 'Urban']
+    tags: ['Nutrition', 'Women', 'Empowerment']
   },
   {
     id: 'proj-12',
@@ -240,19 +240,19 @@ export const projects: Project[] = [
   {
     id: 'proj-13',
     slug: 'ranchi-nutrition-project',
-    programId: 'prog-health',
-    title: 'Ranchi Nutrition Project',
-    category: 'Nutrition',
+    programId: 'prog-empowerment',
+    title: 'Ranchi Women Nutrition Project',
+    category: 'Women Empowerment',
     location: 'Ranchi',
     state: 'Jharkhand',
-    summary: 'A key initiative to improve nutrition infrastructure in Jharkhand.',
+    summary: 'Fostering physical empowerment for young women and mothers through comprehensive nutrition programs.',
     problem: '[Information to be confirmed] Insufficient access to quality nutrition resources in the region.',
-    response: 'To provide essential nutrition support and infrastructure to underserved communities.',
+    response: 'To support young women and mothers with comprehensive nutrition programs to foster physical empowerment.',
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
     images: getImages(['ranchi nutrition porject']),
-    tags: ['Nutrition', 'Rural']
+    tags: ['Nutrition', 'Women', 'Empowerment']
   },
   {
     id: 'proj-14',
@@ -291,20 +291,20 @@ export const projects: Project[] = [
   {
     id: 'proj-16',
     slug: 'skill-development-mamidikudhuru',
-    programId: 'prog-education',
-    title: 'Skill Development Mamidikudhuru',
+    programId: 'prog-empowerment',
+    title: 'Skill Development & Infrastructure',
     category: 'Youth Development',
     location: 'Andhra Pradesh',
     state: 'Andhra Pradesh',
     investment: '₹1 Crore',
-    summary: 'A key initiative to improve youth development infrastructure in Andhra Pradesh.',
+    summary: 'Building vocational infrastructure and providing skill development training to empower youth and women.',
     problem: '[Information to be confirmed] Insufficient access to quality youth development resources in the region.',
-    response: 'To provide essential youth development support and infrastructure to underserved communities.',
+    response: 'To provide essential youth development support, training, and infrastructure to foster financial independence and empowerment.',
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
     images: getImages(['Skill development Mamidikudhuru ap 1 cr']),
-    tags: ['Youth', 'Skill Development', 'Education']
+    tags: ['Youth', 'Skill Development', 'Empowerment', 'Infrastructure']
   },
   {
     id: 'proj-17',

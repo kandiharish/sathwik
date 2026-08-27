@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useAnimationFrame, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { MoveHorizontal } from 'lucide-react';
 import { Container } from '../layout/Container';
 
 // 24 unique images for the top row

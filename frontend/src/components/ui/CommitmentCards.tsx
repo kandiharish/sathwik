@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Users, ShieldPlus, FileSearch, Heart } from 'lucide-react';
+import { Users, ShieldPlus, FileSearch } from 'lucide-react';
 
 const cards = [
   {

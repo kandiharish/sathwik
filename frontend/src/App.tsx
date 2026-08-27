@@ -15,6 +15,7 @@ import { Impact } from './pages/Impact';
 import { ImpactMap } from './pages/ImpactMap';
 import { StoryDetail } from './pages/StoryDetail';
 import { FAQ } from './pages/FAQ';
+import { Contact } from './pages/Contact';
 
 // Placeholder components for routing
 const Placeholder = ({ title }: { title: string }) => (
@@ -42,7 +43,7 @@ const AppRoutes = () => {
           <Route path="stories/:slug" element={<StoryDetail />} />
           <Route path="gallery" element={<Gallery />} />
           <Route path="faq" element={<FAQ />} />
-          <Route path="contact" element={<Placeholder title="Contact Us" />} />
+          <Route path="contact" element={<Contact />} />
           <Route path="donate" element={<Placeholder title="Donate" />} />
           <Route path="volunteer" element={<Placeholder title="Volunteer" />} />
         </Route>

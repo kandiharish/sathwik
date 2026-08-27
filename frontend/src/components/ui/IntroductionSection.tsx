@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Droplets, HeartPulse } from 'lucide-react';
+import { Droplets, HeartPulse } from 'lucide-react';
 import { Container } from '../layout/Container';
-import { ButtonLink } from './Button';
 
 type Segment = { text: string; className?: string };
 

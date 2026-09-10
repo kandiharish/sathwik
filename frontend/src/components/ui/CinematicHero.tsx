@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Play, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -99,50 +99,21 @@ const slides = [
 
 export const CinematicHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const isPlaying = true;
-  const [progress, setProgress] = useState(0);
-  const requestRef = useRef<number>(0);
-  const startTimeRef = useRef<number | null>(null);
-  const pausedTimeRef = useRef<number>(0);
+  const currentSlideRef = useRef(0);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const nextSlide = useCallback(() => {
+    const next = (currentSlideRef.current + 1) % slides.length;
+    currentSlideRef.current = next;
+    setCurrentSlide(next);
+  }, []);
 
-  const animateProgress = (time: number) => {
-    if (!startTimeRef.current) startTimeRef.current = time - pausedTimeRef.current;
-    
-    const elapsed = time - startTimeRef.current;
-    const currentProgress = (elapsed / SLIDE_DURATION) * 100;
-
-    if (currentProgress >= 100) {
-      setProgress(0);
-      startTimeRef.current = null;
-      pausedTimeRef.current = 0;
+  useEffect(() => {
+    const timer = setTimeout(() => {
       nextSlide();
-    } else {
-      setProgress(currentProgress);
-      requestRef.current = requestAnimationFrame(animateProgress);
-    }
-  };
+    }, SLIDE_DURATION);
 
-  useEffect(() => {
-    if (isPlaying) {
-      requestRef.current = requestAnimationFrame(animateProgress);
-    } else {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-      pausedTimeRef.current = (progress / 100) * SLIDE_DURATION;
-      startTimeRef.current = null;
-    }
-    return () => {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-    };
-  }, [isPlaying, progress, currentSlide]);
-
-  // Reset progress when slide changes manually
-  useEffect(() => {
-    setProgress(0);
-    startTimeRef.current = null;
-    pausedTimeRef.current = 0;
-  }, [currentSlide]);
+    return () => clearTimeout(timer);
+  }, [currentSlide, nextSlide]);
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black text-white">
@@ -160,10 +131,12 @@ export const CinematicHero = () => {
           >
               <video
                 src={slides[currentSlide].video}
+                poster={slides[currentSlide].image}
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 className="h-full w-full object-cover"
               />
               {/* Neutral dark overlay for readability without blue tint */}
@@ -273,8 +246,8 @@ export const CinematicHero = () => {
               <img 
                 src={slide.image} 
                 alt={slide.title} 
-                className="w-full h-full object-cover transform transition-transform duration-[10000ms] ease-linear group-hover:scale-110"
-                style={{ transform: isActive ? 'scale(1.1)' : 'scale(1)' }}
+                className="w-full h-full object-cover transform"
+                style={{ transform: isActive ? 'scale(1.05)' : 'scale(1)' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/5 transition-opacity duration-500" style={{ opacity: isActive ? 1 : 0.7 }} />
               <div className="absolute bottom-0 left-0 p-4 lg:p-5 w-full">

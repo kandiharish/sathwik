@@ -12,6 +12,14 @@
 @layer base {
   body {
     @apply bg-background text-text-main font-sans antialiased;
+    /* Boost scroll and paint performance */
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+  }
+
+  /* Ensure hardware-accelerated layers only where needed */
+  img {
+    content-visibility: auto;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -58,4 +66,31 @@
   .animate-float-heart-1 { animation: floatHeart1 1s ease-out infinite; }
   .animate-float-heart-2 { animation: floatHeart2 1.2s ease-out 0.2s infinite; }
   .animate-float-heart-3 { animation: floatHeart3 1.1s ease-out 0.4s infinite; }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Completely remove horizontal slidebars / scrollbars everywhere */
+  ::-webkit-scrollbar:horizontal {
+    display: none !important;
+    height: 0 !important;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
 }
+

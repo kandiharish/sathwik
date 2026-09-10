@@ -1,4 +1,4 @@
-// Shared Content Types for SRYIA Frontend
+// Shared Content Types for SRAYI Association Frontend
 
 export interface ImpactStat {
   label: string;

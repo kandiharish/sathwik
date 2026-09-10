@@ -2,7 +2,7 @@ import type { OrganizationInfo } from '../types/content';
 
 export const organizationInfo: OrganizationInfo = {
   name: 'Sathwik Rural and Youth Integrated Association',
-  acronym: 'SRYIA',
+  acronym: 'SRAYI',
   foundedYear: '2015',
   mission: 'To bring sustainable development to the grassroots of India through holistic rural development, education, and youth empowerment.',
   vision: 'A society where rural communities are self-reliant, educated, and equipped with the resources for continuous sustainable growth.',
@@ -21,16 +21,16 @@ export const organizationInfo: OrganizationInfo = {
     }
   ],
   history: [
-    'Founded in 2015, SRYIA started with a focus on addressing the immediate educational and infrastructural needs of rural schools.',
+    'Founded in 2015, SRAYI Association started with a focus on addressing the immediate educational and infrastructural needs of rural schools.',
     'Over the years, we expanded our footprint into healthcare, providing crucial medical equipment to rural centers that lacked basic diagnostic capabilities.',
     'Recognizing that health and education are deeply intertwined with sanitation, we launched major initiatives to install RO water plants and build sanitation facilities.',
-    'Today, SRYIA is a multi-disciplinary NGO actively managing projects in education, healthcare, youth skill development, and disaster relief across multiple districts.'
+    'Today, SRAYI Association is a multi-disciplinary NGO actively managing projects in education, healthcare, youth skill development, and disaster relief across multiple districts.'
   ],
   timeline: [
     {
       year: '2015',
       title: 'Foundation',
-      description: 'SRYIA was officially registered and began its first educational support initiatives.'
+      description: 'SRAYI Association was officially registered and began its first educational support initiatives.'
     },
     {
       year: '2017',

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, Mail, MapPin, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { siteSettings } from '../../data/settings';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,14 +53,14 @@ export const Navbar = () => {
       >
         <div className="max-w-[1400px] w-full mx-auto px-6 lg:px-10 flex justify-between items-center text-xs font-medium">
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
+            <a href={`tel:${siteSettings.contact.phone.replace(/\\s+/g, '')}`} className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
               <Phone className="w-3.5 h-3.5" />
-              <span>+91 98765 43210</span>
-            </div>
-            <div className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
+              <span>{siteSettings.contact.phone}</span>
+            </a>
+            <a href={`mailto:${siteSettings.contact.email}`} className="flex items-center gap-2 hover:text-orange-400 transition-colors cursor-pointer">
               <Mail className="w-3.5 h-3.5" />
-              <span>info@sathwik.org</span>
-            </div>
+              <span>{siteSettings.contact.email}</span>
+            </a>
           </div>
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
@@ -90,7 +91,7 @@ export const Navbar = () => {
           {/* LEFT: Logo */}
           <Link to="/" className={`flex items-center gap-3 group hover:opacity-90 transition-opacity ${isScrolled ? '' : 'pl-2'}`}>
             <img 
-              src="/logo.png" 
+              src="/logo.webp" 
               alt="SATHWIK Logo" 
               className="h-14 md:h-16 lg:h-[68px] w-auto object-contain py-1"
             />

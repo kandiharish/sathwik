@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { MapPin, Mail, Phone, Clock, MessageSquare, ArrowRight } from 'lucide-react';
+import { siteSettings } from '../data/settings';
 
 export const Contact = () => {
   return (
@@ -91,7 +92,7 @@ export const Contact = () => {
                       </div>
                       <div>
                         <h4 className="font-bold text-xs text-emerald-300/80 uppercase tracking-[0.2em] mb-1.5">Phone Number</h4>
-                        <p className="text-white text-[15px] font-medium">+91 90000 88422</p>
+                        <a href={`tel:${siteSettings.contact.phone.replace(/\\s+/g, '')}`} className="text-white text-[15px] font-medium hover:text-emerald-300 transition-colors">{siteSettings.contact.phone}</a>
                       </div>
                     </div>
 
@@ -101,7 +102,7 @@ export const Contact = () => {
                       </div>
                       <div>
                         <h4 className="font-bold text-xs text-emerald-300/80 uppercase tracking-[0.2em] mb-1.5">Email Address</h4>
-                        <p className="text-white text-[15px] font-medium">admin@sathwik.org</p>
+                        <a href={`mailto:${siteSettings.contact.email}`} className="text-white text-[15px] font-medium hover:text-emerald-300 transition-colors">{siteSettings.contact.email}</a>
                       </div>
                     </div>
                   </div>

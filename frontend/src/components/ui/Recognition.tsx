@@ -38,7 +38,7 @@ export const Recognition = () => {
               
               <div className="mt-6 pt-6 border-t border-[#eae5dd]">
                 <p className="text-gray-600 font-serif italic text-lg leading-relaxed">
-                  "Recognizing the dedicated efforts of SRYIA in bringing impactful development to the communities."
+                  "Recognizing the dedicated efforts of SRAYI Association in bringing impactful development to the communities."
                 </p>
               </div>
             </div>

@@ -48,8 +48,10 @@ export const Home = () => {
         {/* Background Image - Perfectly fitted */}
         <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
           <img 
-            src="/image%20copy%209.png" 
+            src="/image%20copy%209.webp" 
             alt="Impact Background" 
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center opacity-80"
           />
           <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />

@@ -2,54 +2,55 @@ import { motion } from 'framer-motion';
 
 export const FounderMessage = () => {
   return (
-    <section className="relative w-full h-[100dvh] bg-[#d1d1d1] overflow-hidden flex items-center justify-center p-4 md:p-12">
+    <section className="relative w-full h-[100dvh] bg-[#d1d1d1] overflow-hidden flex items-center justify-center p-2 md:p-12">
       
       {/* Inner Editorial Card */}
-      <div className="relative w-full max-w-[1400px] h-[90vh] bg-white shadow-2xl overflow-hidden flex flex-col md:flex-row">
+      <div className="relative w-full max-w-[1400px] h-[95dvh] md:h-[85vh] bg-white shadow-2xl overflow-hidden flex flex-col md:flex-row rounded-xl md:rounded-none">
         
         {/* Diagonal Grey Overlay on the right side */}
         <div 
-          className="absolute top-0 right-0 w-full md:w-[60%] h-full bg-[#e2e2e2] z-0"
-          style={{ clipPath: 'polygon(40% 0, 100% 0, 100% 100%, 0% 100%)' }}
+          className="absolute top-0 right-0 w-full md:w-[60%] h-full bg-[#e2e2e2] z-0 hidden md:block"
+          style={{ clipPath: 'polygon(20% 0, 100% 0, 100% 100%, 0% 100%)' }}
         />
+        <div className="absolute inset-0 w-full h-full bg-[#e2e2e2] z-0 block md:hidden" />
 
         {/* Left Side - Portrait Image */}
-        <div className="relative z-10 w-full md:w-[45%] h-[40vh] md:h-full flex items-center justify-center pt-10">
+        <div className="relative z-10 w-full md:w-[45%] h-[30%] md:h-auto flex items-end justify-center pt-4 md:pt-8 bg-white md:bg-transparent overflow-hidden">
           <motion.img 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            src="/Gemini_Generated_Image_kxdjsfkxdjsfkxdj-removebg-preview.png"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            src="/Gemini_Generated_Image_kxdjsfkxdjsfkxdj-removebg-preview.webp"
             alt="CH. RAMESH"
-            className="w-[110%] h-[110%] object-contain object-bottom -translate-y-8 md:-translate-y-12 grayscale contrast-125 hover:grayscale-0 hover:contrast-100 transition-all duration-500 cursor-pointer"
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full max-h-[100%] object-contain object-bottom grayscale contrast-125 hover:grayscale-0 hover:contrast-100 transition-all duration-700 cursor-pointer"
           />
         </div>
 
         {/* Right Side - Editorial Content */}
-        <div className="relative z-10 w-full md:w-[55%] h-full flex flex-col justify-center px-8 md:px-16 py-12 md:py-0">
+        <div className="relative z-10 w-full md:w-[55%] h-[70%] md:h-auto flex flex-col justify-center px-4 sm:px-6 md:px-16 py-4 md:py-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="max-w-xl"
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+            className="max-w-xl h-full flex flex-col justify-center"
           >
-            {/* Removed Header / Overline as per request */}
-
             {/* Title with Shiny Animation */}
-            <h3 className="text-5xl md:text-6xl font-serif leading-tight mb-2 relative group">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif leading-tight mb-1 md:mb-2 relative group">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#111] via-[#a3a3a3] to-[#111] bg-[length:200%_auto] animate-[shine_3s_linear_infinite]">
                 Leadership Vision
               </span>
             </h3>
             
-            <p className="text-xs font-bold tracking-[0.2em] text-[#666] uppercase mb-8">
-              Founder & President, SRYIA
+            <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#666] uppercase mb-3 md:mb-8">
+              Founder & President, SRAYI Association
             </p>
 
             {/* Body Text */}
-            <div className="space-y-5 text-[#444] text-[15px] leading-[1.8] font-sans">
+            <div className="space-y-2 sm:space-y-3 md:space-y-5 text-[#444] text-[11px] sm:text-[12px] md:text-[15px] leading-[1.5] md:leading-[1.8] font-sans overflow-y-auto pr-2 pb-2 md:pr-0 md:pb-0" style={{ scrollbarWidth: 'thin' }}>
               <p>
                 At SATHWIK, our journey began with a simple belief: that every individual, regardless of their background, deserves access to quality healthcare, education, and the fundamental resources needed to build a dignified life. Over the past decade, we have partnered with communities and corporate leaders to turn this belief into action.
               </p>
@@ -62,9 +63,9 @@ export const FounderMessage = () => {
             </div>
             
             {/* Signature at bottom left */}
-            <div className="mt-8 flex flex-col items-start opacity-100">
+            <div className="mt-3 md:mt-8 flex flex-col items-start opacity-100 shrink-0">
               <span 
-                className="text-4xl text-[#111] inline-block -rotate-2 drop-shadow-sm" 
+                className="text-2xl md:text-4xl text-[#111] inline-block -rotate-2 drop-shadow-sm" 
                 style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
               >
                 CH. RAMESH

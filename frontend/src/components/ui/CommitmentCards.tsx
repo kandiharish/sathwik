@@ -4,33 +4,33 @@ import { Users, ShieldPlus, FileSearch } from 'lucide-react';
 const cards = [
   {
     title: "Community-Centric Approach",
-    desc: "SRYIA prioritizes empowerment, offering skills and resources that enable individuals to achieve lasting self-reliance rather than dependency.",
+    desc: "SRAYI Association prioritizes empowerment, offering skills and resources that enable individuals to achieve lasting self-reliance rather than dependency.",
     color: "text-orange-500",
     hoverBg: "group-hover:bg-orange-500 group-hover:text-white",
     hoverShadow: "hover:shadow-[0_12px_40px_rgba(249,115,22,0.2)]",
     borderColor: "border-orange-500",
     Icon: Users,
-    symbol: "/symbols/community.jpg",
+    symbol: "/symbols/community.webp",
   },
   {
     title: "Improving Health Through Water",
-    desc: "SRYIA is improving public health by installing RO plants in schools, developing healthcare facilities, and providing essential medical equipment.",
+    desc: "SRAYI Association is improving public health by installing RO plants in schools, developing healthcare facilities, and providing essential medical equipment.",
     color: "text-green-600",
     hoverBg: "group-hover:bg-green-600 group-hover:text-white",
     hoverShadow: "hover:shadow-[0_12px_40px_rgba(22,163,74,0.2)]",
     borderColor: "border-green-600",
     Icon: ShieldPlus,
-    symbol: "/symbols/health.jpg",
+    symbol: "/symbols/health.webp",
   },
   {
     title: "Transparency & Accountability",
-    desc: "With a commitment to integrity, SRYIA maintains transparency across operations, ensuring stakeholders are well-informed about program impacts.",
+    desc: "With a commitment to integrity, SRAYI Association maintains transparency across operations, ensuring stakeholders are well-informed about program impacts.",
     color: "text-blue-600",
     hoverBg: "group-hover:bg-blue-600 group-hover:text-white",
     hoverShadow: "hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)]",
     borderColor: "border-blue-600",
     Icon: FileSearch,
-    symbol: "/symbols/transparency.jpg",
+    symbol: "/symbols/transparency.webp",
   }
 ];
 
@@ -50,8 +50,10 @@ export const CommitmentCards = () => {
         <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
         
         <img 
-          src="/image%20copy%205.png" 
+          src="/image%20copy%205.webp" 
           alt="SATHWIK Background" 
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-contain object-center opacity-70"
         />
         {/* Soft, clean fade to ensure text is readable but keeps image bright */}

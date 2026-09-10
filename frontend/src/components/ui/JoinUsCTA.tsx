@@ -65,39 +65,35 @@ export const JoinUsCTA = () => {
                 </Link>
               </div>
 
-              {/* Stats */}
-              <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-x-6 gap-y-4">
-                <div className="flex items-center gap-2.5">
-                  <div className="bg-[#ebf2ed] p-2 rounded-lg text-[#154625]">
-                    <Users className="w-4 h-4" />
+              {/* Stats - Single line layout without any vertical lines */}
+              <div className="flex flex-row items-center gap-x-4 sm:gap-x-6 lg:gap-x-7 pt-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="bg-[#ebf2ed] p-1.5 sm:p-2 rounded-lg text-[#154625] shrink-0">
+                    <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </div>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="font-bold text-[15px] text-slate-900">1000+</span>
-                    <span className="text-[12px] text-slate-500 font-medium">Lives Impacted</span>
-                  </div>
-                </div>
-
-                <div className="hidden sm:block w-px h-6 bg-slate-200" />
-
-                <div className="flex items-center gap-2.5">
-                  <div className="bg-[#ebf2ed] p-2 rounded-lg text-[#154625]">
-                    <BookOpen className="w-4 h-4" />
-                  </div>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="font-bold text-[15px] text-slate-900">50+</span>
-                    <span className="text-[12px] text-slate-500 font-medium">Education Programs</span>
+                  <div className="flex items-baseline gap-1 whitespace-nowrap">
+                    <span className="font-bold text-[13px] sm:text-[14px] text-slate-900">1000+</span>
+                    <span className="text-[11px] sm:text-[12px] text-slate-500 font-medium">Lives Impacted</span>
                   </div>
                 </div>
 
-                <div className="hidden sm:block w-px h-6 bg-slate-200" />
-
-                <div className="flex items-center gap-2.5">
-                  <div className="bg-[#ebf2ed] p-2 rounded-lg text-[#154625]">
-                    <HeartPulse className="w-4 h-4" />
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="bg-[#ebf2ed] p-1.5 sm:p-2 rounded-lg text-[#154625] shrink-0">
+                    <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </div>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="font-bold text-[15px] text-slate-900">20+</span>
-                    <span className="text-[12px] text-slate-500 font-medium">Healthcare Camps</span>
+                  <div className="flex items-baseline gap-1 whitespace-nowrap">
+                    <span className="font-bold text-[13px] sm:text-[14px] text-slate-900">50+</span>
+                    <span className="text-[11px] sm:text-[12px] text-slate-500 font-medium">Education Programs</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="bg-[#ebf2ed] p-1.5 sm:p-2 rounded-lg text-[#154625] shrink-0">
+                    <HeartPulse className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  </div>
+                  <div className="flex items-baseline gap-1 whitespace-nowrap">
+                    <span className="font-bold text-[13px] sm:text-[14px] text-slate-900">20+</span>
+                    <span className="text-[11px] sm:text-[12px] text-slate-500 font-medium">Healthcare Camps</span>
                   </div>
                 </div>
               </div>
@@ -107,15 +103,22 @@ export const JoinUsCTA = () => {
             {/* Right Column - Images Layout */}
             <div className="relative flex items-center justify-center min-h-[350px] lg:min-h-[400px]">
               
-              {/* Brush Stroke / Abstract Background Circle */}
-              <div className="absolute inset-0 flex items-center justify-center z-0">
-                <div className="w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] rounded-full border-[10px] sm:border-[12px] border-[#6b8e76] border-opacity-60 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[#d8e3db] opacity-30 mix-blend-multiply filter blur-xl"></div>
+              {/* Brush Stroke / Abstract Background Circle - Lightly styled & moving continuously */}
+              <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
+                {/* Moving Organic Brush Stroke Circle */}
+                <div className="absolute animate-[spin_35s_linear_infinite] will-change-transform">
+                  <svg className="w-[330px] sm:w-[430px] h-[330px] sm:h-[430px] text-[#4d7559] opacity-45" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18,97,-2.4C97.1,13.2,91.4,29,81.4,41.4C71.4,53.8,57,62.8,42.4,70.6C27.8,78.4,13.9,85.1,-0.7,86.2C-15.3,87.3,-30.6,83,-43.3,74.5C-56,66,-66,53.3,-74.6,39.3C-83.2,25.3,-90.4,10,-89.9,-4.9C-89.4,-19.8,-81.3,-34.3,-71,-45.5C-60.7,-56.7,-48.2,-64.5,-35,-72.1C-21.8,-79.6,-7.9,-86.9,6.5,-88C20.9,-89.1,41.9,-83.6,44.7,-76.4Z" transform="translate(100 100) scale(0.9)" />
+                  </svg>
                 </div>
-                {/* Additional decorative brush effects */}
-                <svg className="absolute w-[350px] sm:w-[450px] h-[350px] sm:h-[450px] text-[#4d7559] opacity-70 rotate-12" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18,97,-2.4C97.1,13.2,91.4,29,81.4,41.4C71.4,53.8,57,62.8,42.4,70.6C27.8,78.4,13.9,85.1,-0.7,86.2C-15.3,87.3,-30.6,83,-43.3,74.5C-56,66,-66,53.3,-74.6,39.3C-83.2,25.3,-90.4,10,-89.9,-4.9C-89.4,-19.8,-81.3,-34.3,-71,-45.5C-60.7,-56.7,-48.2,-64.5,-35,-72.1C-21.8,-79.6,-7.9,-86.9,6.5,-88C20.9,-89.1,41.9,-83.6,44.7,-76.4Z" transform="translate(100 100) scale(0.9)" />
-                </svg>
+
+                {/* Outer Moving Ring - lightly framed */}
+                <div className="absolute w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] rounded-full border-[6px] sm:border-[8px] border-[#6b8e76]/35 animate-[spin_50s_linear_infinite_reverse] will-change-transform">
+                  <div className="absolute inset-0 bg-[#d8e3db] opacity-20 mix-blend-multiply filter blur-xl"></div>
+                </div>
+
+                {/* Subtle Inner Accent Ring - lightly layered */}
+                <div className="absolute w-[235px] h-[235px] sm:w-[315px] sm:h-[315px] rounded-full border-2 border-dashed border-[#4d7559]/25 animate-[spin_40s_linear_infinite] will-change-transform" />
               </div>
 
               {/* Main Image */}
@@ -127,23 +130,27 @@ export const JoinUsCTA = () => {
                 className="relative z-10 w-[200px] h-[200px] sm:w-[260px] sm:h-[260px] rounded-full border-[6px] sm:border-[8px] border-white shadow-2xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/images/ai/hopeful_rural_child.jpg" 
+                  src="/images/ai/hopeful_rural_child.webp" 
                   alt="Happy smiling child" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </motion.div>
 
-              {/* Top Left Floating Image (NEW) */}
+              {/* Top Left Floating Image (Moved down as requested) */}
               <motion.div 
-                initial={{ opacity: 0, x: -30, y: -30 }}
+                initial={{ opacity: 0, x: -30, y: -10 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-                className="absolute top-0 left-4 sm:left-10 z-20 w-[100px] h-[100px] sm:w-[130px] sm:h-[130px] rounded-full border-[4px] sm:border-[6px] border-white shadow-xl overflow-hidden bg-slate-100"
+                className="absolute top-14 sm:top-20 left-4 sm:left-8 z-20 w-[100px] h-[100px] sm:w-[130px] sm:h-[130px] rounded-full border-[4px] sm:border-[6px] border-white shadow-xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/images/ai/rural_volunteers.jpg" 
+                  src="/images/ai/rural_volunteers.webp" 
                   alt="Rural volunteers" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center"
                 />
               </motion.div>
@@ -157,8 +164,10 @@ export const JoinUsCTA = () => {
                 className="absolute top-4 right-4 sm:right-12 z-20 w-[110px] h-[110px] sm:w-[140px] sm:h-[140px] rounded-full border-[4px] sm:border-[6px] border-white shadow-xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/images/ai/rural_healthcare.jpg" 
+                  src="/images/ai/rural_healthcare.webp" 
                   alt="Rural healthcare" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center"
                 />
               </motion.div>
@@ -172,8 +181,10 @@ export const JoinUsCTA = () => {
                 className="absolute -bottom-2 sm:bottom-4 right-8 sm:right-16 z-20 w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] rounded-full border-[4px] sm:border-[6px] border-white shadow-xl overflow-hidden bg-slate-100"
               >
                 <img 
-                  src="/images/ai/rural_women_empowerment.jpg" 
+                  src="/images/ai/rural_women_empowerment.webp" 
                   alt="Women empowerment" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </motion.div>

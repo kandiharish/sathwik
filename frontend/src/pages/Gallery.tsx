@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Section } from '../components/layout/Section';
@@ -8,27 +8,19 @@ import { galleryImages } from '../data/gallery';
 import { X, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 
 export const Gallery = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  const categories = ['ALL', 'PEOPLE', 'EDUCATION', 'HEALTHCARE', 'WATER', 'NUTRITION', 'COMMUNITY', 'EVENTS'];
-
-  const filteredImages = useMemo(() => {
-    if (activeCategory === 'ALL') return galleryImages;
-    return galleryImages.filter(img => img.category.toUpperCase() === activeCategory);
-  }, [activeCategory]);
 
   // Handle keyboard navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (lightboxIndex === null) return;
       if (e.key === 'Escape') setLightboxIndex(null);
-      if (e.key === 'ArrowRight') setLightboxIndex((prev) => prev !== null && prev < filteredImages.length - 1 ? prev + 1 : prev);
+      if (e.key === 'ArrowRight') setLightboxIndex((prev) => prev !== null && prev < galleryImages.length - 1 ? prev + 1 : prev);
       if (e.key === 'ArrowLeft') setLightboxIndex((prev) => prev !== null && prev > 0 ? prev - 1 : prev);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex, filteredImages.length]);
+  }, [lightboxIndex]);
 
   return (
     <div className="bg-[#FAFAF8] min-h-screen">
@@ -42,22 +34,7 @@ export const Gallery = () => {
             />
           </div>
 
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-2 mt-12">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
-                  activeCategory === category
-                    ? 'bg-[#054E38] text-white shadow-md'
-                    : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          {/* Category Filters Removed */}
         </Container>
       </section>
 
@@ -65,7 +42,7 @@ export const Gallery = () => {
         <Container>
           <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
             <AnimatePresence mode="popLayout">
-              {filteredImages.map((img, idx) => (
+              {galleryImages.map((img, idx) => (
                 <motion.div 
                   key={img.url}
                   layout
@@ -73,7 +50,7 @@ export const Gallery = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4 }}
-                  className="break-inside-avoid overflow-hidden rounded-xl group cursor-pointer relative shadow-sm border border-gray-100"
+                  className="break-inside-avoid overflow-hidden rounded-xl group cursor-pointer relative shadow-sm border border-gray-100 bg-gray-100 min-h-[200px]"
                   onClick={() => setLightboxIndex(idx)}
                 >
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex flex-col items-center justify-center p-6 text-center">
@@ -90,7 +67,10 @@ export const Gallery = () => {
                     src={img.url} 
                     alt={img.caption} 
                     loading="lazy"
-                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" 
+                    onLoad={(e) => {
+                      e.currentTarget.classList.remove('opacity-0', 'blur-md');
+                    }}
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-all duration-700 ease-in-out opacity-0 blur-md" 
                   />
                 </motion.div>
               ))}
@@ -132,10 +112,10 @@ export const Gallery = () => {
             <button 
               onClick={(e) => {
                 e.stopPropagation();
-                if (lightboxIndex < filteredImages.length - 1) setLightboxIndex(lightboxIndex + 1);
+                if (lightboxIndex < galleryImages.length - 1) setLightboxIndex(lightboxIndex + 1);
               }}
-              className={`absolute right-4 md:right-10 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-colors z-50 ${lightboxIndex === filteredImages.length - 1 ? 'opacity-30 cursor-not-allowed' : ''}`}
-              disabled={lightboxIndex === filteredImages.length - 1}
+              className={`absolute right-4 md:right-10 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-colors z-50 ${lightboxIndex === galleryImages.length - 1 ? 'opacity-30 cursor-not-allowed' : ''}`}
+              disabled={lightboxIndex === galleryImages.length - 1}
             >
               <ChevronRight className="w-8 h-8" />
             </button>
@@ -143,13 +123,13 @@ export const Gallery = () => {
             {/* Image Container */}
             <div className="relative max-w-5xl w-full max-h-[85vh] px-12 md:px-24 flex flex-col items-center">
               <motion.img 
-                key={filteredImages[lightboxIndex].url}
+                key={galleryImages[lightboxIndex].url}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                src={filteredImages[lightboxIndex].url}
-                alt={filteredImages[lightboxIndex].caption}
+                src={galleryImages[lightboxIndex].url}
+                alt={galleryImages[lightboxIndex].caption}
                 className="max-h-[70vh] w-auto object-contain rounded-lg shadow-2xl"
               />
               
@@ -162,15 +142,15 @@ export const Gallery = () => {
                 className="mt-6 text-center"
               >
                 <div className="inline-block px-3 py-1 bg-white/10 rounded-full text-xs font-bold text-white/80 tracking-widest uppercase mb-3">
-                  {filteredImages[lightboxIndex].category}
+                  {galleryImages[lightboxIndex].category}
                 </div>
                 <p className="text-white text-lg md:text-xl font-medium max-w-2xl mx-auto mb-4">
-                  {filteredImages[lightboxIndex].caption}
+                  {galleryImages[lightboxIndex].caption}
                 </p>
                 
-                {filteredImages[lightboxIndex].projectSlug && (
+                {galleryImages[lightboxIndex].projectSlug && (
                   <Link 
-                    to={`/projects/${filteredImages[lightboxIndex].projectSlug}`}
+                    to={`/projects/${galleryImages[lightboxIndex].projectSlug}`}
                     onClick={() => setLightboxIndex(null)}
                     className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 font-bold tracking-wider uppercase text-sm group"
                   >

@@ -6,35 +6,35 @@ import { ArrowRight } from 'lucide-react';
 // Using clean, properly formatted images from the public folder to ensure they always load
 const BLOGS = [
   {
-    image: "/healthcare_rural.jpg",
+    image: "/healthcare_rural.webp",
     title: "Healthcare Access"
   },
   {
-    image: "/education_rural.jpg",
+    image: "/education_rural.webp",
     title: "Youth Education"
   },
   {
-    image: "/environment_rural.jpg",
+    image: "/environment_rural.webp",
     title: "Eco Sustainability"
   },
   {
-    image: "/empowerment_rural.jpg",
+    image: "/empowerment_rural.webp",
     title: "Community Empowerment"
   },
   {
-    image: "/clean_water.jpg",
+    image: "/clean_water.webp",
     title: "Clean Water Access"
   },
   {
-    image: "/healthcare_rural.jpg", // Reusing clean assets to maintain aesthetic
+    image: "/healthcare_rural.webp", // Reusing clean assets to maintain aesthetic
     title: "Rural Health Camps"
   },
   {
-    image: "/education_rural.jpg",
+    image: "/education_rural.webp",
     title: "Medical Equipment"
   },
   {
-    image: "/empowerment_rural.jpg",
+    image: "/empowerment_rural.webp",
     title: "Community Outreach"
   }
 ];
@@ -51,8 +51,10 @@ export const GalleryStack = () => {
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-[#FAFAF8] to-transparent z-10" />
         <img 
-          src="/image%20copy%208.png" 
+          src="/image%20copy%208.webp" 
           alt="Blogs Background" 
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-contain object-center opacity-[0.35]"
         />
         <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#FAFAF8] to-transparent z-10" />
@@ -125,19 +127,18 @@ export const GalleryStack = () => {
               <div key={idx} className="relative flex flex-col items-center flex-shrink-0 group">
                 
                 {/* The "Clip" and String (Brown colored) */}
-                <div className="w-[1.5px] h-8 bg-[#8b5a2b]/70 relative z-10 flex flex-col items-center transition-all duration-300 group-hover:bg-[#8b5a2b]">
+                <div className="w-[1.5px] h-8 bg-[#8b5a2b]/70 relative z-10 flex flex-col items-center">
                   {/* Top ring/clip on the wire */}
-                  <div className="absolute -top-[5px] w-3 h-3 rounded-full border-[2px] border-[#8b5a2b] bg-[#FAFAF8] shadow-sm transition-all duration-300 group-hover:scale-125 group-hover:border-[#6b421a]" />
+                  <div className="absolute -top-[5px] w-3 h-3 rounded-full border-[2px] border-[#8b5a2b] bg-[#FAFAF8] shadow-sm" />
                 </div>
                 
-                {/* The Hanging Card */}
-                {/* Pauses swaying when hovered, scales up massively, and comes to front */}
+                {/* The Hanging Card - No popping, stable smooth elevation */}
                 <div
                   style={{
                     animation: `gentleSway${animType} ${duration}s ease-in-out infinite`,
                     transformOrigin: 'top center'
                   }}
-                  className="group-hover:[animation-play-state:paused] w-[240px] md:w-[280px] h-[320px] md:h-[360px] bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-slate-100 flex flex-col cursor-pointer transition-all duration-500 group-hover:z-50 group-hover:scale-110 group-hover:-translate-y-2 group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.2)] will-change-transform"
+                  className="w-[240px] md:w-[280px] h-[320px] md:h-[360px] bg-white rounded-2xl shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.1)] border border-slate-100/90 flex flex-col cursor-pointer transition-shadow duration-300 will-change-transform"
                 >
                   
                   {/* Decorative tape/clip at the top of the card (now matches brown theme) */}
@@ -148,7 +149,7 @@ export const GalleryStack = () => {
                     <img
                       src={blog.image}
                       alt={blog.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />

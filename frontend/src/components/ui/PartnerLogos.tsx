@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
 
 const partners = [
-  { name: 'GAIL', type: 'Public Sector Undertaking', image: '/gail_logo.jpg' },
-  { name: 'ONGC', type: 'Public Sector Undertaking', image: '/ongc_logo.jpg' },
-  { name: 'NTPC', type: 'Public Sector Undertaking', image: '/ntpc_logo.jpg' },
-  { name: 'BPCL', type: 'Public Sector Undertaking', image: '/bpcl_logo.jpg' },
-  { name: 'NMDC', type: 'Public Sector Undertaking', image: '/nmdc_logo.jpg' },
-  { name: 'IOCL', type: 'Public Sector Undertaking', image: '/iocl_logo.jpg' },
-  { name: 'HPCL', type: 'Public Sector Undertaking', image: '/hpcl_logo.jpg' },
+  { name: 'GAIL', type: 'Public Sector Undertaking', image: '/gail.png' },
+  { name: 'NTPC', type: 'Public Sector Undertaking', image: '/ntpc.png' },
+  { name: 'BPCL', type: 'Public Sector Undertaking', image: '/bpcl.png' },
+  { name: 'NMDC', type: 'Public Sector Undertaking', image: '/nmdc.png' },
+  { name: 'IOCL', type: 'Public Sector Undertaking', image: '/iocl.png' },
+  { name: 'HPCL', type: 'Public Sector Undertaking', image: '/hpcl.png' },
 ];
 
 export const PartnerLogos = () => {
@@ -50,9 +49,9 @@ export const PartnerLogos = () => {
               className="flex flex-col items-center justify-center mx-12 md:mx-20 group cursor-pointer relative"
             >
               {/* Logo / Name Placeholder */}
-              <div className="flex items-center justify-center transition-all duration-500 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:-translate-y-2 w-32 h-32 md:w-40 md:h-40 mix-blend-multiply">
+              <div className="flex items-center justify-center transition-all duration-500 group-hover:-translate-y-2 w-32 h-32 md:w-40 md:h-40">
                 {partner.image ? (
-                  <img src={partner.image} alt={partner.name} className="w-full h-full object-contain mix-blend-multiply" />
+                  <img src={partner.image} alt={partner.name} className="w-full h-full object-contain" />
                 ) : (
                   <span className="font-serif font-black text-4xl md:text-6xl text-[#333] tracking-tighter">
                     {partner.name}

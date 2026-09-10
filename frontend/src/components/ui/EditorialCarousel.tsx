@@ -19,12 +19,11 @@ export const EditorialCarousel: React.FC<EditorialCarouselProps> = ({ projects }
         return (
           <motion.div
             key={project.id}
-            onHoverStart={() => setActiveIndex(index)}
             onClick={() => setActiveIndex(index)}
             animate={{
               width: isActive ? '75%' : '8.33%',
             }}
-            transition={{ type: "spring", damping: 25, stiffness: 120 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="relative h-full cursor-pointer overflow-hidden bg-[#1a1a1a] rounded-sm group flex-shrink-0"
           >
             {/* Background Image */}

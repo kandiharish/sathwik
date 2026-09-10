@@ -168,29 +168,31 @@ export const InteractiveTunnel = () => {
   });
 
   return (
-    // Total height determines how long it takes to scroll through the whole stack
-    // Reduced from 600vh to 300vh to make the cards come in much faster and snappier
+    // 300vh scrolls through all 8 cards
     <section ref={containerRef} className="relative h-[300vh] bg-[#FAFAF8] z-40">
       
       {/* Sticky Viewport */}
       <div 
         className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center"
-        style={{
-          backgroundImage: `url('/image%20copy.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
       >
-        {/* Soft white overlay for premium aesthetic */}
+        {/* Background image - separated into its own composited layer */}
+        <img
+          src="/image%20copy.webp"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-80 pointer-events-none"
+          style={{ willChange: 'auto' }}
+        />
+        {/* Soft white overlay */}
         <div className="absolute inset-0 bg-white/60 pointer-events-none z-0" />
 
-        {/* Section Heading Badge with Animated Border - Now in standard flow */}
+        {/* Section Heading Badge */}
         <div className="relative z-50 text-center mt-12 md:mt-16 mb-4 shrink-0">
           <div className="relative inline-block rounded-full shadow-lg overflow-hidden bg-white/40 p-[3px]">
-            {/* Spinning continuous lines for heading */}
-            <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(transparent_0%,transparent_85%,#009966_100%)] opacity-90" />
-            <div className="absolute inset-[-200%] animate-[spin_4s_linear_infinite_2s] bg-[conic-gradient(transparent_0%,transparent_85%,#f59e0b_100%)] opacity-90" />
+            {/* Spinning border */}
+            <div className="absolute inset-[-200%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(transparent_0%,transparent_85%,#009966_100%)] opacity-90" />
             
             <div className="relative bg-white/95 backdrop-blur-xl px-12 py-3 rounded-full flex items-center justify-center">
               <h2 
@@ -203,7 +205,7 @@ export const InteractiveTunnel = () => {
           </div>
         </div>
 
-        {/* The Card Stack Viewport - takes remaining vertical space */}
+        {/* The Card Stack Viewport */}
         <div className="relative w-full flex-1 flex items-center justify-center z-10 perspective-1000 pb-10">
           {FOCUS_AREAS.map((item, idx) => (
             <StackCard 

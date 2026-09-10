@@ -7,42 +7,42 @@ const areas = [
   {
     num: "01",
     title: "Empowerment",
-    desc: "SRYIA provides skill development, vocational training, and employment opportunities, helping youth become economically self-sufficient and community leaders.",
+    desc: "SRAYI Association provides skill development, vocational training, and employment opportunities, helping youth become economically self-sufficient and community leaders.",
     color: "bg-[#054E38]",
     textColor: "text-[#054E38]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#054E38]/80 group-hover:to-[#054E38]/20 group-hover:scale-110",
+    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#054E38]/80 group-hover:to-[#054E38]/20",
     icon: <Users className="w-5 h-5" />,
-    image: "/empowerment_rural.jpg"
+    image: "/empowerment_rural.webp"
   },
   {
     num: "02",
     title: "Education and Literacy",
-    desc: "By establishing learning centers and literacy programs, SRYIA ensures access to quality education, focusing on academic and life skills to empower individuals in making informed life choices.",
+    desc: "By establishing learning centers and literacy programs, SRAYI Association ensures access to quality education, focusing on academic and life skills to empower individuals in making informed life choices.",
     color: "bg-[#B84018]",
     textColor: "text-[#B84018]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#B84018]/80 group-hover:to-[#B84018]/20 group-hover:scale-110",
+    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#B84018]/80 group-hover:to-[#B84018]/20",
     icon: <BookOpen className="w-5 h-5" />,
-    image: "/education_rural.jpg"
+    image: "/education_rural.webp"
   },
   {
     num: "03",
     title: "Healthcare & Wellness",
-    desc: "SRYIA promotes preventive healthcare, nutrition, and sanitation awareness through health camps and partnerships with healthcare professionals, improving community well-being.",
+    desc: "SRAYI Association promotes preventive healthcare, nutrition, and sanitation awareness through health camps and partnerships with healthcare professionals, improving community well-being.",
     color: "bg-[#1C4E52]",
     textColor: "text-[#1C4E52]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#1C4E52]/80 group-hover:to-[#1C4E52]/20 group-hover:scale-110",
+    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#1C4E52]/80 group-hover:to-[#1C4E52]/20",
     icon: <HeartPulse className="w-5 h-5" />,
-    image: "/healthcare_rural.jpg"
+    image: "/healthcare_rural.webp"
   },
   {
     num: "04",
     title: "Environmental Sustainability",
-    desc: "Through initiatives in tree planting, waste management, and clean energy adoption, SRYIA encourages eco-friendly practices to preserve natural resources and promote sustainable community growth.",
+    desc: "Through initiatives in tree planting, waste management, and clean energy adoption, SRAYI Association encourages eco-friendly practices to preserve natural resources and promote sustainable community growth.",
     color: "bg-[#064E3B]",
     textColor: "text-[#064E3B]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#064E3B]/80 group-hover:to-[#064E3B]/20 group-hover:scale-110",
+    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#064E3B]/80 group-hover:to-[#064E3B]/20",
     icon: <Leaf className="w-5 h-5" />,
-    image: "/environment_rural.jpg"
+    image: "/environment_rural.webp"
   }
 ];
 
@@ -79,11 +79,13 @@ export const AreasOfFocus = () => {
         <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
         
         <img 
-          src="/image%20copy%207.png" 
+          src="/image%20copy%207.webp" 
           alt="Abstract Areas of Focus Background" 
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover object-center opacity-80"
         />
-        <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-0" />
+        <div className="absolute inset-0 bg-white/40 z-0" />
         
         {/* Bottom Fade */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
@@ -109,7 +111,7 @@ export const AreasOfFocus = () => {
               Promoting Rural <span className="text-[#B84018]">Growth & Development</span>
             </h3>
             <p className="text-gray-600 font-medium text-[15px] max-w-2xl mx-auto">
-              Sathwik Rural and Youth Integrated Association (SRYIA) works across
+              Sathwik Rural and Youth Integrated Association (SRAYI) works across
               key sectors to build stronger, self-reliant rural communities.
             </p>
           </motion.div>
@@ -149,11 +151,11 @@ export const AreasOfFocus = () => {
                 >
                   {/* Colored decorative block behind the card (Top Left) */}
                   <div 
-                    className={`absolute top-0 left-0 w-[40%] h-[40%] rounded-tl-[1.5rem] rounded-br-[1.5rem] ${area.color} z-0 transition-transform duration-700 group-hover:scale-110 group-hover:-translate-x-1 group-hover:-translate-y-1`} 
+                    className={`absolute top-0 left-0 w-[40%] h-[40%] rounded-tl-[1.5rem] rounded-br-[1.5rem] ${area.color} z-0`} 
                   />
                   
                   {/* Main Card (Ultra Compact & Premium) */}
-                  <div className="relative z-10 bg-white rounded-[1.5rem] rounded-tl-[2rem] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col h-full border border-gray-100/50 transition-all duration-700">
+                  <div className="relative z-10 bg-white rounded-[1.5rem] rounded-tl-[2rem] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col h-full border border-gray-100/50 transition-shadow duration-500">
                     
                     {/* Image Section */}
                     <div className="h-[140px] overflow-hidden relative rounded-t-[1.5rem] rounded-tl-[2rem]">
@@ -161,13 +163,13 @@ export const AreasOfFocus = () => {
                       <img 
                         src={area.image} 
                         alt={area.title}
-                        className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" 
+                        className="w-full h-full object-cover" 
                       />
                     </div>
 
                     {/* Circular Overlapping Icon */}
                     <div className="absolute top-[140px] left-5 -translate-y-1/2 w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center shadow-md z-20">
-                      <div className={`w-[85%] h-[85%] rounded-full border-[1.5px] ${area.textColor.replace('text-', 'border-')} flex items-center justify-center bg-white transition-transform duration-500 group-hover:scale-110`}>
+                      <div className={`w-[85%] h-[85%] rounded-full border-[1.5px] ${area.textColor.replace('text-', 'border-')} flex items-center justify-center bg-white`}>
                         <div className={area.textColor}>
                           {area.icon}
                         </div>

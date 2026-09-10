@@ -11,8 +11,8 @@ export const IntroductionSection = () => {
 
   const p1Segments = [
     { text: "Founded in ", className: "" },
-    { text: "2015, Sathwik Rural and Youth Integrated Association (SRYIA)", className: "font-serif font-black text-[#053e2f]" },
-    { text: " is committed to uplifting rural communities by improving socio-economic conditions. Through initiatives in education, skill development, and healthcare, SRYIA has been a driving force for change, empowering youth and ensuring sustainable progress.", className: "" }
+    { text: "2015, Sathwik Rural and Youth Integrated Association (SRAYI)", className: "font-serif font-black text-[#053e2f]" },
+    { text: " is committed to uplifting rural communities by improving socio-economic conditions. Through initiatives in education, skill development, and healthcare, SRAYI Association has been a driving force for change, empowering youth and ensuring sustainable progress.", className: "" }
   ];
   
   const p2Segments = [
@@ -27,8 +27,10 @@ export const IntroductionSection = () => {
         <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
         
         <img 
-          src="/image%20copy%206.png" 
+          src="/image%20copy%206.webp" 
           alt="Introduction Background" 
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-contain object-center opacity-85"
         />
         {/* Very soft white overlay to ensure content is readable, classic Apple style */}
@@ -53,7 +55,7 @@ export const IntroductionSection = () => {
               className="text-6xl md:text-8xl text-[#053e2f]/10 tracking-tight leading-none mb-4"
               style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
             >
-              Introduction to SRYIA
+              Introduction to SRAYI
             </h2>
             <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-10 md:-mt-12">
               Transforming Rural Lives <br />

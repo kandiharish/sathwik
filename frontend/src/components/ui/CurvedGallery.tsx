@@ -1,5 +1,13 @@
+import { useState } from 'react';
 import { Container } from '../layout/Container';
-import { motion } from 'framer-motion';
+import { SectionHeading } from './SectionHeading';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { Img } from '../common/Img';
+import { Lightbox, type LightboxImage } from './Lightbox';
+
+// The home strip shows 12 photos (6 per row); the full set lives on /gallery.
+const PER_ROW = 6;
 
 const TOP_IMAGES = [
   "/gallery-thumb/top-1.webp",
@@ -31,144 +39,89 @@ const BOTTOM_IMAGES = [
   "/gallery-thumb/bot-12.webp",
 ];
 
-// Double the arrays to pack more items onto a massively wide cylinder
-const EXTENDED_TOP = [...TOP_IMAGES, ...TOP_IMAGES];
-const EXTENDED_BOTTOM = [...BOTTOM_IMAGES, ...BOTTOM_IMAGES];
+const altFor = (n: number) => `SRAYI field activity photograph ${n}`;
 
-const radius = 1300;
-const numItems = 24;
-
-// Pre-compute angles to avoid recalculating on every render
-const TOP_ITEMS = EXTENDED_TOP.map((src, i) => ({
+const HOME_IMAGES: LightboxImage[] = [...TOP_IMAGES.slice(0, PER_ROW), ...BOTTOM_IMAGES.slice(0, PER_ROW)].map((src, i) => ({
   src,
-  angle: i * (360 / numItems),
-  key: `top-${i}`,
+  alt: altFor(i + 1),
 }));
 
-const BOTTOM_ITEMS = EXTENDED_BOTTOM.map((src, i) => ({
-  src,
-  angle: i * (360 / numItems),
-  key: `bottom-${i}`,
-}));
+interface RowProps {
+  images: string[];
+  reverse?: boolean;
+  offset?: number;
+  paused?: boolean;
+  onOpen: (index: number) => void;
+}
+
+const Row = ({ images, reverse = false, offset = 0, paused = false, onOpen }: RowProps) => (
+  <ul
+    className={`flex w-max [animation:marquee_80s_linear_infinite] group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]
+      motion-reduce:animate-none motion-reduce:w-auto motion-reduce:overflow-x-auto motion-reduce:px-6
+      ${reverse ? '[animation-direction:reverse]' : ''}`}
+    style={paused ? { animationPlayState: 'paused' } : undefined}
+  >
+    {[...images, ...images].map((src, i) => {
+      const duplicate = i >= images.length;
+      return (
+        <li
+          key={`${src}-${i}`}
+          aria-hidden={duplicate || undefined}
+          className={`mr-4 md:mr-5 w-[220px] md:w-[320px] shrink-0 overflow-hidden rounded-2xl border border-line bg-sand ${
+            duplicate ? 'motion-reduce:hidden' : ''
+          }`}
+        >
+          <button
+            type="button"
+            tabIndex={duplicate ? -1 : undefined}
+            onClick={() => onOpen((i % images.length) + offset)}
+            aria-label={duplicate ? undefined : `Open ${altFor((i % images.length) + 1 + offset)}`}
+            className="block w-full cursor-zoom-in overflow-hidden rounded-2xl focus-visible:outline-offset-[-3px]"
+          >
+            <Img
+              src={src}
+              alt={duplicate ? '' : altFor((i % images.length) + 1 + offset)}
+              width={560}
+              height={400}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[7/5] h-auto w-full object-cover transition-transform duration-700 hover:scale-[1.04]"
+            />
+          </button>
+        </li>
+      );
+    })}
+  </ul>
+);
 
 export const CurvedGallery = () => {
+  const [open, setOpen] = useState<number | null>(null);
+  const paused = open !== null;
+
   return (
-    <section className="py-24 bg-white relative overflow-hidden w-full">
-      <Container className="relative z-10 mb-8">
-        <div className="flex flex-col items-center text-center w-full max-w-2xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-            className="w-full"
-          >
-            <h2 
-              className="text-5xl md:text-7xl text-[#d4c8b8]/40 tracking-tight leading-none mb-3"
-              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
-            >
-              Our Impressive Works
-            </h2>
-            <h3 className="text-5xl md:text-6xl lg:text-[72px] font-serif font-black text-[#054E38] tracking-tighter -mt-6 md:-mt-8 drop-shadow-sm">
-              Gallery
-            </h3>
-          </motion.div>
-        </div>
+    <section className="section relative w-full overflow-hidden bg-white">
+      <Container>
+        <SectionHeading eyebrow="Our Impressive Works" title={<em>Gallery</em>} />
       </Container>
 
-      {/* 3D Scene Container - Covers full window */}
       <div
-        className="relative w-full overflow-hidden pt-10 pb-10"
+        className="group flex flex-col gap-4 md:gap-5"
         style={{
-          maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+          maskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
         }}
       >
-        {/* Perspective wrapper */}
-        <div className="w-full flex flex-col gap-10 md:gap-14 items-center" style={{ perspective: '2000px' }}>
-          
-          {/* TOP ROW - 3D Cylinder */}
-          <div
-            className="relative w-[280px] h-[200px]"
-            style={{
-              transformStyle: 'preserve-3d',
-              animation: `rotateCylinderRight 45s infinite linear`,
-              willChange: 'transform',
-            }}
-          >
-            {TOP_ITEMS.map(({ src, angle, key }) => (
-              <div 
-                key={key}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  contain: 'strict',
-                }}
-                className="rounded-2xl overflow-hidden shadow-[0_15px_40px_rgb(0,0,0,0.12)] border border-slate-100/50 bg-slate-50"
-              >
-                <img 
-                  src={src} 
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover"
-                  style={{ willChange: 'auto' }}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* BOTTOM ROW - 3D Cylinder */}
-          <div
-            className="relative w-[280px] h-[200px]"
-            style={{
-              transformStyle: 'preserve-3d',
-              animation: `rotateCylinderLeft 45s infinite linear`,
-              willChange: 'transform',
-            }}
-          >
-            {BOTTOM_ITEMS.map(({ src, angle, key }) => (
-              <div 
-                key={key}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  contain: 'strict',
-                }}
-                className="rounded-2xl overflow-hidden shadow-[0_15px_40px_rgb(0,0,0,0.12)] border border-slate-100/50 bg-slate-50"
-              >
-                <img 
-                  src={src} 
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover"
-                  style={{ willChange: 'auto' }}
-                />
-              </div>
-            ))}
-          </div>
-
-        </div>
+        <Row images={TOP_IMAGES.slice(0, PER_ROW)} paused={paused} onOpen={setOpen} />
+        <Row images={BOTTOM_IMAGES.slice(0, PER_ROW)} reverse offset={PER_ROW} paused={paused} onOpen={setOpen} />
       </div>
 
-      {/* CSS keyframes injected once at module level via a style tag outside the animated elements */}
-      <style>{`
-        @keyframes rotateCylinderRight {
-          from { transform: translateZ(-${radius}px) rotateY(0deg); }
-          to   { transform: translateZ(-${radius}px) rotateY(-360deg); }
-        }
-        @keyframes rotateCylinderLeft {
-          from { transform: translateZ(-${radius}px) rotateY(0deg); }
-          to   { transform: translateZ(-${radius}px) rotateY(360deg); }
-        }
-      `}</style>
+      <Lightbox images={HOME_IMAGES} index={open} onClose={() => setOpen(null)} onIndexChange={setOpen} />
+
+      <div className="mt-12 flex justify-center">
+        <Link to="/gallery" className="btn btn-outline">
+          View Full Gallery <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
+      </div>
     </section>
   );
 };

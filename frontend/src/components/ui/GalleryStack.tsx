@@ -1,185 +1,165 @@
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { Container } from '../layout/Container';
-import { ArrowRight } from 'lucide-react';
+import { SectionHeading } from './SectionHeading';
+import { MapPin } from 'lucide-react';
+import { Img } from '../common/Img';
+import { Lightbox, type LightboxImage } from './Lightbox';
 
-// Using clean, properly formatted images from the public folder to ensure they always load
-const BLOGS = [
+// Using real, high-resolution project photographs from actual field interventions
+const STORIES = [
   {
-    image: "/healthcare_rural.webp",
-    title: "Healthcare Access"
+    image: "/real-stories/story-1.webp",
+    category: "Healthcare",
+    title: "Rural Mobile Health Camps",
+    location: "Andhra Pradesh"
   },
   {
-    image: "/education_rural.webp",
-    title: "Youth Education"
+    image: "/real-stories/story-2.webp",
+    category: "Skill Training",
+    title: "GAIL Institute of Skills",
+    location: "Nagaram, AP"
   },
   {
-    image: "/environment_rural.webp",
-    title: "Eco Sustainability"
+    image: "/real-stories/story-3.webp",
+    category: "Water & Sanitation",
+    title: "Drinking Water RO Plants",
+    location: "Janaagama, TS"
   },
   {
-    image: "/empowerment_rural.webp",
-    title: "Community Empowerment"
+    image: "/real-stories/story-4.webp",
+    category: "Education Support",
+    title: "School Bicycle Distribution",
+    location: "Karimnagar"
   },
   {
-    image: "/clean_water.webp",
-    title: "Clean Water Access"
+    image: "/real-stories/story-5.webp",
+    category: "Nutrition Aid",
+    title: "Poshak Protein Kits for Women",
+    location: "Hyderabad"
   },
   {
-    image: "/healthcare_rural.webp", // Reusing clean assets to maintain aesthetic
-    title: "Rural Health Camps"
+    image: "/real-stories/story-6.webp",
+    category: "Sports & Wellness",
+    title: "Open-Air Community Gym",
+    location: "Hyderabad"
   },
   {
-    image: "/education_rural.webp",
-    title: "Medical Equipment"
+    image: "/real-stories/story-7.webp",
+    category: "Disability Inclusion",
+    title: "Hospital Wheelchairs & Monitors",
+    location: "Sattenapalle, AP"
   },
   {
-    image: "/empowerment_rural.webp",
-    title: "Community Outreach"
+    image: "/real-stories/story-8.webp",
+    category: "Clean Water",
+    title: "Govt School Water Infrastructure",
+    location: "Banka, Bihar"
   }
 ];
 
-// Duplicate for continuous seamless scrolling (Marquee)
-const EXTENDED_BLOGS = [...BLOGS, ...BLOGS];
+type Story = (typeof STORIES)[number];
 
-export const GalleryStack = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const LIGHTBOX_IMAGES: LightboxImage[] = STORIES.map((s) => ({
+  src: s.image,
+  alt: s.title,
+  caption: `${s.title} · ${s.location}`,
+}));
 
-  return (
-    <section className="py-24 relative overflow-hidden bg-[#FAFAF8] z-10 flex flex-col">
-      {/* Background with seamless fades */}
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-[30vh] bg-gradient-to-b from-[#FAFAF8] to-transparent z-10" />
-        <img 
-          src="/image%20copy%208.webp" 
-          alt="Blogs Background" 
+const HangingCard = ({ story, hidden = false, onOpen }: { story: Story; hidden?: boolean; onOpen: () => void }) => (
+  <li
+    className={`relative mr-10 md:mr-14 flex shrink-0 flex-col items-center ${hidden ? 'motion-reduce:hidden' : ''}`}
+    aria-hidden={hidden || undefined}
+  >
+    {/* String + clip on the rope */}
+    <div className="relative flex h-7 w-px flex-col items-center bg-gold/60" aria-hidden="true">
+      <span className="absolute -top-[5px] h-2.5 w-2.5 rounded-full border-2 border-gold bg-background" />
+    </div>
+
+    <article className="group/card relative w-[240px] md:w-[272px] overflow-hidden rounded-2xl border border-line bg-white shadow-[0_10px_30px_-12px_rgba(26,28,25,0.18)] transition-shadow duration-500 hover:shadow-[0_18px_40px_-14px_rgba(26,28,25,0.25)]">
+      {/* Clip / tape */}
+      <span className="absolute left-1/2 top-0 z-10 h-2.5 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/40 bg-gold-soft" aria-hidden="true" />
+
+      <button
+        type="button"
+        onClick={onOpen}
+        tabIndex={hidden ? -1 : undefined}
+        aria-label={hidden ? undefined : `Open photo: ${story.title}`}
+        className="block aspect-[4/3] w-full cursor-zoom-in overflow-hidden bg-sand focus-visible:outline-offset-[-3px]"
+      >
+        <Img
+          src={story.image}
+          alt={hidden ? '' : story.title}
+          width={544}
+          height={408}
           loading="lazy"
           decoding="async"
-          className="w-full h-full object-contain object-center opacity-[0.35]"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-[1.04]"
         />
-        <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-[#FAFAF8] to-transparent z-10" />
-      </div>
-      
-      <Container className="relative z-10 pointer-events-none">
-        <div className="flex flex-col items-center text-center mb-16 mt-0 w-full max-w-2xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 
-              className="text-5xl md:text-7xl text-[#d4c8b8]/40 tracking-tight leading-none mb-3"
-              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
-            >
-              Stories of Change
-            </h2>
-            <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-8 md:-mt-10">
-              Our Latest Blogs
-            </h3>
-            <p className="text-gray-600 font-medium text-[15px] mt-4 max-w-lg mx-auto">
-              Swipe through our recent field activities and see the real-world impact we're making across rural areas.
-            </p>
-          </motion.div>
+      </button>
+
+      <div className="flex flex-col gap-2 p-5">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">{story.category}</span>
+        <h3 className="font-serif text-lg font-semibold leading-snug text-ink line-clamp-2 min-h-[2.8em]">{story.title}</h3>
+        <div className="mt-1 flex items-center gap-1.5 border-t border-line pt-3 text-[13px] text-ink-muted">
+          <MapPin className="h-3.5 w-3.5 shrink-0 text-secondary" aria-hidden="true" />
+          <span className="truncate">{story.location}</span>
         </div>
+      </div>
+    </article>
+  </li>
+);
+
+export const GalleryStack = () => {
+  const [open, setOpen] = useState<number | null>(null);
+
+  return (
+    <section className="section relative overflow-hidden bg-background">
+      {/* Decorative background photo, very low opacity */}
+      <Img
+        src="/image%20copy%208.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-[0.12]"
+      />
+
+      <Container className="relative">
+        <SectionHeading
+          eyebrow="Stories of Change"
+          title={<>Recent <em>Field Activities</em></>}
+          description="Authentic moments from our verified grassroots projects, health camps, and community infrastructure across rural India."
+        />
       </Container>
 
-      {/* Global Style for high-performance GPU animations */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes gentleSway1 {
-          0%, 100% { transform: rotate(-1.5deg); }
-          50% { transform: rotate(1.5deg); }
-        }
-        @keyframes gentleSway2 {
-          0%, 100% { transform: rotate(1.5deg); }
-          50% { transform: rotate(-1.5deg); }
-        }
-        @keyframes gentleSway3 {
-          0%, 100% { transform: rotate(-2deg); }
-          50% { transform: rotate(1deg); }
-        }
-        @keyframes marqueeScroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .marquee-track:hover {
-          animation-play-state: paused;
-        }
-      `}} />
+      {/* Clothesline */}
+      <div
+        className="group relative w-full overflow-hidden pt-2"
+        style={{
+          maskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+        }}
+      >
+        {/* Rope */}
+        <div className="absolute left-0 top-2 h-px w-full bg-gold/70" aria-hidden="true" />
 
-      {/* Clothesline Container */}
-      <div className="relative w-full mt-10 z-20" ref={containerRef}>
-        
-        {/* The infinite horizontal line (the brown clothesline rope) */}
-        <div className="absolute top-0 left-0 w-full h-[2px] bg-[#8b5a2b]/80 z-0 shadow-sm" />
-
-        {/* The scrollable track of hanging cards - Uses CSS marquee animation */}
-        <div 
-          className="flex gap-12 md:gap-16 px-8 pb-32 pt-0 w-max will-change-transform marquee-track"
-          style={{ animation: 'marqueeScroll 40s linear infinite' }}
+        <ul
+          className="flex w-max pb-6 [animation:marquee_60s_linear_infinite]
+            group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]
+            motion-reduce:animate-none motion-reduce:w-auto motion-reduce:overflow-x-auto motion-reduce:px-6"
+          style={open !== null ? { animationPlayState: 'paused' } : undefined}
         >
-          
-          {EXTENDED_BLOGS.map((blog, idx) => {
-            const animType = (idx % 3) + 1;
-            const duration = 4.5 + (idx % 2); // 4.5s or 5.5s
-            
-            return (
-              <div key={idx} className="relative flex flex-col items-center flex-shrink-0 group">
-                
-                {/* The "Clip" and String (Brown colored) */}
-                <div className="w-[1.5px] h-8 bg-[#8b5a2b]/70 relative z-10 flex flex-col items-center">
-                  {/* Top ring/clip on the wire */}
-                  <div className="absolute -top-[5px] w-3 h-3 rounded-full border-[2px] border-[#8b5a2b] bg-[#FAFAF8] shadow-sm" />
-                </div>
-                
-                {/* The Hanging Card - No popping, stable smooth elevation */}
-                <div
-                  style={{
-                    animation: `gentleSway${animType} ${duration}s ease-in-out infinite`,
-                    transformOrigin: 'top center'
-                  }}
-                  className="w-[240px] md:w-[280px] h-[320px] md:h-[360px] bg-white rounded-2xl shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.1)] border border-slate-100/90 flex flex-col cursor-pointer transition-shadow duration-300 will-change-transform"
-                >
-                  
-                  {/* Decorative tape/clip at the top of the card (now matches brown theme) */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-2.5 bg-[#8b5a2b]/20 backdrop-blur-md border border-[#8b5a2b]/30 rounded-full z-20 shadow-sm" />
-
-                  {/* Blog Image */}
-                  <div className="w-full h-[60%] relative overflow-hidden bg-slate-100 rounded-t-2xl">
-                    <img
-                      src={blog.image}
-                      alt={blog.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
-                  </div>
-                  
-                  {/* Blog Content */}
-                  <div className="flex-1 p-5 flex flex-col justify-between bg-white relative rounded-b-2xl">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[9px] font-bold tracking-widest uppercase text-[#054E38]/70 bg-[#054E38]/5 px-2 py-1 rounded-sm">
-                          Impact Story
-                        </span>
-                      </div>
-                      <h4 className="text-lg font-serif font-black text-slate-900 tracking-tight leading-tight line-clamp-2">
-                        {blog.title}
-                      </h4>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 text-[#cc4a14] font-bold text-[11px] uppercase tracking-widest group-hover:text-[#a3380e] transition-colors">
-                      Read Article <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-2 transition-transform" />
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            );
-          })}
-          
-        </div>
+          {STORIES.map((story, i) => (
+            <HangingCard key={story.title} story={story} onOpen={() => setOpen(i)} />
+          ))}
+          {/* Duplicate set for a seamless loop (hidden from assistive tech and when motion is reduced) */}
+          {STORIES.map((story, i) => (
+            <HangingCard key={`dup-${story.title}`} story={story} hidden onOpen={() => setOpen(i)} />
+          ))}
+        </ul>
       </div>
+
+      <Lightbox images={LIGHTBOX_IMAGES} index={open} onClose={() => setOpen(null)} onIndexChange={setOpen} />
     </section>
   );
 };

@@ -49,3 +49,36 @@ export const organizationInfo: OrganizationInfo = {
     }
   ]
 };
+
+/**
+ * Milestone periods from the organisation's original About page.
+ * The About page groups `organizationInfo.timeline` events under these phases,
+ * so there is a single, merged history timeline.
+ */
+export const milestonePhases = [
+  {
+    period: '2015 to 2018',
+    startYear: 2015,
+    endYear: 2018,
+    description: 'Established foundational programs in education and vocational skills.'
+  },
+  {
+    period: '2018 to 2021',
+    startYear: 2018,
+    endYear: 2021,
+    description: 'Launched healthcare and environmental sustainability initiatives.'
+  },
+  {
+    period: '2021 to Present',
+    startYear: 2021,
+    endYear: Number.POSITIVE_INFINITY,
+    description: 'Expanded partnerships for rural entrepreneurship and youth leadership programs.'
+  }
+];
+
+/** Returns the timeline events that fall inside a phase (start inclusive, end exclusive). */
+export const eventsForPhase = (phase: (typeof milestonePhases)[number]) =>
+  organizationInfo.timeline.filter((event) => {
+    const year = parseInt(event.year, 10);
+    return year >= phase.startYear && year < phase.endYear;
+  });

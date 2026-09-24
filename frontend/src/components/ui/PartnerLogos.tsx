@@ -1,72 +1,63 @@
-import { motion } from 'framer-motion';
+import { Container } from '../layout/Container';
+import { SectionHeading } from './SectionHeading';
+import { Img } from '../common/Img';
 
 const partners = [
-  { name: 'GAIL', type: 'Public Sector Undertaking', image: '/gail.png' },
-  { name: 'NTPC', type: 'Public Sector Undertaking', image: '/ntpc.png' },
-  { name: 'BPCL', type: 'Public Sector Undertaking', image: '/bpcl.png' },
-  { name: 'NMDC', type: 'Public Sector Undertaking', image: '/nmdc.png' },
-  { name: 'IOCL', type: 'Public Sector Undertaking', image: '/iocl.png' },
-  { name: 'HPCL', type: 'Public Sector Undertaking', image: '/hpcl.png' },
+  { name: 'GAIL', type: 'Public Sector Undertaking', image: '/partners/gail.webp' },
+  { name: 'NTPC', type: 'Public Sector Undertaking', image: '/partners/ntpc.webp' },
+  { name: 'HAL', type: 'Public Sector Undertaking', image: '/partners/hal.webp' },
+  { name: 'BPCL', type: 'Public Sector Undertaking', image: '/partners/bpcl.webp' },
+  { name: 'NMDC', type: 'Public Sector Undertaking', image: '/partners/nmdc.webp' },
+  { name: 'IOCL', type: 'Public Sector Undertaking', image: '/partners/iocl.webp' },
+  { name: 'HPCL', type: 'Public Sector Undertaking', image: '/partners/hpcl.webp' },
 ];
 
 export const PartnerLogos = () => {
-  // Duplicate array multiple times to ensure a seamless infinite loop on ultra-wide screens
-  const duplicatedPartners = [...partners, ...partners, ...partners];
+  // Two copies for a seamless -50% loop; the copy is hidden from AT and when motion is reduced.
+  const items = [...partners, ...partners];
 
   return (
-    <section className="py-24 lg:py-32 bg-[#FAFAF8] relative overflow-hidden border-t border-[#eae5dd]">
-      
-      {/* Sleek Heading */}
-      <div className="text-center mb-16 relative z-10 px-4">
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-col items-center"
+    <section className="section border-t border-line bg-background overflow-hidden">
+      <Container>
+        <SectionHeading
+          title={<>Trusted By <em>Industry Leaders</em></>}
+          eyebrow="Our Visionary Corporate Social Responsibility Partners"
+        />
+      </Container>
+
+      <div className="group relative w-full overflow-hidden">
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 md:w-40 bg-gradient-to-r from-background to-transparent motion-reduce:hidden" aria-hidden="true" />
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 md:w-40 bg-gradient-to-l from-background to-transparent motion-reduce:hidden" aria-hidden="true" />
+
+        <ul
+          className="flex w-max items-center py-4 [animation:marquee_45s_linear_infinite]
+            group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]
+            motion-reduce:animate-none motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-y-8 motion-reduce:px-6"
         >
-          <h2 className="text-3xl md:text-5xl font-serif text-[#111] mb-2 tracking-tight">
-            Trusted By <span className="text-[#054E38] italic">Industry Leaders</span>
-          </h2>
-          <div className="w-16 h-[2px] bg-[#054E38] mx-auto mt-6 mb-6" />
-          <p className="text-xs font-bold tracking-[0.25em] uppercase text-[#666]">
-            Our Corporate Social Responsibility Partners
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Infinite Marquee Container */}
-      <div className="relative w-full overflow-hidden flex items-center mt-8 py-4">
-        
-        {/* Fading gradients at edges to make them smoothly appear/disappear */}
-        <div className="absolute left-0 top-0 w-24 md:w-48 h-full bg-gradient-to-r from-[#FAFAF8] to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 w-24 md:w-48 h-full bg-gradient-to-l from-[#FAFAF8] to-transparent z-20 pointer-events-none" />
-
-        {/* The scrolling track */}
-        <div className="flex w-max animate-marquee">
-          {duplicatedPartners.map((partner, idx) => (
-            <div 
-              key={`${partner.name}-${idx}`} 
-              className="flex flex-col items-center justify-center mx-12 md:mx-20 group cursor-pointer relative"
-            >
-              {/* Logo / Name Placeholder */}
-              <div className="flex items-center justify-center transition-all duration-500 group-hover:-translate-y-2 w-32 h-32 md:w-40 md:h-40">
-                {partner.image ? (
-                  <img src={partner.image} alt={partner.name} className="w-full h-full object-contain" />
-                ) : (
-                  <span className="font-serif font-black text-4xl md:text-6xl text-[#333] tracking-tighter">
-                    {partner.name}
-                  </span>
-                )}
-              </div>
-              
-              {/* Subtle Partner Type Tooltip below */}
-              <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[10px] font-bold tracking-widest uppercase text-amber-700 whitespace-nowrap">
-                {partner.type}
-              </span>
-            </div>
-          ))}
-        </div>
-        
+          {items.map((partner, idx) => {
+            const duplicate = idx >= partners.length;
+            return (
+              <li
+                key={`${partner.name}-${idx}`}
+                aria-hidden={duplicate || undefined}
+                className={`flex shrink-0 flex-col items-center px-8 md:px-14 ${duplicate ? 'motion-reduce:hidden' : ''}`}
+                title={`${partner.name}, ${partner.type}`}
+              >
+                <Img
+                  src={partner.image}
+                  alt={duplicate ? '' : `${partner.name} logo`}
+                  width={160}
+                  height={56}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-14 md:h-16 w-auto max-w-[170px] object-contain transition-transform duration-500 hover:scale-105"
+                />
+                <span className="sr-only">{partner.type}</span>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

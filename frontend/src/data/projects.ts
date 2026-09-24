@@ -42,7 +42,7 @@ export const projects: Project[] = [
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
     images: getImages(['Bihar ro plant 50 lakhs']),
-    beforeImage: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).jpeg',
+    beforeImage: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).webp',
     tags: ['Water', 'RO Plant', 'Sanitation']
   },
   {

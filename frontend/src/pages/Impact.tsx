@@ -1,135 +1,117 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Section } from '../components/layout/Section';
 import { Container } from '../components/layout/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { impactStats } from '../data/impact';
 import { ArrowRight, MapPin, Target, Landmark } from 'lucide-react';
 
+const fadeUp = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+};
+
+const EXPLORE = [
+  {
+    title: 'Geographic Reach',
+    text: "Explore our interactive map to see the communities and states we've reached across India.",
+    cta: 'View Impact Map',
+    to: '/impact/map',
+    icon: MapPin,
+  },
+  {
+    title: 'Strategic Areas',
+    text: 'We focus on Healthcare, Water & Sanitation, Education, and Community Development.',
+    cta: 'Browse Projects',
+    to: '/projects',
+    icon: Target,
+  },
+  {
+    title: 'CSR Partners',
+    text: 'Our initiatives are supported by major Public Sector Undertakings including GAIL, ONGC, and NTPC.',
+    cta: 'Learn More',
+    to: '/about',
+    icon: Landmark,
+  },
+];
+
 export const Impact = () => {
   return (
-    <div className="bg-[#FAFAF8] min-h-screen">
-      <section className="pt-32 pb-16">
+    <div className="bg-background min-h-screen">
+      {/* Hero */}
+      <section className="page-hero pt-32 pb-10 md:pt-40 md:pb-14">
         <Container>
           <div className="max-w-3xl">
-            <SectionHeading 
-              title="Our Impact Dashboard" 
-              subtitle="A Decade of Delivering Change"
+            <SectionHeading
+              as="h1"
+              eyebrow="A Decade of Delivering Change"
+              title={<>Our Impact <em>Dashboard</em></>}
+              description="SATHWIK has a proven track record of over a decade implementing CSR projects in association with multiple Public Sector Undertakings."
               alignment="left"
+              className="!mb-0"
             />
-            <p className="text-xl text-gray-600 mt-6 leading-relaxed">
-              SATHWIK has a proven track record of over a decade implementing CSR projects in association with multiple Public Sector Undertakings.
-            </p>
           </div>
         </Container>
       </section>
 
-      {/* Main Stats Grid */}
-      <Section className="pt-0 pb-20">
+      {/* Main stats */}
+      <section className="pb-16 md:pb-24" aria-label="Impact figures">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {impactStats.map((stat, idx) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-white p-8 rounded-[2rem] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 flex flex-col items-center text-center group hover:-translate-y-1 transition-transform duration-300"
-              >
-                <div className="text-4xl md:text-5xl font-serif font-bold text-[#054E38] mb-2 flex items-baseline justify-center">
-                  {stat.prefix && <span className="text-2xl mr-1">{stat.prefix}</span>}
-                  {stat.value}
-                  {stat.suffix && <span className="text-2xl ml-1">{stat.suffix}</span>}
-                </div>
-                <div className="text-sm font-bold tracking-widest uppercase text-gray-900 mb-2">
-                  {stat.label}
-                </div>
-                {stat.description && (
-                  <div className="text-sm text-gray-500 mt-auto">
-                    {stat.description}
-                  </div>
-                )}
+          <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line rounded-2xl overflow-hidden">
+            {impactStats.map((stat) => (
+              <motion.div key={stat.label} {...fadeUp} className="bg-white p-8 md:p-10 flex flex-col-reverse justify-end">
+                <dt>
+                  <span className="block mt-3 text-[12px] font-semibold tracking-[0.12em] uppercase text-ink">
+                    {stat.label}
+                  </span>
+                  {stat.description && (
+                    <span className="block mt-2 text-[15px] leading-relaxed text-ink-muted">{stat.description}</span>
+                  )}
+                </dt>
+                <dd className="font-serif font-semibold text-primary tracking-tight flex items-baseline flex-wrap">
+                  {stat.prefix && <span className="text-3xl md:text-4xl mr-0.5">{stat.prefix}</span>}
+                  <span className="text-5xl md:text-6xl">{stat.value}</span>
+                  {stat.suffix && <span className="text-2xl md:text-3xl ml-1 text-gold">{stat.suffix}</span>}
+                </dd>
               </motion.div>
             ))}
-          </div>
+          </dl>
         </Container>
-      </Section>
+      </section>
 
-      {/* Deep Dive Categories */}
-      <Section className="bg-white py-24 border-y border-gray-100">
+      {/* Explore */}
+      <section className="section bg-white border-t border-line">
         <Container>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4">Explore Our Work</h2>
-              <p className="text-lg text-gray-600">
-                Discover the specific ways we are creating meaningful change across communities in India.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Geographic Impact */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="group bg-[#FAFAF8] rounded-[2rem] p-8 md:p-10 flex flex-col h-full border border-gray-100"
-            >
-              <div className="w-14 h-14 bg-[#054E38]/10 text-[#054E38] rounded-2xl flex items-center justify-center mb-6">
-                <MapPin className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">Geographic Reach</h3>
-              <p className="text-gray-600 mb-8 flex-grow">
-                Explore our interactive map to see the communities and states we've reached across India.
-              </p>
-              <Link to="/impact/map" className="inline-flex items-center gap-2 text-[#054E38] font-bold uppercase tracking-wider text-sm hover:gap-4 transition-all">
-                View Impact Map <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-
-            {/* Strategic Programs */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="group bg-[#FAFAF8] rounded-[2rem] p-8 md:p-10 flex flex-col h-full border border-gray-100"
-            >
-              <div className="w-14 h-14 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center mb-6">
-                <Target className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">Strategic Areas</h3>
-              <p className="text-gray-600 mb-8 flex-grow">
-                We focus on Healthcare, Water & Sanitation, Education, and Community Development.
-              </p>
-              <Link to="/projects" className="inline-flex items-center gap-2 text-amber-700 font-bold uppercase tracking-wider text-sm hover:gap-4 transition-all">
-                Browse Projects <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-
-            {/* CSR Partners */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="group bg-[#FAFAF8] rounded-[2rem] p-8 md:p-10 flex flex-col h-full border border-gray-100"
-            >
-              <div className="w-14 h-14 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center mb-6">
-                <Landmark className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">CSR Partners</h3>
-              <p className="text-gray-600 mb-8 flex-grow">
-                Our initiatives are supported by major Public Sector Undertakings including GAIL, ONGC, and NTPC.
-              </p>
-              <Link to="/about" className="inline-flex items-center gap-2 text-blue-700 font-bold uppercase tracking-wider text-sm hover:gap-4 transition-all">
-                Learn More <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
+          <SectionHeading
+            eyebrow="Go Deeper"
+            title={<>Explore Our <em>Work</em></>}
+            description="Discover the specific ways we are creating meaningful change across communities in India."
+            alignment="left"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {EXPLORE.map((item) => {
+              const Icon = item.icon;
+              return (
+                <motion.article key={item.title} {...fadeUp} className="group relative card card-hover p-8 md:p-10 flex flex-col">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-soft text-primary mb-6">
+                    <Icon className="w-5 h-5" aria-hidden="true" />
+                  </span>
+                  <h3 className="font-serif font-semibold text-2xl text-ink mb-3">{item.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-ink-muted mb-8 flex-grow">{item.text}</p>
+                  <Link
+                    to={item.to}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary after:absolute after:inset-0"
+                  >
+                    {item.cta}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </Link>
+                </motion.article>
+              );
+            })}
           </div>
         </Container>
-      </Section>
+      </section>
     </div>
   );
 };

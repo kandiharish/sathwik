@@ -1,122 +1,178 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Quote } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Container } from '../components/layout/Container';
+import { ButtonLink } from '../components/ui/Button';
 import { stories } from '../data/stories';
 import { projects } from '../data/projects';
+import { programs } from '../data/programs';
+import { usePageMeta, breadcrumbs } from '../lib/seo';
+import { Img } from '../components/common/Img';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+};
+
+const truncate = (text: string, max = 155) => {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  return `${clean.slice(0, max - 1).replace(/\s+\S*$/, '')}…`;
+};
 
 export const StoryDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const story = stories.find(s => s.slug === slug);
+  const story = stories.find((s) => s.slug === slug);
+
+  usePageMeta(
+    story
+      ? {
+          title: `${story.title} | SATHWIK Stories`,
+          description: truncate(story.situation),
+          path: `/stories/${story.slug}`,
+          image: story.heroImage,
+          type: 'article',
+          jsonLd: [
+            breadcrumbs([
+              { name: 'Stories', path: '/stories' },
+              { name: story.title, path: `/stories/${story.slug}` },
+            ]),
+          ],
+        }
+      : null,
+  );
 
   if (!story) {
     return (
-      <div className="min-h-screen pt-40 pb-20 flex flex-col items-center justify-center bg-[#FAFAF8]">
-        <h1 className="text-3xl font-serif font-bold text-gray-900 mb-4">Story Not Found</h1>
-        <Link to="/stories" className="text-[#054E38] hover:underline font-medium flex items-center gap-2">
-          <ArrowLeft className="w-4 h-4" /> Back to Stories
-        </Link>
-      </div>
+      <section className="min-h-[70vh] bg-background pt-36 pb-24 md:pt-44">
+        <Container className="max-w-2xl text-center">
+          <span className="eyebrow eyebrow-center mb-5">Stories</span>
+          <h1 className="display-title mb-6">Story Not Found</h1>
+          <ButtonLink to="/stories" variant="outline">
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back to Stories
+          </ButtonLink>
+        </Container>
+      </section>
     );
   }
 
-  const relatedProject = story.relatedProjectId ? projects.find(p => p.id === story.relatedProjectId) : null;
+  const relatedProject = story.relatedProjectId ? projects.find((p) => p.id === story.relatedProjectId) : null;
+  const relatedProgram = story.relatedProgramId ? programs.find((p) => p.id === story.relatedProgramId) : null;
+  const moreStories = stories.filter((s) => s.id !== story.id).slice(0, 3);
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen">
+    <div className="min-h-screen bg-background">
       <article>
         {/* HERO */}
-        <section className="relative h-[60vh] md:h-[75vh] min-h-[500px] flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0">
-            <img 
-              src={story.heroImage} 
-              alt={story.title} 
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAF8] via-transparent to-transparent" />
-          </div>
-          
-          <Container className="relative z-10 w-full text-center mt-20">
+        <header className="bg-background page-hero pt-32 pb-10 md:pt-40 md:pb-14">
+          <Container>
+            <nav aria-label="Breadcrumb" className="mb-10 flex justify-center text-[13px] text-ink-muted">
+              <ol className="flex flex-wrap items-center justify-center gap-2">
+                <li><Link to="/" className="link-underline hover:text-primary">Home</Link></li>
+                <li aria-hidden="true" className="text-line">/</li>
+                <li><Link to="/stories" className="link-underline hover:text-primary">Stories</Link></li>
+                <li aria-hidden="true" className="text-line">/</li>
+                <li aria-current="page" className="text-ink line-clamp-1">{story.title}</li>
+              </ol>
+            </nav>
+
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="mx-auto max-w-4xl text-center"
             >
-              <Link to="/stories" className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-6 text-sm font-bold uppercase tracking-widest bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                <ArrowLeft className="w-4 h-4" /> Back to Stories
-              </Link>
-              
-              <div className="mb-4">
-                <span className="text-amber-400 font-bold tracking-[0.2em] uppercase text-sm drop-shadow-md">
-                  {story.category}
-                </span>
-              </div>
-              
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white max-w-4xl mx-auto leading-tight drop-shadow-lg">
+              <span className="eyebrow eyebrow-center mb-6">{story.category}</span>
+              <h1 className="font-serif text-4xl font-semibold leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-6xl">
                 {story.title}
               </h1>
+              {(story.location || story.date) && (
+                <p className="mt-6 text-[14px] text-ink-muted">
+                  {[story.location, story.date].filter(Boolean).join(' · ')}
+                </p>
+              )}
             </motion.div>
           </Container>
-        </section>
+        </header>
+
+        <Container>
+          <figure data-reveal="wipe" className="mx-auto aspect-[16/10] max-w-6xl overflow-hidden rounded-2xl bg-sand md:aspect-[2/1]">
+            <Img
+              src={story.heroImage}
+              alt={story.title}
+              width={1600}
+              height={800}
+              fetchPriority="high"
+              sizes="(max-width: 1280px) 100vw, 1216px"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </figure>
+        </Container>
 
         {/* CONTENT */}
-        <section className="pb-24 -mt-10 relative z-20">
+        <section className="section bg-background">
           <Container>
-            <div className="max-w-3xl mx-auto bg-white p-8 md:p-16 rounded-[2rem] shadow-[0_20px_40px_rgb(0,0,0,0.06)] border border-gray-100">
-              
-              <div className="prose prose-lg md:prose-xl prose-p:text-gray-600 prose-p:leading-relaxed mx-auto">
-                <p className="text-2xl font-serif text-gray-900 leading-snug mb-10">
-                  {story.situation}
-                </p>
-                
-                <h3 className="text-[#054E38] font-bold text-sm tracking-widest uppercase mt-12 mb-4">The Challenge</h3>
-                <p>{story.challenge}</p>
+            <div className="mx-auto max-w-3xl">
+              {story.introduction && (
+                <p className="mb-8 text-[17px] leading-[1.8] text-ink-muted">{story.introduction}</p>
+              )}
+              <p className="mb-14 font-serif text-2xl leading-snug text-ink md:text-[1.75rem]">{story.situation}</p>
 
-                <h3 className="text-[#054E38] font-bold text-sm tracking-widest uppercase mt-12 mb-4">The Action</h3>
-                <p>{story.action}</p>
-              </div>
+              <motion.div {...fadeUp} className="mb-12">
+                <h2 className="eyebrow mb-4">The Challenge</h2>
+                <p className="text-[17px] leading-[1.8] text-ink-muted">{story.challenge}</p>
+              </motion.div>
 
-              {/* QUOTE PULL-OUT */}
-              <div className="my-16 relative">
-                <div className="absolute -top-6 -left-6 text-[#054E38]/10">
-                  <Quote className="w-24 h-24 rotate-180" />
-                </div>
-                <blockquote className="relative z-10 pl-8 md:pl-12 border-l-4 border-amber-400">
-                  <p className="text-2xl md:text-3xl font-serif italic text-gray-900 leading-snug mb-6">
+              <motion.div {...fadeUp} className="mb-12">
+                <h2 className="eyebrow mb-4">The Action</h2>
+                <p className="text-[17px] leading-[1.8] text-ink-muted">{story.action}</p>
+              </motion.div>
+
+              {/* PULL QUOTE */}
+              <motion.figure {...fadeUp} className="my-16 border-y border-line py-12 md:my-20">
+                <blockquote>
+                  <p className="font-serif text-2xl italic leading-snug text-ink md:text-[2rem] md:leading-[1.3]">
                     "{story.quote.text}"
                   </p>
-                  <footer>
-                    <div className="font-bold text-gray-900">{story.quote.author}</div>
-                    <div className="text-sm font-bold uppercase tracking-wider text-gray-500">{story.quote.role}</div>
-                  </footer>
                 </blockquote>
-              </div>
+                <figcaption className="mt-8">
+                  <span className="block text-[15px] font-semibold text-ink">{story.quote.author}</span>
+                  <span className="block text-[12px] font-medium uppercase tracking-[0.12em] text-ink-muted">
+                    {story.quote.role}
+                  </span>
+                </figcaption>
+              </motion.figure>
 
-              <div className="prose prose-lg md:prose-xl prose-p:text-gray-600 prose-p:leading-relaxed mx-auto">
-                <h3 className="text-[#054E38] font-bold text-sm tracking-widest uppercase mb-4">The Impact</h3>
-                <p>{story.change}</p>
-                <p>{story.impact}</p>
-              </div>
-              
+              <motion.div {...fadeUp}>
+                <h2 className="eyebrow mb-4">The Impact</h2>
+                <div className="space-y-5 text-[17px] leading-[1.8] text-ink-muted">
+                  <p>{story.change}</p>
+                  <p>{story.impact}</p>
+                </div>
+              </motion.div>
+
               {/* RELATED LINKS */}
               {(relatedProject || story.relatedProgramId) && (
-                <div className="mt-16 pt-8 border-t border-gray-100 flex flex-col sm:flex-row gap-4 items-center justify-between">
-                  <span className="text-sm font-bold tracking-widest uppercase text-gray-400">Explore Related</span>
-                  <div className="flex gap-4">
+                <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-line pt-8 sm:flex-row sm:items-center">
+                  <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-ink-muted">Explore Related</span>
+                  <div className="flex flex-wrap gap-6">
                     {relatedProject && (
-                      <Link 
+                      <Link
                         to={`/projects/${relatedProject.slug}`}
-                        className="text-sm font-bold text-[#054E38] hover:underline"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary link-underline"
                       >
-                        View Related Project
+                        View Related Project <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </Link>
                     )}
                     {story.relatedProgramId && (
-                      <Link 
-                        to="/programs" 
-                        className="text-sm font-bold text-amber-600 hover:underline"
+                      <Link
+                        to={relatedProgram ? `/programs/${relatedProgram.slug}` : '/programs'}
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary link-underline"
                       >
-                        View Related Program
+                        View Related Program <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </Link>
                     )}
                   </div>
@@ -125,7 +181,75 @@ export const StoryDetail = () => {
             </div>
           </Container>
         </section>
+
+        {/* STORY GALLERY */}
+        {story.galleryImages && story.galleryImages.length > 0 && (
+          <section className="section bg-white">
+            <Container>
+              <div className="mb-12 text-center">
+                <h2 className="display-title">Gallery</h2>
+              </div>
+              <ul className="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-3">
+                {story.galleryImages.map((img, idx) => (
+                  <li key={img} className="group aspect-[4/3] overflow-hidden rounded-2xl bg-sand">
+                    <Img
+                      src={img}
+                      alt={`${story.title} photo ${idx + 1}`}
+                      width={800}
+                      height={600}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-premium group-hover:scale-[1.04]"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </Container>
+          </section>
+        )}
       </article>
+
+      {/* MORE STORIES */}
+      {moreStories.length > 0 && (
+        <section className="section bg-sand" aria-labelledby="more-stories">
+          <Container>
+            <div className="mb-10 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between">
+              <div>
+                <span className="eyebrow mb-4">Stories of Change</span>
+                <h2 id="more-stories" className="display-title">More <em className="font-medium text-primary">Stories</em></h2>
+              </div>
+              <Link to="/stories" className="inline-flex items-center gap-2 text-sm font-semibold text-primary link-underline">
+                All stories <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <ul className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              {moreStories.map((s) => (
+                <li key={s.id}>
+                  <Link to={`/stories/${s.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden bg-sand">
+                      <Img
+                        src={s.heroImage}
+                        alt={s.title}
+                        width={800}
+                        height={600}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-premium group-hover:scale-[1.04]"
+                      />
+                    </div>
+                    <div className="flex grow flex-col p-6">
+                      <span className="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-gold">{s.category}</span>
+                      <h3 className="font-serif text-xl font-semibold leading-snug text-ink transition-colors group-hover:text-primary">
+                        {s.title}
+                      </h3>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </section>
+      )}
     </div>
   );
 };

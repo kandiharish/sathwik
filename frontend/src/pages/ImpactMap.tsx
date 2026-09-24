@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Section } from '../components/layout/Section';
 import { Container } from '../components/layout/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { projects } from '../data/projects';
 import { MapPin, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Img } from '../components/common/Img';
 
 // Extract unique states that actually have projects
 const uniqueStates = Array.from(new Set(projects.filter(p => p.state).map(p => p.state as string))).sort();
@@ -18,127 +18,126 @@ export const ImpactMap = () => {
   }, [activeState]);
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen">
-      <section className="pt-32 pb-16">
+    <div className="bg-background min-h-screen">
+      <section className="page-hero pt-32 pb-10 md:pt-40 md:pb-14">
         <Container>
-          <Link to="/impact" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#054E38] transition-colors mb-10">
-            <ArrowLeft className="w-4 h-4" /> Back to Impact Dashboard
+          <Link
+            to="/impact"
+            className="inline-flex items-center gap-2 text-sm font-medium text-ink-muted hover:text-primary transition-colors mb-10"
+          >
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" /> Back to Impact Dashboard
           </Link>
-          
+
           <div className="max-w-3xl">
-            <SectionHeading 
-              title="Geographic Reach" 
-              subtitle="Where We Work"
+            <SectionHeading
+              as="h1"
+              eyebrow="Where We Work"
+              title={<>Geographic <em>Reach</em></>}
+              description={`Explore our project footprint across ${uniqueStates.length} states in India. Select a region to view local initiatives.`}
               alignment="left"
+              className="!mb-0"
             />
-            <p className="text-xl text-gray-600 mt-6 leading-relaxed">
-              Explore our project footprint across {uniqueStates.length} states in India. Select a region to view local initiatives.
-            </p>
           </div>
         </Container>
       </section>
 
-      <Section className="pt-0 pb-32">
+      <section className="pb-16 md:pb-24">
         <Container>
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
-            
-            {/* States List */}
-            <div className="bg-white p-6 rounded-[2rem] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2">
-              <h3 className="text-sm font-bold tracking-[0.2em] uppercase text-gray-500 mb-4 px-4">Regions</h3>
-              {uniqueStates.map((state) => {
-                const count = projects.filter(p => p.state === state).length;
-                const isActive = activeState === state;
-                return (
-                  <button
-                    key={state}
-                    onClick={() => setActiveState(state)}
-                    className={`flex items-center justify-between w-full p-4 rounded-xl text-left transition-all duration-300 ${
-                      isActive 
-                        ? 'bg-[#054E38] text-white shadow-md' 
-                        : 'hover:bg-gray-50 text-gray-700'
-                    }`}
-                  >
-                    <span className="font-semibold">{state}</span>
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${
-                      isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
-                    }`}>
-                      {count} Project{count !== 1 ? 's' : ''}
-                    </span>
-                  </button>
-                );
-              })}
+          <div className="grid lg:grid-cols-[minmax(260px,1fr)_2fr] gap-10 lg:gap-12 items-start">
+            {/* States list */}
+            <div className="card p-4 md:p-5 lg:sticky lg:top-28">
+              <h2 className="text-[11px] font-semibold tracking-[0.12em] uppercase text-gold mb-3 px-3 pt-2">Regions</h2>
+              <ul className="flex flex-col gap-1" role="list">
+                {uniqueStates.map((state) => {
+                  const count = projects.filter(p => p.state === state).length;
+                  const isActive = activeState === state;
+                  return (
+                    <li key={state}>
+                      <button
+                        type="button"
+                        onClick={() => setActiveState(state)}
+                        aria-pressed={isActive}
+                        className={`flex items-center justify-between w-full px-4 py-3.5 rounded-xl text-left transition-colors duration-300 ${
+                          isActive ? 'bg-primary text-white' : 'hover:bg-sand text-ink'
+                        }`}
+                      >
+                        <span className="font-medium text-[15px]">{state}</span>
+                        <span
+                          className={`text-[12px] font-semibold px-2.5 py-1 rounded-full ${
+                            isActive ? 'bg-white/15 text-white' : 'bg-sand text-ink-muted'
+                          }`}
+                        >
+                          {count} Project{count !== 1 ? 's' : ''}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
 
-            {/* Projects in State */}
-            <div>
+            {/* Projects in state */}
+            <div aria-live="polite">
               <div className="flex items-center gap-3 mb-8">
-                <MapPin className="w-6 h-6 text-[#054E38]" />
-                <h3 className="text-2xl font-serif font-bold text-gray-900">
+                <MapPin className="w-5 h-5 text-gold" aria-hidden="true" />
+                <h2 className="font-serif font-semibold text-2xl md:text-3xl text-ink">
                   Projects in {activeState}
-                </h3>
+                </h2>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-6">
-                <AnimatePresence mode="popLayout">
-                  {stateProjects.map((project, idx) => (
-                    <motion.div
-                      key={project.id}
-                      layout
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ delay: idx * 0.05, duration: 0.3 }}
-                      className="group bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 flex flex-col h-full hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow duration-300"
-                    >
-                      {project.images?.[0] ? (
-                        <div className="relative w-full aspect-[4/3] overflow-hidden">
-                          <img 
-                            src={project.images[0]} 
-                            alt={project.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                          />
-                          <div className="absolute top-4 left-4">
-                            <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-[#054E38] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm">
-                              {project.category}
-                            </span>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="w-full aspect-[4/3] bg-gray-100 flex items-center justify-center p-6 text-center">
-                          <span className="px-3 py-1 bg-white text-[#054E38] rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm">
-                            {project.category}
-                          </span>
-                        </div>
+                {stateProjects.map((project) => (
+                  <motion.article
+                    key={`${activeState}-${project.id}`}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="group relative card card-hover overflow-hidden flex flex-col h-full"
+                  >
+                    <div className="relative w-full aspect-[4/3] overflow-hidden bg-sand">
+                      {project.images?.[0] && (
+                        <Img
+                          src={project.images[0]}
+                          alt={project.title}
+                          width={800}
+                          height={600}
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                        />
                       )}
-                      
-                      <div className="p-6 flex flex-col flex-grow">
-                        <h4 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                      <span className="absolute top-4 left-4 px-3 py-1 bg-white text-primary rounded-full text-[11px] font-semibold uppercase tracking-[0.14em]">
+                        {project.category}
+                      </span>
+                    </div>
+
+                    <div className="p-6 flex flex-col flex-grow">
+                      <h3 className="font-serif font-semibold text-xl text-ink leading-snug mb-2 line-clamp-2">
+                        <Link to={`/projects/${project.slug}`} className="after:absolute after:inset-0 focus:outline-none">
                           {project.title}
-                        </h4>
-                        <p className="text-sm text-gray-600 mb-6 line-clamp-2">
-                          {project.summary}
-                        </p>
-                        
-                        <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
-                          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                            {project.location || project.state}
-                          </div>
-                          <Link 
-                            to={`/projects/${project.slug}`}
-                            className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#054E38] group-hover:text-white transition-colors"
-                          >
-                            <ArrowRight className="w-4 h-4" />
-                          </Link>
-                        </div>
+                        </Link>
+                      </h3>
+                      <p className="text-[15px] leading-relaxed text-ink-muted mb-6 line-clamp-2">{project.summary}</p>
+
+                      <div className="mt-auto pt-4 border-t border-line flex items-center justify-between">
+                        <span className="text-[12px] font-semibold text-ink-muted uppercase tracking-[0.12em]">
+                          {project.location || project.state}
+                        </span>
+                        <span
+                          className="w-8 h-8 rounded-full bg-sand flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors"
+                          aria-hidden="true"
+                        >
+                          <ArrowRight className="w-4 h-4" />
+                        </span>
                       </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
+                    </div>
+                  </motion.article>
+                ))}
               </div>
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
     </div>
   );
 };

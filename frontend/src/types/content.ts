@@ -10,6 +10,20 @@ export interface ImpactStat {
   requiresConfirmation?: boolean;
 }
 
+export interface ProgramInitiative {
+  title: string;
+  description: string;
+}
+
+export interface ProgramInitiativeGroup {
+  heading: string;
+  /** Optional secondary line under the heading. */
+  subheading?: string;
+  /** Intro copy; separate paragraphs with a blank line. */
+  intro?: string;
+  items: ProgramInitiative[];
+}
+
 export interface Program {
   id: string;
   slug: string;
@@ -24,6 +38,13 @@ export interface Program {
   galleryImages?: string[];
   impactStats?: ImpactStat[];
   relatedProgramIds?: string[];
+  /** Longer introductory paragraph (from the organisation's original programme pages). */
+  intro?: string;
+  /** Heading shown above `initiatives`. */
+  initiativesHeading?: string;
+  initiatives?: ProgramInitiative[];
+  /** Use instead of `initiatives` when a programme has several named strands. */
+  initiativeGroups?: ProgramInitiativeGroup[];
 }
 
 export interface Project {

@@ -1,216 +1,352 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useForm, useWatch } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { MapPin, Mail, Phone, Clock, ArrowRight, CheckCircle2, MessageCircle, Handshake, HeartHandshake, Heart } from 'lucide-react';
 import { Container } from '../components/layout/Container';
-import { Section } from '../components/layout/Section';
-import { MapPin, Mail, Phone, Clock, MessageSquare, ArrowRight } from 'lucide-react';
+import { SectionHeading } from '../components/ui/SectionHeading';
 import { siteSettings } from '../data/settings';
+import { tones, type Tone } from '../lib/tones';
+
+const TOPICS = ['Donations', 'Volunteering', 'Partnerships', 'General Inquiry'] as const;
+type Topic = (typeof TOPICS)[number];
+
+/** The four ways in, shown as large cards at the top of the form. Each sets the topic field. */
+const ENQUIRY_TYPES: { topic: Topic; label: string; description: string; icon: typeof MessageCircle; tone: Tone }[] = [
+  { topic: 'General Inquiry', label: 'General enquiry', description: 'Questions about our work or programs', icon: MessageCircle, tone: 'teal' },
+  { topic: 'Partnerships', label: 'CSR partnership', description: 'Fund or co-create a project with us', icon: Handshake, tone: 'blue' },
+  { topic: 'Volunteering', label: 'Volunteer', description: 'Give your time and skills', icon: HeartHandshake, tone: 'green' },
+  { topic: 'Donations', label: 'Donation', description: 'Support our work financially', icon: Heart, tone: 'red' },
+];
+
+const schema = z.object({
+  firstName: z.string().trim().min(1, 'Please enter your first name.'),
+  lastName: z.string().trim().optional(),
+  email: z.string().trim().min(1, 'Please enter your email address.').email('Please enter a valid email address.'),
+  phone: z
+    .string()
+    .trim()
+    .optional()
+    .refine((v) => !v || /^[+()\-\s\d]{7,20}$/.test(v), 'Please enter a valid phone number.'),
+  topic: z.enum(TOPICS).optional(),
+  organisation: z.string().trim().optional(),
+  role: z.string().trim().optional(),
+  message: z.string().trim().min(10, 'Please write a short message (at least 10 characters).'),
+});
+
+type FormValues = z.infer<typeof schema>;
+
+const { address, phone, email, workingHours } = siteSettings.contact;
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent('1-10-1/21, St. no. 5, Ashok Nagar, Hyderabad 500020')}&output=embed`;
+
+const inputBase =
+  'w-full rounded-xl border bg-background px-4 py-3 text-[15px] text-ink placeholder:text-ink-muted/60 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15';
 
 export const Contact = () => {
-  return (
-    <div className="bg-[#FAFAF8] min-h-screen relative overflow-hidden">
-      
-      {/* Background Ambient Glows */}
-      <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-emerald-50/50 to-transparent pointer-events-none z-0" />
-      <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-rose-50/40 rounded-full blur-[120px] pointer-events-none z-0" />
-      <div className="absolute top-[20%] left-[-10%] w-[600px] h-[600px] bg-emerald-100/30 rounded-full blur-[100px] pointer-events-none z-0" />
+  const [sent, setSent] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: { topic: 'General Inquiry' } });
+  const topic = useWatch({ control, name: 'topic' });
 
-      {/* Hero Section */}
-      <section className="pt-40 pb-16 relative z-10">
-        <Container className="text-center">
+  /**
+   * There is no backend endpoint for this form yet, so submissions open the
+   * visitor's email client with the message pre-filled (mailto fallback).
+   */
+  const onSubmit = (data: FormValues) => {
+    const name = [data.firstName, data.lastName].filter(Boolean).join(' ');
+    const subject = `${data.topic ?? 'General Inquiry'}, enquiry from ${name}`;
+    const details = [`Name: ${name}`, `Email: ${data.email}`];
+    if (data.phone) details.push(`Phone: ${data.phone}`);
+    if (data.topic) details.push(`Interested in: ${data.topic}`);
+    if (data.topic === 'Partnerships') {
+      if (data.organisation) details.push(`Organisation: ${data.organisation}`);
+      if (data.role) details.push(`Role: ${data.role}`);
+    }
+    const body = `${details.join('\n')}\n\n${data.message}`;
+    window.location.assign(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+    setSent(true);
+    reset();
+  };
+
+  const fieldClass = (hasError: boolean) => `${inputBase} ${hasError ? 'border-secondary' : 'border-line'}`;
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Page hero */}
+      <section className="page-hero pt-32 md:pt-40 pb-10 md:pb-14 bg-background border-b border-line">
+        <Container>
+          <nav aria-label="Breadcrumb" className="mb-8 flex justify-center text-[13px] text-ink-muted">
+            <ol className="flex items-center gap-2">
+              <li><Link to="/" className="link-underline hover:text-primary">Home</Link></li>
+              <li aria-hidden="true" className="text-line">/</li>
+              <li aria-current="page" className="text-ink">Contact Us</li>
+            </ol>
+          </nav>
+          <SectionHeading
+            as="h1"
+            eyebrow="Get in Touch"
+            title={<>Let's Start a <em>Conversation</em></>}
+            description="Whether you have a question about our programs, want to volunteer, or are interested in partnering with us, our team is ready to help."
+            alignment="center"
+            className="!mb-0"
+          />
+        </Container>
+      </section>
+
+      {/* Details + form */}
+      <section className="section bg-white">
+        <Container>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col items-center"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="grid gap-8 lg:grid-cols-[5fr_7fr] lg:gap-12"
           >
-            <div className="inline-flex items-center gap-2 bg-white border border-slate-100 shadow-sm text-[#054E38] px-4 py-1.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase mb-8">
-              <MessageSquare className="w-3.5 h-3.5" />
-              Get in Touch
+            {/* Contact details */}
+            <aside className="flex flex-col justify-between rounded-2xl bg-primary-deep p-8 text-white md:p-12">
+              <div>
+                <h2 className="mb-4 font-serif text-3xl font-semibold tracking-tight">Contact Information</h2>
+                <p className="mb-10 text-[15px] leading-relaxed text-white/75">
+                  Fill out the form and our dedicated team will get back to you within 24 hours.
+                </p>
+
+                <ul className="space-y-8">
+                  <DetailItem icon={<MapPin className="h-5 w-5" />} label="Our Location">
+                    <address className="not-italic">{address}</address>
+                  </DetailItem>
+                  <DetailItem icon={<Phone className="h-5 w-5" />} label="Phone Number">
+                    <a href={`tel:${phone.replace(/\s+/g, '')}`} className="link-underline hover:text-gold-soft">
+                      {phone}
+                    </a>
+                  </DetailItem>
+                  <DetailItem icon={<Mail className="h-5 w-5" />} label="Email Address">
+                    <a href={`mailto:${email}`} className="link-underline break-all hover:text-gold-soft">
+                      {email}
+                    </a>
+                  </DetailItem>
+                  <DetailItem icon={<Clock className="h-5 w-5" />} label="Working Hours">
+                    {workingHours}
+                  </DetailItem>
+                </ul>
+              </div>
+            </aside>
+
+            {/* Form */}
+            <div className="card p-8 md:p-12">
+              {sent ? (
+                <div role="status" className="flex h-full flex-col items-center justify-center py-12 text-center">
+                  <span className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft text-primary">
+                    <CheckCircle2 className="h-8 w-8" aria-hidden="true" />
+                  </span>
+                  <h2 className="mb-3 font-serif text-3xl font-semibold text-ink">Thank you</h2>
+                  <p className="mb-8 max-w-md text-[15px] leading-relaxed text-ink-muted">
+                    Your email app should now open with your message ready to send. If it didn't, write to us directly at{' '}
+                    <a href={`mailto:${email}`} className="font-semibold text-primary link-underline">{email}</a>.
+                  </p>
+                  <button type="button" onClick={() => setSent(false)} className="btn btn-outline">
+                    Send another message
+                  </button>
+                </div>
+              ) : (
+                <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6" aria-label="Contact form">
+                  <fieldset>
+                    <legend className="mb-3 text-[14px] font-semibold text-ink">How can we help?</legend>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {ENQUIRY_TYPES.map(({ topic: value, label, description, icon: Icon, tone }) => {
+                        const t = tones[tone];
+                        return (
+                          <label key={value} className="relative cursor-pointer">
+                            <input type="radio" value={value} className="peer sr-only" {...register('topic')} />
+                            <span
+                              className={`flex h-full items-start gap-3 rounded-2xl border border-line bg-white p-4 transition-colors hover:border-ink/20 peer-checked:border-current peer-checked:ring-1 peer-checked:ring-current peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent sm:flex-col sm:gap-4 sm:p-5 ${t.text}`}
+                            >
+                              <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${t.soft}`} aria-hidden="true">
+                                <Icon className="h-5 w-5" />
+                              </span>
+                              <span>
+                                <span className="block text-[15px] font-semibold text-ink">{label}</span>
+                                <span className="mt-0.5 block text-[13px] leading-snug text-ink-muted">{description}</span>
+                              </span>
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+
+                  {topic === 'Partnerships' && (
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <Field id="organisation" label="Organisation" error={errors.organisation?.message}>
+                        <input
+                          id="organisation"
+                          type="text"
+                          autoComplete="organization"
+                          className={fieldClass(!!errors.organisation)}
+                          {...register('organisation')}
+                        />
+                      </Field>
+                      <Field id="role" label="Your Role" error={errors.role?.message}>
+                        <input
+                          id="role"
+                          type="text"
+                          autoComplete="organization-title"
+                          className={fieldClass(!!errors.role)}
+                          {...register('role')}
+                        />
+                      </Field>
+                    </div>
+                  )}
+
+                  {topic === 'Volunteering' && (
+                    <p role="note" className="rounded-2xl bg-leaf-soft px-5 py-4 text-[14px] leading-relaxed text-ink">
+                      Want to sign up? Our{' '}
+                      <Link to="/volunteer" className="font-semibold text-leaf link-underline">volunteer form</Link>{' '}
+                      lets you tell us your skills and availability. You can still send a message here.
+                    </p>
+                  )}
+
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <Field id="firstName" label="First Name" required error={errors.firstName?.message}>
+                      <input
+                        id="firstName"
+                        type="text"
+                        autoComplete="given-name"
+                        aria-required="true"
+                        aria-invalid={!!errors.firstName}
+                        aria-describedby={errors.firstName ? 'firstName-error' : undefined}
+                        className={fieldClass(!!errors.firstName)}
+                        {...register('firstName')}
+                      />
+                    </Field>
+                    <Field id="lastName" label="Last Name" error={errors.lastName?.message}>
+                      <input
+                        id="lastName"
+                        type="text"
+                        autoComplete="family-name"
+                        aria-invalid={!!errors.lastName}
+                        className={fieldClass(!!errors.lastName)}
+                        {...register('lastName')}
+                      />
+                    </Field>
+                  </div>
+
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <Field id="email" label="Email Address" required error={errors.email?.message}>
+                      <input
+                        id="email"
+                        type="email"
+                        autoComplete="email"
+                        aria-required="true"
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
+                        className={fieldClass(!!errors.email)}
+                        {...register('email')}
+                      />
+                    </Field>
+                    <Field id="phone" label="Phone Number" error={errors.phone?.message}>
+                      <input
+                        id="phone"
+                        type="tel"
+                        autoComplete="tel"
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? 'phone-error' : undefined}
+                        className={fieldClass(!!errors.phone)}
+                        {...register('phone')}
+                      />
+                    </Field>
+                  </div>
+
+
+                  <Field id="message" label="Your Message" required error={errors.message?.message}>
+                    <textarea
+                      id="message"
+                      rows={5}
+                      aria-required="true"
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? 'message-error' : undefined}
+                      className={`${fieldClass(!!errors.message)} resize-y`}
+                      {...register('message')}
+                    />
+                  </Field>
+
+                  <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                    <button type="submit" disabled={isSubmitting} className="btn btn-primary !px-8 !py-4 disabled:opacity-60">
+                      Send Message <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                    <p className="text-[13px] text-ink-muted">
+                      <span className="text-secondary" aria-hidden="true">*</span> Required fields
+                    </p>
+                  </div>
+                </form>
+              )}
             </div>
-            
-            <h1 
-              className="text-6xl md:text-8xl text-[#053e2f]/10 tracking-tight leading-none mb-2"
-              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
-            >
-              Contact Us
-            </h1>
-            <h2 className="text-4xl md:text-6xl font-serif font-black text-[#1d1d1f] tracking-tight -mt-10 md:-mt-14 mb-6">
-              Let's Start a <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#053e2f] to-[#0a7a5c]">
-                Conversation
-              </span>
-            </h2>
-            
-            <p className="text-[17px] text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
-              Whether you have a question about our programs, want to volunteer, or are interested in partnering with us, our team is ready to help.
-            </p>
           </motion.div>
         </Container>
       </section>
 
-      {/* Premium Bento Box Form Section */}
-      <Section className="py-12 pb-32 relative z-10">
+      {/* Map */}
+      <section className="section bg-sand">
         <Container>
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="max-w-6xl mx-auto"
-          >
-            <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_20px_80px_rgba(0,0,0,0.06)] border border-white overflow-hidden flex flex-col lg:flex-row relative">
-              
-              {/* Left Column - Premium Contact Card */}
-              <div className="lg:w-2/5 relative overflow-hidden bg-[#053e2f] p-10 md:p-14 lg:p-16 text-white flex flex-col justify-between group">
-                {/* Stunning animated gradient background inside the card */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#053e2f] via-[#085a45] to-[#0a7a5c] z-0" />
-                <div className="absolute -top-32 -right-32 w-96 h-96 bg-emerald-400/20 rounded-full blur-[80px] group-hover:bg-emerald-400/30 transition-colors duration-700 z-0" />
-                <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-blue-400/20 rounded-full blur-[80px] group-hover:bg-blue-400/30 transition-colors duration-700 z-0" />
-
-                <div className="relative z-10">
-                  <h3 className="text-3xl font-serif font-bold mb-4 tracking-tight">Contact Information</h3>
-                  <p className="text-emerald-100/70 text-[15px] mb-12 font-medium leading-relaxed pr-8">
-                    Fill out the form and our dedicated team will get back to you within 24 hours.
-                  </p>
-
-                  <div className="space-y-10">
-                    <div className="flex items-start gap-5 group/item cursor-default">
-                      <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 group-hover/item:bg-white/20 transition-colors duration-300">
-                        <MapPin className="w-6 h-6 text-emerald-300" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-xs text-emerald-300/80 uppercase tracking-[0.2em] mb-1.5">Our Location</h4>
-                        <p className="text-white leading-relaxed text-[15px] font-medium">
-                          380 St Kilda Road<br />
-                          Ashok Nagar, Hyderabad<br />
-                          500 020
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-5 group/item cursor-default">
-                      <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 group-hover/item:bg-white/20 transition-colors duration-300">
-                        <Phone className="w-6 h-6 text-emerald-300" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-xs text-emerald-300/80 uppercase tracking-[0.2em] mb-1.5">Phone Number</h4>
-                        <a href={`tel:${siteSettings.contact.phone.replace(/\\s+/g, '')}`} className="text-white text-[15px] font-medium hover:text-emerald-300 transition-colors">{siteSettings.contact.phone}</a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-5 group/item cursor-default">
-                      <div className="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 group-hover/item:bg-white/20 transition-colors duration-300">
-                        <Mail className="w-6 h-6 text-emerald-300" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-xs text-emerald-300/80 uppercase tracking-[0.2em] mb-1.5">Email Address</h4>
-                        <a href={`mailto:${siteSettings.contact.email}`} className="text-white text-[15px] font-medium hover:text-emerald-300 transition-colors">{siteSettings.contact.email}</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="relative z-10 mt-16 pt-8 border-t border-white/10">
-                  <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-emerald-300/80" />
-                    <span className="text-sm font-medium text-emerald-100">Mon - Fri: 9:00 AM - 6:00 PM</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column - Premium Form Tool */}
-              <div className="lg:w-3/5 p-10 md:p-14 lg:p-16 bg-white relative">
-                <form className="space-y-8 relative z-10" onSubmit={(e) => e.preventDefault()}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="relative group">
-                      <input 
-                        type="text" 
-                        id="firstName"
-                        className="peer w-full px-0 py-3 bg-transparent border-0 border-b-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-[#054E38] transition-all text-slate-800 placeholder-transparent font-medium"
-                        placeholder="First Name"
-                      />
-                      <label htmlFor="firstName" className="absolute left-0 -top-3.5 text-xs font-bold tracking-widest uppercase text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-placeholder-shown:tracking-normal peer-placeholder-shown:font-medium peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-bold peer-focus:tracking-widest peer-focus:text-[#054E38]">
-                        First Name
-                      </label>
-                    </div>
-                    
-                    <div className="relative group">
-                      <input 
-                        type="text" 
-                        id="lastName"
-                        className="peer w-full px-0 py-3 bg-transparent border-0 border-b-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-[#054E38] transition-all text-slate-800 placeholder-transparent font-medium"
-                        placeholder="Last Name"
-                      />
-                      <label htmlFor="lastName" className="absolute left-0 -top-3.5 text-xs font-bold tracking-widest uppercase text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-placeholder-shown:tracking-normal peer-placeholder-shown:font-medium peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-bold peer-focus:tracking-widest peer-focus:text-[#054E38]">
-                        Last Name
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="relative group">
-                      <input 
-                        type="email" 
-                        id="email"
-                        className="peer w-full px-0 py-3 bg-transparent border-0 border-b-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-[#054E38] transition-all text-slate-800 placeholder-transparent font-medium"
-                        placeholder="Email Address"
-                      />
-                      <label htmlFor="email" className="absolute left-0 -top-3.5 text-xs font-bold tracking-widest uppercase text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-placeholder-shown:tracking-normal peer-placeholder-shown:font-medium peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-bold peer-focus:tracking-widest peer-focus:text-[#054E38]">
-                        Email Address
-                      </label>
-                    </div>
-                    
-                    <div className="relative group">
-                      <input 
-                        type="tel" 
-                        id="phone"
-                        className="peer w-full px-0 py-3 bg-transparent border-0 border-b-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-[#054E38] transition-all text-slate-800 placeholder-transparent font-medium"
-                        placeholder="Phone Number"
-                      />
-                      <label htmlFor="phone" className="absolute left-0 -top-3.5 text-xs font-bold tracking-widest uppercase text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-placeholder-shown:tracking-normal peer-placeholder-shown:font-medium peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-bold peer-focus:tracking-widest peer-focus:text-[#054E38]">
-                        Phone Number
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="relative group pt-4">
-                    <p className="text-sm font-bold text-slate-700 mb-4 tracking-wide">I am interested in...</p>
-                    <div className="flex flex-wrap gap-3">
-                      {['Donations', 'Volunteering', 'Partnerships', 'General Inquiry'].map((topic) => (
-                        <label key={topic} className="cursor-pointer">
-                          <input type="radio" name="topic" className="peer sr-only" />
-                          <div className="px-5 py-2.5 rounded-full border-2 border-slate-200 text-slate-600 font-medium text-sm transition-all hover:border-[#054E38]/30 peer-checked:border-[#054E38] peer-checked:bg-[#054E38] peer-checked:text-white">
-                            {topic}
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="relative group pt-6">
-                    <textarea 
-                      id="message"
-                      rows={4}
-                      className="peer w-full px-0 py-3 bg-transparent border-0 border-b-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-[#054E38] transition-all text-slate-800 placeholder-transparent resize-none font-medium"
-                      placeholder="Your Message"
-                    ></textarea>
-                    <label htmlFor="message" className="absolute left-0 -top-3.5 text-xs font-bold tracking-widest uppercase text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-placeholder-shown:tracking-normal peer-placeholder-shown:font-medium peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-bold peer-focus:tracking-widest peer-focus:text-[#054E38]">
-                      Your Message
-                    </label>
-                  </div>
-
-                  <div className="pt-4">
-                    <button className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#111] hover:bg-[#054E38] text-white px-10 py-5 rounded-2xl font-bold transition-all duration-300 hover:shadow-[0_10px_40px_rgba(5,78,56,0.3)] hover:-translate-y-1 overflow-hidden">
-                      <span className="relative z-10 text-[15px] tracking-wide">Send Message</span>
-                      <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shine_1.5s_ease-out] z-0" />
-                    </button>
-                  </div>
-                </form>
-              </div>
-              
-            </div>
-          </motion.div>
+          <SectionHeading eyebrow="Our Location" title={<>Visit Our <em>Office</em></>} description={address} alignment="center" />
+          <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[var(--shadow-soft)]">
+            <iframe
+              title={`Map showing SRAYI Association office: ${address}`}
+              src={mapSrc}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="block h-[380px] w-full rounded-2xl border-0 md:h-[460px]"
+              allowFullScreen
+            />
+          </div>
         </Container>
-      </Section>
+      </section>
     </div>
   );
 };
+
+const DetailItem = ({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) => (
+  <li className="flex items-start gap-4">
+    <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-white/15 text-gold-soft" aria-hidden="true">
+      {icon}
+    </span>
+    <div>
+      <h3 className="mb-1 font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-soft">{label}</h3>
+      <div className="text-[15px] leading-relaxed text-white">{children}</div>
+    </div>
+  </li>
+);
+
+const Field = ({
+  id,
+  label,
+  required,
+  error,
+  children,
+}: {
+  id: string;
+  label: string;
+  required?: boolean;
+  error?: string;
+  children: React.ReactNode;
+}) => (
+  <div>
+    <label htmlFor={id} className="mb-2 block text-[14px] font-semibold text-ink">
+      {label}
+      {required && <span className="ml-0.5 text-secondary" aria-hidden="true">*</span>}
+    </label>
+    {children}
+    {error && (
+      <p id={`${id}-error`} role="alert" className="mt-2 text-[13px] font-medium text-secondary">
+        {error}
+      </p>
+    )}
+  </div>
+);

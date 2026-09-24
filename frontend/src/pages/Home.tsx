@@ -1,136 +1,158 @@
-
 import { lazy, Suspense } from 'react';
 import { CinematicHero } from '../components/ui/CinematicHero';
 
-// Lazy load heavy components
+// Lazy load below-the-fold sections
 const InteractiveTunnel = lazy(() => import('../components/ui/InteractiveTunnel').then(m => ({ default: m.InteractiveTunnel })));
 const WhoWeAre = lazy(() => import('../components/ui/WhoWeAre').then(m => ({ default: m.WhoWeAre })));
-const CommitmentCards = lazy(() => import('../components/ui/CommitmentCards').then(m => ({ default: m.CommitmentCards })));
+const CommitmentStrategy = lazy(() => import('../components/ui/CommitmentStrategy').then(m => ({ default: m.CommitmentStrategy })));
 const IntroductionSection = lazy(() => import('../components/ui/IntroductionSection').then(m => ({ default: m.IntroductionSection })));
 const AreasOfFocus = lazy(() => import('../components/ui/AreasOfFocus').then(m => ({ default: m.AreasOfFocus })));
 const CurvedGallery = lazy(() => import('../components/ui/CurvedGallery').then(m => ({ default: m.CurvedGallery })));
 const GalleryStack = lazy(() => import('../components/ui/GalleryStack').then(m => ({ default: m.GalleryStack })));
 const EditorialCarousel = lazy(() => import('../components/ui/EditorialCarousel').then(m => ({ default: m.EditorialCarousel })));
 const FounderMessage = lazy(() => import('../components/ui/FounderMessage').then(m => ({ default: m.FounderMessage })));
+const VoicesSection = lazy(() => import('../components/ui/VoicesSection').then(m => ({ default: m.VoicesSection })));
 const PartnerLogos = lazy(() => import('../components/ui/PartnerLogos').then(m => ({ default: m.PartnerLogos })));
 
 import { Container } from '../components/layout/Container';
 import { ButtonLink } from '../components/ui/Button';
+import { SectionHeading } from '../components/ui/SectionHeading';
 import { ImpactCounter } from '../components/ui/ImpactCounter';
 import { projects } from '../data/projects';
 import { impactStats } from '../data/impact';
-import { ArrowRight, Users, HandCoins, CalendarDays } from 'lucide-react';
+import { ArrowRight, Users, HandCoins, CalendarDays, MapPin } from 'lucide-react';
 import { JoinUsCTA } from '../components/ui/JoinUsCTA';
+import { Img } from '../components/common/Img';
+
+/** Neutral placeholder that reserves space while a lazy section loads (no dark flash). */
+const SectionFallback = ({ minH = 'min-h-[600px]', bg = 'bg-background' }: { minH?: string; bg?: string }) => (
+  <div className={`${minH} ${bg}`} aria-hidden="true" />
+);
+
+const impactIcons = [
+  <HandCoins key="coins" className="h-5 w-5" strokeWidth={1.5} />,
+  <Users key="users" className="h-5 w-5" strokeWidth={1.5} />,
+  <MapPin key="map" className="h-5 w-5" strokeWidth={1.5} />,
+  <CalendarDays key="cal" className="h-5 w-5" strokeWidth={1.5} />,
+];
+
 export const Home = () => {
   return (
     <div>
-      {/* HERO SECTION */}
+      {/* HERO */}
       <CinematicHero />
 
-      <Suspense fallback={<div className="h-screen bg-black" />}>
-        {/* 3D INTERACTIVE TUNNEL (About Us) */}
-        <InteractiveTunnel />
-        
-        {/* WHO WE ARE SECTION */}
+      {/* WHO WE ARE */}
+      <Suspense fallback={<SectionFallback minH="min-h-[700px]" />}>
         <WhoWeAre />
-
-        {/* COMMITMENT CARDS */}
-        <CommitmentCards />
-
-        {/* INTRODUCTION SECTION */}
-        <IntroductionSection />
-        <AreasOfFocus />
-        <GalleryStack />
-        <CurvedGallery />
       </Suspense>
-      {/* IMPACT DASHBOARD - REDESIGNED */}
-      <section id="impact" className="py-12 lg:py-16 relative bg-[#FAFAF8] overflow-hidden min-h-[100vh] max-h-[900px] flex items-center justify-center">
-        {/* Background Image - Perfectly fitted */}
-        <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center">
-          <img 
-            src="/image%20copy%209.webp" 
-            alt="Impact Background" 
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover object-center opacity-80"
-          />
-          <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
-        </div>
 
-        <Container className="relative z-10 w-full">
-          <div className="text-center mb-16 w-full flex flex-col items-center">
-            <h2 className="text-5xl md:text-7xl text-[#d97706]/15 tracking-tight leading-none mb-3" style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}>
-              By the Numbers
-            </h2>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black text-[#1d1d1f] tracking-tight -mt-6 md:-mt-8">
-              Our Collective <span className="text-[#054E38]">Impact</span>
-            </h3>
-            
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent mx-auto mt-6" />
-          </div>
+      {/* IMPACT, BY THE NUMBERS */}
+      <section id="impact" className="section relative overflow-hidden bg-primary-deep text-white">
+        <Img
+          src="/image%20copy%209.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.12]"
+        />
+        <Container className="relative">
+          <SectionHeading eyebrow="By the Numbers" title={<>Our Collective <em>Impact</em></>} dark />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {impactStats.slice(0, 4).map((stat, idx) => {
-              let Icon;
-              if (idx === 0) Icon = <HandCoins className="w-7 h-7 text-[#d97706]" strokeWidth={1.5} />;
-              if (idx === 1) Icon = <Users className="w-7 h-7 text-[#054E38]" strokeWidth={1.5} />;
-              if (idx === 2) Icon = (
-                <svg className="w-7 h-7 text-[#054E38]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                  <circle cx="12" cy="9" r="2.5"/>
-                </svg>
-              ); 
-              if (idx === 3) Icon = <CalendarDays className="w-7 h-7 text-[#d97706]" strokeWidth={1.5} />;
-              
-              return (
-                <ImpactCounter 
-                  key={idx} 
-                  value={stat.value} 
-                  suffix={stat.suffix}
-                  label={stat.label} 
-                  icon={Icon}
-                />
-              );
-            })}
+          <div className="mx-auto grid max-w-6xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y divide-white/10 sm:divide-y-0 lg:divide-x">
+            {impactStats.slice(0, 4).map((stat, idx) => (
+              <ImpactCounter
+                key={stat.label}
+                value={stat.value}
+                prefix={stat.prefix}
+                suffix={stat.suffix}
+                label={stat.label}
+                icon={impactIcons[idx]}
+                dark
+              />
+            ))}
           </div>
         </Container>
       </section>
 
-      {/* FEATURED INITIATIVES - CONTENT CAROUSEL */}
-      <div className="py-24 lg:py-32 bg-white relative overflow-hidden">
-        <Container className="relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
-            <div className="flex flex-col mb-6 md:mb-0">
-              <h2 className="text-5xl md:text-7xl text-[#d4c8b8]/40 tracking-tight leading-none mb-3" style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}>
-                Action On The Ground
-              </h2>
-              <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-6 md:-mt-8">
-                Featured <span className="text-[#054E38]">Initiatives</span>
-              </h3>
-            </div>
-            <ButtonLink to="/programs" variant="ghost" className="hidden md:flex mb-6 text-amber-800 hover:bg-amber-50/50 border border-amber-200/50 transition-colors">
-              View All Projects <ArrowRight className="w-4 h-4 ml-2" />
+      {/* INTRODUCTION */}
+      <Suspense fallback={<SectionFallback minH="min-h-[600px]" />}>
+        <IntroductionSection />
+      </Suspense>
+
+      {/* CORE FOCUS AREAS */}
+      <Suspense fallback={<SectionFallback minH="min-h-[700px]" />}>
+        <InteractiveTunnel />
+      </Suspense>
+
+      {/* OUR APPROACH: COMMITMENT + STRATEGY */}
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[700px]" />}>
+          <CommitmentStrategy />
+        </Suspense>
+      </div>
+
+      {/* KEY AREAS OF FOCUS */}
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[800px]" bg="bg-sand" />}>
+          <AreasOfFocus />
+        </Suspense>
+      </div>
+
+      {/* FEATURED INITIATIVES */}
+      <section className="section bg-white">
+        <Container>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between">
+            <SectionHeading eyebrow="Action On The Ground" title={<>Featured <em>Initiatives</em></>} alignment="left" />
+            <ButtonLink to="/projects" variant="outline" className="mb-12 md:mb-16 w-max">
+              View All Projects <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>
-          
-          <div className="pb-12">
-            <Suspense fallback={<div className="h-[400px]" />}>
-              <EditorialCarousel projects={projects} />
-            </Suspense>
-          </div>
+
+          <Suspense fallback={<SectionFallback minH="min-h-[560px]" bg="bg-white" />}>
+            <EditorialCarousel projects={projects} />
+          </Suspense>
         </Container>
+      </section>
+
+      {/* VOICES FROM THE GROUND */}
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[760px]" bg="bg-sand" />}>
+          <VoicesSection />
+        </Suspense>
       </div>
 
       {/* FOUNDER MESSAGE */}
-      <Suspense fallback={<div className="h-[500px]" />}>
-        <FounderMessage />
-        
-        {/* CSR PARTNERS */}
-        <PartnerLogos />
-      </Suspense>
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[700px]" bg="bg-sand" />}>
+          <FounderMessage />
+        </Suspense>
+      </div>
+
+      {/* FIELD ACTIVITIES + GALLERY */}
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[700px]" />}>
+          <GalleryStack />
+        </Suspense>
+      </div>
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[640px]" bg="bg-white" />}>
+          <CurvedGallery />
+        </Suspense>
+      </div>
+
+      {/* CSR PARTNERS */}
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[360px]" />}>
+          <PartnerLogos />
+        </Suspense>
+      </div>
 
       {/* FINAL CTA */}
-      <JoinUsCTA />
+      <div className="cv-auto">
+        <JoinUsCTA />
+      </div>
     </div>
   );
 };

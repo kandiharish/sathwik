@@ -1,224 +1,230 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { Container } from '../layout/Container';
+import { SectionHeading } from './SectionHeading';
+import { Img } from '../common/Img';
+import { tones, toneFor } from '../../lib/tones';
+import { scrollToElement } from '../../lib/lenis';
 
-const FOCUS_AREAS = [
+/** Sticky offset of card `i` (matches the inline `top` on each list item). */
+const STICKY_TOP = 96;
+const STICKY_STEP = 12;
+
+export const FOCUS_AREAS = [
   {
     tag: "HEALTHCARE",
     title: "Healthcare & Medical Infrastructure",
     subtitle: "Healing communities from within.",
     description: "We believe that access to quality healthcare is a fundamental human right. Our initiatives focus on equipping rural hospitals with life-saving medical devices, establishing local health camps, and building robust infrastructure that can serve generations.",
-    img: "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.17 PM (1).jpeg",
-    theme: { bg: "bg-emerald-50", tagBg: "bg-emerald-100", tagText: "text-emerald-800", text: "text-emerald-950", line: "rgba(16,185,129,0.5)" }
+    img: "/tunnel-thumb/tunnel-1.webp",
   },
   {
     tag: "WASH",
     title: "Water, Sanitation & Hygiene",
     subtitle: "The foundation of a healthy life.",
     description: "Clean water is the starting point for all community development. We install advanced RO water plants and build modern sanitation facilities in underserved villages, drastically reducing waterborne diseases and improving overall public health.",
-    img: "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg",
-    theme: { bg: "bg-blue-50", tagBg: "bg-blue-100", tagText: "text-blue-800", text: "text-blue-950", line: "rgba(59,130,246,0.5)" }
+    img: "/tunnel-thumb/tunnel-2.webp",
   },
   {
     tag: "EDUCATION",
     title: "Education & School Infrastructure",
     subtitle: "Empowering the minds of tomorrow.",
     description: "Education is the most powerful tool to break the cycle of poverty. We reconstruct dilapidated rural schools, provide essential learning materials, and create safe, inspiring environments where every child has the opportunity to thrive.",
-    img: "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg",
-    theme: { bg: "bg-amber-50", tagBg: "bg-amber-100", tagText: "text-amber-800", text: "text-amber-950", line: "rgba(245,158,11,0.5)" }
+    img: "/tunnel-thumb/tunnel-3.webp",
   },
   {
     tag: "NUTRITION",
     title: "Nutrition & Maternal Health",
     subtitle: "Nourishing mothers, protecting futures.",
     description: "A community cannot grow if its people are undernourished. Our targeted nutrition drives provide essential sustenance to expecting mothers and young children, ensuring they receive the vital vitamins and calories needed for healthy development.",
-    img: "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg",
-    theme: { bg: "bg-rose-50", tagBg: "bg-rose-100", tagText: "text-rose-800", text: "text-rose-950", line: "rgba(244,63,94,0.5)" }
+    img: "/tunnel-thumb/tunnel-4.webp",
   },
   {
     tag: "WELLNESS",
     title: "Sports & Community Wellness",
     subtitle: "Building strength and solidarity.",
     description: "Physical fitness is crucial for a vibrant community. By constructing open-air gyms and sports facilities in rural areas, we provide youth with healthy outlets for their energy, fostering teamwork, discipline, and long-term physical well-being.",
-    img: "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg",
-    theme: { bg: "bg-indigo-50", tagBg: "bg-indigo-100", tagText: "text-indigo-800", text: "text-indigo-950", line: "rgba(99,102,241,0.5)" }
+    img: "/tunnel-thumb/tunnel-5.webp",
   },
   {
     tag: "INFRASTRUCTURE",
     title: "Infrastructure Development",
     subtitle: "Paving the way to progress.",
     description: "We lay the groundwork for economic growth by developing essential community infrastructure. From community halls to skill development centers, we build the physical spaces where communities can gather, learn, and grow together.",
-    img: "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg",
-    theme: { bg: "bg-orange-50", tagBg: "bg-orange-100", tagText: "text-orange-800", text: "text-orange-950", line: "rgba(249,115,22,0.5)" }
+    img: "/tunnel-thumb/tunnel-6.webp",
   },
   {
     tag: "INCLUSION",
     title: "Disability Inclusion",
     subtitle: "Ensuring no one is left behind.",
     description: "A truly developed society is measured by how it treats its most vulnerable. We provide specialized support, medical equipment, and accessible infrastructure for individuals with disabilities, ensuring they can participate fully in community life.",
-    img: "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM (1).jpeg",
-    theme: { bg: "bg-teal-50", tagBg: "bg-teal-100", tagText: "text-teal-800", text: "text-teal-950", line: "rgba(20,184,166,0.5)" }
+    img: "/tunnel-thumb/tunnel-7.webp",
   },
   {
     tag: "HOLISTIC",
     title: "Holistic Development",
     subtitle: "Integrating all facets of life.",
     description: "True development requires a multi-dimensional approach. We integrate economic, social, and environmental strategies to create self-sustaining rural ecosystems where every individual has the resources and agency to build a better life.",
-    img: "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (1).jpeg",
-    theme: { bg: "bg-stone-50", tagBg: "bg-stone-200", tagText: "text-stone-800", text: "text-stone-950", line: "rgba(120,113,108,0.5)" }
+    img: "/tunnel-thumb/tunnel-8.webp",
   }
 ];
 
-// Helper component for individual cards in the stack
-const StackCard = ({ 
-  item, 
-  index, 
-  total, 
-  scrollYProgress 
-}: { 
-  item: typeof FOCUS_AREAS[0]; 
-  index: number; 
-  total: number; 
-  scrollYProgress: MotionValue<number>;
-}) => {
-  // Define the scroll range for this specific card
-  // Cards enter one by one. 
-  // Card 0 enters immediately. Card 1 enters after.
-  const startEntry = index / total;
-  const endEntry = startEntry + 1 / (total * 2);
-  
-  let startExit = startEntry + 1 / total;
-  let endExit = startEntry + 2 / total;
 
-  if (startExit >= 1) {
-    startExit = 0.999;
-    endExit = 1;
-  } else if (endExit > 1) {
-    endExit = 1;
-  }
-
-  // Transformations
-  // Fly in from bottom (100vh) to center (0)
-  const yEntry = useTransform(scrollYProgress, [startEntry, endEntry], ["100vh", "0vh"]);
-  
-  // When next card comes in, move this one up slightly for a stacking effect
-  const yExit = useTransform(scrollYProgress, [startExit, endExit], ["0vh", "-4vh"]);
-  
-  // Combine Y movements
-  const y = useTransform(() => {
-    if (scrollYProgress.get() < endEntry) return yEntry.get();
-    return yExit.get();
-  });
-
-  // Scale down as newer cards stack on top
-  const scale = useTransform(scrollYProgress, [startExit, endExit], [1, 0.95 - (total - index) * 0.01]);
-  
-  // Dim slightly as newer cards stack on top
-  const opacity = useTransform(scrollYProgress, [startExit, endExit], [1, 1]);
-
-  return (
-    <motion.div
-      style={{
-        y,
-        scale,
-        opacity,
-        zIndex: index + 10,
-        // willChange forces GPU acceleration
-        willChange: "transform"
-      }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90%] md:max-w-5xl h-[70vh] md:h-[500px] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col md:flex-row border border-slate-100"
-    >
-      {/* Left Half - Image */}
-      <div className="w-full md:w-1/2 h-[40%] md:h-full relative overflow-hidden bg-slate-100">
-        <img 
-          src={item.img} 
-          alt={item.title} 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent pointer-events-none" />
-      </div>
-
-        {/* Right Half - Content with Classic Color Themes */}
-        <div className={`w-full md:w-1/2 h-[60%] md:h-full p-8 md:p-12 lg:p-16 flex flex-col justify-center ${item.theme.bg}`}>
-          <div className={`inline-block ${item.theme.tagBg} ${item.theme.tagText} text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase px-3 py-1.5 rounded-sm mb-6 w-max`}>
-            {item.tag}
-          </div>
-          
-          <h3 className={`text-3xl md:text-4xl lg:text-5xl font-serif font-bold ${item.theme.text} leading-tight mb-4`}>
-            {item.title}
-          </h3>
-          
-          <p className={`font-serif italic text-lg md:text-xl ${item.theme.text} opacity-80 mb-6`}>
-            "{item.subtitle}"
-          </p>
-          
-          <p className={`${item.theme.text} opacity-70 text-sm md:text-[15px] leading-relaxed`}>
-            {item.description}
-          </p>
-        </div>
-    </motion.div>
-  );
-};
-
+/**
+ * Core Focus Areas, a CSS `position: sticky` card stack.
+ * Each card pins slightly lower than the previous one, so the stack builds up
+ * as the user scrolls. No scroll listeners or per-frame JS transforms.
+ * On small screens the cards simply stack in normal flow.
+ */
 export const InteractiveTunnel = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+  const total = FOCUS_AREAS.length;
+  const listRef = useRef<HTMLOListElement>(null);
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const anchorRef = useRef<HTMLSpanElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Highlight the top-most card currently pinned / in the upper part of the viewport.
+  // One IntersectionObserver entry per card; stuck cards stay "intersecting", so the
+  // highest intersecting index is the card the reader is looking at.
+  useEffect(() => {
+    const items = itemRefs.current.filter((el): el is HTMLLIElement => el !== null);
+    if (!items.length || typeof IntersectionObserver === 'undefined') return;
+    const visible = new Set<number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const idx = Number((entry.target as HTMLElement).dataset.index);
+          if (entry.isIntersecting) visible.add(idx);
+          else visible.delete(idx);
+        }
+        if (visible.size) setActiveIndex(Math.max(...visible));
+      },
+      { rootMargin: '0px 0px -60% 0px', threshold: 0 },
+    );
+    items.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // Sticky cards report their pinned position, so compute each card's natural
+  // (in-flow) position, park an invisible anchor there and scroll to it.
+  const goTo = (index: number) => {
+    const list = listRef.current;
+    const anchor = anchorRef.current;
+    if (!list || !anchor) return;
+    let top = 0;
+    for (let i = 0; i < index; i++) {
+      const el = itemRefs.current[i];
+      if (!el) continue;
+      top += el.offsetHeight + (parseFloat(getComputedStyle(el).marginBottom) || 0);
+      const next = itemRefs.current[i + 1];
+      if (next) top += parseFloat(getComputedStyle(next).marginTop) || 0;
+    }
+    anchor.style.top = `${top}px`;
+    scrollToElement(anchor, -(STICKY_TOP + index * STICKY_STEP));
+  };
 
   return (
-    // 300vh scrolls through all 8 cards
-    <section ref={containerRef} className="relative h-[300vh] bg-[#FAFAF8] z-40">
-      
-      {/* Sticky Viewport */}
-      <div 
-        className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center"
-      >
-        {/* Background image - separated into its own composited layer */}
-        <img
-          src="/image%20copy.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-80 pointer-events-none"
-          style={{ willChange: 'auto' }}
-        />
-        {/* Soft white overlay */}
-        <div className="absolute inset-0 bg-white/60 pointer-events-none z-0" />
+    <section className="section relative bg-sand" aria-labelledby="focus-areas-heading">
+      {/* Subtle background photo */}
+      <Img
+        src="/image%20copy.webp"
+        alt=""
+        aria-hidden="true"
+        width={1777}
+        height={885}
+        loading="lazy"
+        decoding="async"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[70vh] w-full object-cover object-center opacity-15"
+      />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[70vh] bg-gradient-to-b from-sand/40 via-sand/70 to-sand" />
 
-        {/* Section Heading Badge */}
-        <div className="relative z-50 text-center mt-12 md:mt-16 mb-4 shrink-0">
-          <div className="relative inline-block rounded-full shadow-lg overflow-hidden bg-white/40 p-[3px]">
-            {/* Spinning border */}
-            <div className="absolute inset-[-200%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(transparent_0%,transparent_85%,#009966_100%)] opacity-90" />
-            
-            <div className="relative bg-white/95 backdrop-blur-xl px-12 py-3 rounded-full flex items-center justify-center">
-              <h2 
-                className="text-3xl md:text-[42px] text-[#054E38] tracking-wide m-0 leading-none"
-                style={{ fontFamily: '"Brush Script MT", cursive' }}
-              >
-                Our Core Focus Areas
-              </h2>
-            </div>
-          </div>
+      <Container className="relative">
+        <div id="focus-areas-heading">
+          <SectionHeading eyebrow="What we do" title={<>Our Core <em>Focus Areas</em></>} />
         </div>
 
-        {/* The Card Stack Viewport */}
-        <div className="relative w-full flex-1 flex items-center justify-center z-10 perspective-1000 pb-10">
-          {FOCUS_AREAS.map((item, idx) => (
-            <StackCard 
-              key={idx} 
-              item={item} 
-              index={idx} 
-              total={FOCUS_AREAS.length} 
-              scrollYProgress={scrollYProgress} 
-            />
+        <div className="lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[230px_minmax(0,1fr)] xl:gap-12">
+          {/* Sticky index (lg+) */}
+          <nav aria-label="Core focus areas" className="hidden lg:block">
+            <ol className="sticky space-y-1" style={{ top: `${STICKY_TOP}px` }}>
+              {FOCUS_AREAS.map((item, index) => {
+                const tone = tones[toneFor(item.tag)];
+                const isActive = index === activeIndex;
+                return (
+                  <li key={item.tag}>
+                    <button
+                      type="button"
+                      onClick={() => goTo(index)}
+                      aria-current={isActive ? 'true' : undefined}
+                      className={`flex w-full items-start gap-3 rounded-xl px-3 py-2.5 text-left transition-colors duration-300 ${
+                        isActive ? `${tone.soft} ${tone.text}` : 'text-ink-muted hover:bg-white hover:text-ink'
+                      }`}
+                    >
+                      <span className="pt-px text-[12px] font-semibold tabular-nums">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="text-[14px] font-semibold leading-snug">{item.title}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+
+        <div className="relative mx-auto max-w-5xl lg:mx-0 lg:max-w-none">
+        <span ref={anchorRef} className="pointer-events-none absolute left-0 h-px w-px" aria-hidden="true" />
+        <ol ref={listRef} className="relative space-y-6 md:space-y-10 md:pb-10">
+          {FOCUS_AREAS.map((item, index) => (
+            <li
+              key={item.tag}
+              ref={(el) => { itemRefs.current[index] = el; }}
+              data-index={index}
+              className="md:sticky"
+              style={{ top: `calc(${STICKY_TOP}px + ${index * STICKY_STEP}px)`, zIndex: index + 1 }}
+            >
+              <article className="card flex flex-col overflow-hidden md:min-h-[360px] md:flex-row">
+                {/* Image */}
+                <div data-reveal="wipe" className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-sand md:aspect-auto md:w-1/2">
+                  <Img
+                    src={item.img}
+                    alt={item.title}
+                    width={700}
+                    height={500}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="relative flex w-full flex-col justify-center p-7 sm:p-9 md:w-1/2 lg:p-10">
+
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <span className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${tones[toneFor(item.tag)].soft} ${tones[toneFor(item.tag)].text}`}>
+                      {item.tag}
+                    </span>
+                    <span className="text-[13px] font-medium tabular-nums text-ink-muted" aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  <h3 className="mb-3 font-serif text-2xl font-semibold leading-tight tracking-tight text-ink md:text-3xl lg:text-[2.1rem]">
+                    {item.title}
+                  </h3>
+
+                  <p className={`mb-5 text-lg font-medium ${tones[toneFor(item.tag)].text}`}>
+                    “{item.subtitle}”
+                  </p>
+
+
+                  <p className="text-[15px] leading-relaxed text-ink-muted">
+                    {item.description}
+                  </p>
+                </div>
+              </article>
+            </li>
           ))}
+        </ol>
         </div>
-        
-      </div>
+        </div>
+      </Container>
     </section>
   );
 };

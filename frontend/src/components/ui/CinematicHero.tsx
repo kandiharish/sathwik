@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Play, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Img } from '../common/Img';
 
 const AnimatedNumber = ({ value }: { value: number }) => {
   const motionValue = useMotionValue(0);
@@ -17,9 +18,9 @@ const AnimatedNumber = ({ value }: { value: number }) => {
 
 const ShinyWord = ({ children, color = "amber" }: { children: React.ReactNode, color?: "amber" | "emerald" | "cyan" }) => {
   const colors = {
-    amber: "text-amber-400 drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]",
-    emerald: "text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]",
-    cyan: "text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]"
+    amber: "text-[#FF5A6E] drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)]",
+    emerald: "text-[#3FD6A6] drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)]",
+    cyan: "text-[#5CC8F5] drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)]"
   };
   return (
     <span className={`font-black tracking-wide ${colors[color]}`}>
@@ -35,64 +36,64 @@ const slides = [
     id: '01',
     title: 'NUTRITIONAL SUPPORT',
     description: <>Nourishing <ShinyWord color="amber">families.</ShinyWord></>,
-    video: '/videos/nutrition for pregnat.mp4',
-    image: '/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.jpeg',
+    video: '/videos/web/nutrition-for-pregnat.mp4',
+    image: '/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.webp',
     transformOrigin: 'center center',
   },
   {
     id: '02',
     title: 'CLEAN WATER',
     description: <>Providing <ShinyWord color="cyan">clean water.</ShinyWord></>,
-    video: '/videos/water.mp4',
-    image: '/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.jpeg',
+    video: '/videos/web/water.mp4',
+    image: '/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.webp',
     transformOrigin: 'left center',
   },
   {
     id: '03',
     title: 'SCHOOL INFRASTRUCTURE',
     description: <>Building <ShinyWord color="emerald">better schools.</ShinyWord></>,
-    video: '/videos/school infrastructure.mp4',
-    image: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.jpeg',
+    video: '/videos/web/school-infrastructure.mp4',
+    image: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.webp',
     transformOrigin: 'center bottom',
   },
   {
     id: '04',
     title: 'RURAL DEVELOPMENT',
     description: <>Empowering <ShinyWord color="amber">rural lives.</ShinyWord></>,
-    video: '/videos/rural developement.mp4',
-    image: '/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).jpeg',
+    video: '/videos/web/rural-developement.mp4',
+    image: '/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).webp',
     transformOrigin: 'right center',
   },
   {
     id: '05',
     title: 'HEALTHCARE SUPPORT',
     description: <>Delivering <ShinyWord color="emerald">essential healthcare.</ShinyWord></>,
-    video: '/videos/nutrition for pregnat.mp4',
-    image: '/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.17 PM (1).jpeg',
+    video: '/videos/web/nutrition-for-pregnat.mp4',
+    image: '/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.17 PM (1).webp',
     transformOrigin: 'center top',
   },
   {
     id: '06',
     title: 'RO PLANT INSTALLATION',
     description: <>Sustainable <ShinyWord color="cyan">water access.</ShinyWord></>,
-    video: '/videos/water.mp4',
-    image: '/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.53 PM.jpeg',
+    video: '/videos/web/water.mp4',
+    image: '/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.53 PM.webp',
     transformOrigin: 'right center',
   },
   {
     id: '07',
     title: 'DIGITAL CLASSROOMS',
     description: <>Enabling <ShinyWord color="amber">digital education.</ShinyWord></>,
-    video: '/videos/school infrastructure.mp4',
-    image: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.23 PM.jpeg',
+    video: '/videos/web/school-infrastructure.mp4',
+    image: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.23 PM.webp',
     transformOrigin: 'center center',
   },
   {
     id: '08',
     title: 'COMMUNITY WELLNESS',
     description: <>Fostering <ShinyWord color="emerald">public wellness.</ShinyWord></>,
-    video: '/videos/rural developement.mp4',
-    image: '/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM.jpeg',
+    video: '/videos/web/rural-developement.mp4',
+    image: '/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM.webp',
     transformOrigin: 'center bottom',
   }
 ];
@@ -191,10 +192,10 @@ export const CinematicHero = () => {
 
           <div className="flex flex-col sm:flex-row items-center gap-3 mt-1">
             <div className="flex -space-x-2.5">
-              <img src="/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).jpeg" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-[#061928] object-cover" />
-              <img src="/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.09 PM (1).jpeg" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-[#061928] object-cover" />
-              <img src="/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.11 PM.jpeg" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-[#061928] object-cover" />
-              <img src="/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.06 PM (2).jpeg" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-[#061928] object-cover" />
+              <Img src="/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).webp" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-primary-deep object-cover" />
+              <Img src="/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.09 PM (1).webp" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-primary-deep object-cover" />
+              <Img src="/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.11 PM.webp" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-primary-deep object-cover" />
+              <Img src="/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.06 PM (2).webp" alt="Volunteer" className="w-8 h-8 rounded-full border-2 border-primary-deep object-cover" />
             </div>
             <div className="text-center sm:text-left">
               <p className="text-white font-bold text-xs leading-tight">
@@ -241,9 +242,9 @@ export const CinematicHero = () => {
                   : '0 20px 40px rgba(0,0,0,0.6)',
                 borderColor: isActive ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.1)'
               }}
-              onClick={() => setCurrentSlide(i)}
+              onClick={() => { currentSlideRef.current = i; setCurrentSlide(i); }}
             >
-              <img 
+              <Img 
                 src={slide.image} 
                 alt={slide.title} 
                 className="w-full h-full object-cover transform"

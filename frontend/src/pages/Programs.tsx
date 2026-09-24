@@ -1,183 +1,222 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Section } from '../components/layout/Section';
+import { ArrowRight, Check } from 'lucide-react';
 import { Container } from '../components/layout/Container';
-import { programs } from '../data/programs';
+import { SectionHeading } from '../components/ui/SectionHeading';
+import { ButtonLink } from '../components/ui/Button';
+import { programs, getInitiativeGroups } from '../data/programs';
 import { projects } from '../data/projects';
-import { ArrowRight, MapPin, CheckCircle2 } from 'lucide-react';
+import { Img } from '../components/common/Img';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+};
 
 export const Programs = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
-  
-  // Default to the first program if no valid tab is found
-  const initialProgram = programs.find(p => p.id === tabParam) || programs[0];
-  const [activeTab, setActiveTab] = useState(initialProgram.id);
+  const [highlighted, setHighlighted] = useState<string | null>(null);
 
-  // Sync state when URL parameter changes (e.g., clicking Navbar links)
+  // Backward compatibility: /programs?tab=prog-education scrolls to and highlights that program.
   useEffect(() => {
-    if (tabParam && programs.some(p => p.id === tabParam)) {
-      setActiveTab(tabParam);
-    }
+    if (!tabParam || !programs.some((p) => p.id === tabParam)) return;
+    const el = document.getElementById(tabParam);
+    if (!el) return;
+    const frame = requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    setHighlighted(tabParam);
+    const timer = window.setTimeout(() => setHighlighted(null), 2400);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
   }, [tabParam]);
 
-  const handleTabChange = (id: string) => {
-    setActiveTab(id);
-    setSearchParams({ tab: id });
-  };
-
-  const activeProgram = programs.find(p => p.id === activeTab) || programs[0];
-  const activeProjects = projects.filter(p => p.programId === activeProgram.id);
-
   return (
-    <div className="bg-white min-h-screen">
-      {/* Hero Section - Pure White Theme */}
-      <section className="pt-32 pb-16 bg-white border-b border-gray-100 relative overflow-hidden">
-        {/* Subtle background decoration */}
-        <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[600px] h-[600px] bg-emerald-50/40 rounded-full blur-3xl pointer-events-none z-0" />
-        
-        <Container className="text-center relative z-10">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-serif font-bold mb-6 text-slate-900"
-          >
-            Programs & Initiatives
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium"
-          >
-            Discover our comprehensive initiatives designed to foster self-reliance and sustainable development.
-          </motion.p>
+    <div className="bg-background min-h-screen">
+      {/* Hero */}
+      <section className="page-hero pt-32 pb-10 md:pt-40 md:pb-14 bg-background border-b border-line">
+        <Container>
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.span
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="eyebrow eyebrow-center justify-center mb-6"
+            >
+              What We Do
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="font-serif font-semibold text-ink tracking-tight leading-[1.08] text-4xl md:text-6xl mb-6"
+            >
+              Programs &amp; <em className="italic font-medium text-primary">Initiatives</em>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="lead max-w-2xl mx-auto"
+            >
+              Discover our comprehensive initiatives designed to foster self-reliance and sustainable development.
+            </motion.p>
+          </div>
+
+          {/* Quick index */}
+          <nav aria-label="Programs" className="mt-12">
+            <ul className="flex flex-wrap justify-center gap-3">
+              {programs.map((program) => (
+                <li key={program.id}>
+                  <Link
+                    to={`/programs/${program.slug}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-2.5 text-sm font-medium text-ink hover:border-primary hover:text-primary transition-colors"
+                  >
+                    {program.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </Container>
       </section>
 
-      <Section className="bg-white py-12 md:py-20">
+      {/* Program rows */}
+      <section className="section bg-white">
         <Container>
-          {/* Tab Navigation */}
-          <div className="flex flex-wrap justify-center gap-3 mb-16">
-            {programs.map((program) => {
-              const isActive = activeTab === program.id;
+          <div className="space-y-20 md:space-y-28">
+            {programs.map((program, idx) => {
+              const related = projects.filter((p) => p.programId === program.id);
+              const reversed = idx % 2 === 1;
+              const isHighlighted = highlighted === program.id;
+              const highlights = program.activities?.length
+                ? program.activities
+                : getInitiativeGroups(program).flatMap((g) => g.items.map((i) => i.title));
               return (
-                <button
+                <motion.article
                   key={program.id}
-                  onClick={() => handleTabChange(program.id)}
-                  className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 shadow-sm ${
-                    isActive 
-                      ? 'bg-[#054E38] text-white shadow-md scale-105'
-                      : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 hover:border-slate-300'
+                  id={program.id}
+                  {...fadeUp}
+                  className={`scroll-mt-28 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center rounded-3xl transition-shadow duration-700 ${
+                    isHighlighted ? 'ring-2 ring-gold ring-offset-8 ring-offset-white' : ''
                   }`}
                 >
-                  {program.title}
-                </button>
-              );
-            })}
-          </div>
+                  <Link
+                    to={`/programs/${program.slug}`}
+                    className={`group lg:col-span-6 block ${reversed ? 'lg:order-2' : ''}`}
+                    aria-hidden="true"
+                    tabIndex={-1}
+                  >
+                    <div data-reveal="wipe" className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-sand border border-line">
+                      {program.coverImage && (
+                        <Img
+                          src={program.coverImage}
+                          alt={program.title}
+                          width={1200}
+                          height={900}
+                          loading={idx === 0 ? 'eager' : 'lazy'}
+                          decoding="async"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                        />
+                      )}
+                    </div>
+                  </Link>
 
-          {/* Active Tab Content */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="bg-white"
-            >
-              <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-                {/* Left Column: Program Info */}
-                <div className="lg:w-1/3 flex flex-col">
-                  <div className="sticky top-32">
-                    <h2 className="text-3xl lg:text-4xl font-serif font-bold text-slate-900 mb-6">{activeProgram.title}</h2>
-                    <p className="text-slate-600 text-[16px] leading-relaxed mb-8">{activeProgram.overview}</p>
-                    
-                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 mb-8">
-                      <h4 className="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wider">Key Activities</h4>
-                      <ul className="space-y-3">
-                        {activeProgram.activities?.map((activity, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <CheckCircle2 className="w-5 h-5 text-[#009966] shrink-0 mt-0.5" />
-                            <span className="text-sm text-slate-700 font-medium">{activity}</span>
+                  <div className={`lg:col-span-6 ${reversed ? 'lg:order-1' : ''}`}>
+                    <span className="font-serif text-sm text-gold" aria-hidden="true">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <h2 className="mt-2 font-serif font-semibold text-3xl md:text-4xl text-ink tracking-tight leading-tight">
+                      <Link to={`/programs/${program.slug}`} className="hover:text-primary transition-colors">
+                        {program.title}
+                      </Link>
+                    </h2>
+                    <p className="mt-5 text-base md:text-[17px] leading-relaxed text-ink-muted">{program.overview}</p>
+
+                    {highlights.length > 0 && (
+                      <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+                        {highlights.map((activity) => (
+                          <li key={activity} className="flex items-start gap-3 text-[15px] text-ink">
+                            <Check className="w-4 h-4 mt-1 shrink-0 text-primary" aria-hidden="true" />
+                            <span>{activity}</span>
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    )}
 
-                    <div className="grid grid-cols-2 gap-4">
-                      {activeProgram.impactStats?.map((stat, idx) => (
-                        <div key={idx} className="bg-white border border-slate-100 p-4 rounded-xl shadow-sm text-center">
-                          <div className="text-2xl font-black text-[#054E38] mb-1">
-                            {stat.value}{stat.suffix}
+                    {program.impactStats && program.impactStats.length > 0 && (
+                      <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6">
+                        {program.impactStats.map((stat) => (
+                          <div key={stat.label} className="flex flex-col-reverse">
+                            <dt className="mt-1 text-[12px] font-medium uppercase tracking-[0.14em] text-ink-muted">
+                              {stat.label}
+                            </dt>
+                            <dd className="font-serif font-semibold text-3xl text-primary tracking-tight">
+                              {stat.prefix}{stat.value}{stat.suffix}
+                            </dd>
                           </div>
-                          <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">
-                            {stat.label}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Right Column: Projects */}
-                <div className="lg:w-2/3">
-                  <div className="mb-10 pb-4 border-b border-slate-100">
-                    <h3 className="text-2xl font-serif font-bold text-slate-900 flex items-center gap-4">
-                      Featured Projects
-                      <span className="h-px bg-slate-200 flex-1 ml-4 hidden sm:block"></span>
-                    </h3>
-                  </div>
+                        ))}
+                      </dl>
+                    )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {activeProjects.length > 0 ? (
-                      activeProjects.map((project, idx) => (
-                        <motion.div 
-                          key={project.id}
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: idx * 0.1 }}
-                          className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full"
-                        >
-                          <div className="h-56 bg-slate-100 relative overflow-hidden">
-                            <img 
-                              src={project.images?.[0] || "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).jpeg"} 
-                              alt={project.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
-                          <div className="p-6 flex flex-col flex-1">
-                            <div className="flex items-center text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-4 gap-1.5">
-                              <MapPin className="w-3.5 h-3.5 text-[#F43F5E]" /> {project.location}
-                            </div>
-                            <h4 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-[#054E38] transition-colors leading-tight">
-                              {project.title}
-                            </h4>
-                            <p className="text-slate-600 text-sm mb-6 line-clamp-3 leading-relaxed flex-1">
-                              {project.response}
-                            </p>
-                            <Link to={`/projects/${project.slug}`} className="inline-flex items-center gap-2 text-sm font-bold text-[#054E38] hover:text-[#009966] transition-colors group/link mt-auto w-max">
-                              Read Full Story 
-                              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                            </Link>
-                          </div>
-                        </motion.div>
-                      ))
-                    ) : (
-                      <div className="col-span-full py-12 text-center text-slate-500 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                        No featured projects found for this program yet.
+                    {related.length > 0 && (
+                      <div className="mt-8">
+                        <h3 className="text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-muted mb-3">
+                          Featured Projects
+                        </h3>
+                        <ul className="flex flex-wrap gap-2">
+                          {related.slice(0, 4).map((project) => (
+                            <li key={project.id}>
+                              <Link
+                                to={`/projects/${project.slug}`}
+                                className="inline-block rounded-full bg-sand px-3.5 py-1.5 text-[13px] text-ink hover:bg-primary-soft hover:text-primary transition-colors"
+                              >
+                                {project.title}
+                              </Link>
+                            </li>
+                          ))}
+                          {related.length > 4 && (
+                            <li className="inline-block px-2 py-1.5 text-[13px] text-ink-muted">
+                              +{related.length - 4} more
+                            </li>
+                          )}
+                        </ul>
                       </div>
                     )}
+
+                    <div className="mt-9">
+                      <ButtonLink to={`/programs/${program.slug}`} variant="outline">
+                        Explore program <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                      </ButtonLink>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+                </motion.article>
+              );
+            })}
+          </div>
         </Container>
-      </Section>
+      </section>
+
+      {/* CTA */}
+      <section className="section bg-primary-deep text-white">
+        <Container>
+          <SectionHeading
+            dark
+            eyebrow="Get Involved"
+            title={<>Partner with us to <em>scale impact</em></>}
+            description="Support a program or collaborate with SRAYI Association on your next CSR initiative."
+            className="!mb-10"
+          />
+          <div className="flex flex-wrap justify-center gap-3">
+            <ButtonLink to="/donate" variant="donate" size="lg">Donate now</ButtonLink>
+            <ButtonLink to="/contact" variant="ghost-light" size="lg">Contact us</ButtonLink>
+          </div>
+        </Container>
+      </section>
     </div>
   );
 };

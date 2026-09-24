@@ -1,264 +1,354 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, MapPin, Tag, Banknote, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, Tag, Banknote, CheckCircle2, CalendarDays, Map as MapIcon } from 'lucide-react';
 import { Container } from '../components/layout/Container';
+import { ButtonLink } from '../components/ui/Button';
 import { projects } from '../data/projects';
+import { usePageMeta, breadcrumbs } from '../lib/seo';
+import { Img } from '../components/common/Img';
 import { BeforeAfterSlider } from '../components/ui/BeforeAfterSlider';
+import { tones, toneFor } from '../lib/tones';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+};
+
+const truncate = (text: string, max = 155) => {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  return `${clean.slice(0, max - 1).replace(/\s+\S*$/, '')}…`;
+};
 
 export const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const project = projects.find(p => p.slug === slug);
+  const project = projects.find((p) => p.slug === slug);
+
+  usePageMeta(
+    project
+      ? {
+          title: `${project.title} | SATHWIK Projects`,
+          description: truncate(project.summary || project.response || project.title),
+          path: `/projects/${project.slug}`,
+          image: project.images?.[0],
+          type: 'article',
+          jsonLd: [
+            breadcrumbs([
+              { name: 'Projects', path: '/projects' },
+              { name: project.title, path: `/projects/${project.slug}` },
+            ]),
+          ],
+        }
+      : null,
+  );
 
   if (!project) {
     return (
-      <div className="min-h-screen pt-40 pb-20 flex flex-col items-center justify-center bg-[#FAFAF8]">
-        <h1 className="text-3xl font-serif font-bold text-gray-900 mb-4">Project Not Found</h1>
-        <Link to="/projects" className="text-[#054E38] hover:underline font-medium flex items-center gap-2">
-          <ArrowLeft className="w-4 h-4" /> Back to Projects
-        </Link>
-      </div>
+      <section className="min-h-[70vh] bg-background pt-36 pb-24 md:pt-44">
+        <Container className="max-w-2xl text-center">
+          <span className="eyebrow eyebrow-center mb-5">Projects</span>
+          <h1 className="display-title mb-6">Project Not Found</h1>
+          <ButtonLink to="/projects" variant="outline">
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back to Projects
+          </ButtonLink>
+        </Container>
+      </section>
     );
   }
 
   const coverImage = project.images?.[0];
+  const tone = tones[toneFor(project.category)];
+  const categoryHref = `/projects?category=${encodeURIComponent(project.category)}`;
+  const related = [
+    ...projects.filter((p) => p.id !== project.id && p.category === project.category),
+    ...projects.filter((p) => p.id !== project.id && p.category !== project.category && p.state === project.state),
+  ].slice(0, 3);
+
+  const chapters = [
+    project.problem && { key: 'need', eyebrow: '01 · The Need', title: 'Identifying the Challenge', body: <p>{project.problem}</p> },
+    project.response && { key: 'response', eyebrow: '02 · The Response', title: 'Our Objective', body: <p>{project.response}</p> },
+    (project.implementation || project.impact) && {
+      key: 'impact',
+      eyebrow: '03 · Implementation & Impact',
+      title: 'Creating Meaningful Change',
+      body: (
+        <>
+          {project.implementation && <p>{project.implementation}</p>}
+          {project.impact && (
+            <div className="mt-8 rounded-2xl border border-line bg-background p-6 md:p-8">
+              <h3 className="mb-4 font-serif text-xl font-semibold text-ink">Key Outcomes:</h3>
+              <ul className="space-y-3">
+                {project.impact.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-1 h-4 w-4 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
+      ),
+    },
+  ].filter(Boolean) as { key: string; eyebrow: string; title: string; body: React.ReactNode }[];
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen">
-      
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-        <Container className="relative z-10">
-          <Link to="/projects" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#054E38] transition-colors mb-10">
-            <ArrowLeft className="w-4 h-4" /> Back to all projects
-          </Link>
-          
-          <div className="max-w-4xl">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-center flex-wrap gap-3 mb-6"
-            >
-              <Link 
-                to={`/projects?category=${encodeURIComponent(project.category)}`}
-                className="px-3 py-1 bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors rounded-full text-xs font-bold uppercase tracking-widest"
+    <div className="min-h-screen bg-background">
+      <article>
+        {/* 1. HERO */}
+        <header className="bg-background page-hero pt-32 pb-10 md:pt-40 md:pb-14">
+          <Container>
+            <nav aria-label="Breadcrumb" className="mb-10 text-[13px] text-ink-muted">
+              <ol className="flex flex-wrap items-center gap-2">
+                <li><Link to="/" className="link-underline hover:text-primary">Home</Link></li>
+                <li aria-hidden="true" className="text-line">/</li>
+                <li><Link to="/projects" className="link-underline hover:text-primary">Projects</Link></li>
+                <li aria-hidden="true" className="text-line">/</li>
+                <li aria-current="page" className="text-ink line-clamp-1">{project.title}</li>
+              </ol>
+            </nav>
+
+            <div className="max-w-4xl">
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="mb-6 flex flex-wrap items-center gap-2.5"
               >
-                {project.category}
-              </Link>
-              {project.investment && (
-                <span className="px-3 py-1 bg-[#054E38]/10 text-[#054E38] rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
-                  <Banknote className="w-3.5 h-3.5" />
-                  Investment: {project.investment}
-                </span>
-              )}
-              {project.tags?.map(tag => (
-                <span key={tag} className="px-3 py-1 border border-gray-200 text-gray-600 rounded-full text-xs font-bold uppercase tracking-widest">
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 leading-tight mb-8"
-            >
-              {project.title}
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl"
-            >
-              {project.summary}
-            </motion.p>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. PROJECT INFORMATION & GALLERY HERO */}
-      <section className="pb-20">
-        <Container>
-          {/* Main Hero Image */}
-          {coverImage && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-gray-900 rounded-[2rem] overflow-hidden mb-16 shadow-[0_20px_40px_rgb(0,0,0,0.08)]"
-            >
-              <img 
-                src={coverImage} 
-                alt="" 
-                className="absolute inset-0 w-full h-full object-cover opacity-50 blur-2xl scale-110"
-                aria-hidden="true"
-              />
-              <img 
-                src={coverImage} 
-                alt={project.title} 
-                className="relative z-10 w-full h-full object-contain p-4 md:p-8"
-              />
-            </motion.div>
-          )}
-
-          {/* Key Details Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-white p-8 md:p-10 rounded-[2rem] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100">
-            {project.location && (
-              <div>
-                <div className="text-sm text-gray-500 font-medium mb-1 flex items-center gap-1.5"><MapPin className="w-4 h-4"/> Location</div>
-                <div className="font-semibold text-gray-900">{project.location}</div>
-              </div>
-            )}
-            {project.state && (
-              <div>
-                <div className="text-sm text-gray-500 font-medium mb-1 flex items-center gap-1.5"><MapPin className="w-4 h-4"/> State</div>
-                <div className="font-semibold text-gray-900">{project.state}</div>
-              </div>
-            )}
-            <div>
-              <div className="text-sm text-gray-500 font-medium mb-1 flex items-center gap-1.5"><Tag className="w-4 h-4"/> Category</div>
-              <Link to={`/projects?category=${encodeURIComponent(project.category)}`} className="font-semibold text-gray-900 hover:text-[#054E38] transition-colors">{project.category}</Link>
-            </div>
-            <div>
-              <div className="text-sm text-gray-500 font-medium mb-1 flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4"/> Status</div>
-              <div className="font-semibold text-[#054E38]">Completed</div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* 3. CASE STUDY CONTENT */}
-      <section className="py-16 md:py-24 bg-white border-y border-gray-100">
-        <Container>
-          <div className="max-w-4xl mx-auto space-y-24">
-            
-            {/* The Need */}
-            {project.problem && (
-              <div className="grid md:grid-cols-[1fr_2fr] gap-8 md:gap-16">
-                <div>
-                  <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-amber-600 mb-2">01 &mdash; The Need</h2>
-                  <h3 className="text-2xl font-serif font-bold text-gray-900">Identifying the Challenge</h3>
-                </div>
-                <div className="prose prose-lg text-gray-600 prose-p:leading-relaxed">
-                  <p>{project.problem}</p>
-                </div>
-              </div>
-            )}
-
-            {/* The Response */}
-            {project.response && (
-              <div className="grid md:grid-cols-[1fr_2fr] gap-8 md:gap-16">
-                <div>
-                  <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-[#054E38] mb-2">02 &mdash; The Response</h2>
-                  <h3 className="text-2xl font-serif font-bold text-gray-900">Our Objective</h3>
-                </div>
-                <div className="prose prose-lg text-gray-600 prose-p:leading-relaxed">
-                  <p>{project.response}</p>
-                </div>
-              </div>
-            )}
-
-            {/* Implementation & Impact */}
-            {(project.implementation || project.impact) && (
-              <div className="grid md:grid-cols-[1fr_2fr] gap-8 md:gap-16">
-                <div>
-                  <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-emerald-600 mb-2">03 &mdash; Implementation & Impact</h2>
-                  <h3 className="text-2xl font-serif font-bold text-gray-900">Creating Meaningful Change</h3>
-                </div>
-                <div className="prose prose-lg text-gray-600 prose-p:leading-relaxed">
-                  {project.implementation && <p>{project.implementation}</p>}
-                  {project.impact && (
-                    <div>
-                      <h4 className="text-lg font-bold text-gray-900 mt-6 mb-2">Key Outcomes:</h4>
-                      <ul className="list-disc pl-5">
-                        {project.impact.map((item, idx) => (
-                          <li key={idx}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-          </div>
-        </Container>
-      </section>
-
-      {/* 3.5 BEFORE / AFTER COMPARISON */}
-      {project.beforeImage && coverImage && (
-        <section className="py-16 md:py-24 bg-[#FAFAF8]">
-          <Container>
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-[#054E38] mb-4">Transformation</h2>
-                <h3 className="text-3xl font-serif font-bold text-gray-900">Before & After</h3>
-              </div>
-              <BeforeAfterSlider 
-                beforeImage={project.beforeImage} 
-                afterImage={coverImage} 
-              />
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* 4. EDITORIAL PROJECT GALLERY */}
-      {project.images && project.images.length > 0 && (
-        <section className="py-24 bg-[#111] text-white">
-          <Container>
-            <div className="text-center mb-16">
-              <h2 className="text-sm font-bold tracking-[0.2em] uppercase text-gray-400 mb-4">04 &mdash; Project Gallery</h2>
-              <p className="text-3xl md:text-4xl font-serif font-medium">Visual Documentation</p>
-            </div>
-            
-            {/* Clean Grid Gallery */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {project.images.map((img, idx) => (
-                <div 
-                  key={idx} 
-                  className="relative group overflow-hidden rounded-xl bg-gray-900 aspect-[4/3] shadow-lg border border-white/10"
+                <Link
+                  to={categoryHref}
+                  className={`rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity hover:opacity-80 ${tone.soft} ${tone.text}`}
                 >
-                  <img 
-                    src={img} 
-                    alt="" 
-                    className="absolute inset-0 w-full h-full object-cover opacity-30 blur-xl scale-110 transition-opacity duration-500 group-hover:opacity-50"
-                    aria-hidden="true"
-                  />
-                  <img 
-                    src={img} 
-                    alt={`${project.title} gallery image ${idx + 1}`} 
-                    loading="lazy"
-                    className="relative z-10 w-full h-full object-contain p-2 transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-none" />
-                </div>
-              ))}
+                  {project.category}
+                </Link>
+                {project.investment && (
+                  <span className="flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+                    <Banknote className="h-3.5 w-3.5" aria-hidden="true" />
+                    Investment: {project.investment}
+                  </span>
+                )}
+                {project.tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-line px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className="mb-6 font-serif text-4xl font-semibold leading-[1.08] tracking-tight text-ink md:text-5xl lg:text-6xl"
+              >
+                {project.title}
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+                className="lead max-w-3xl md:!text-xl"
+              >
+                {project.summary}
+              </motion.p>
             </div>
+          </Container>
+        </header>
+
+        {/* 2. COVER + KEY FACTS */}
+        <section className="bg-background pb-4 md:pb-8">
+          <Container>
+            {coverImage && (
+              <figure data-reveal="wipe" className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-sand md:aspect-[2/1]">
+                <Img
+                  src={coverImage}
+                  alt={project.title}
+                  width={1600}
+                  height={800}
+                  fetchPriority="high"
+                  sizes="(max-width: 1280px) 100vw, 1216px"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+              </figure>
+            )}
+
+          </Container>
+        </section>
+
+        {/* 3. CASE STUDY, editorial reading column + sticky project facts */}
+        <section className="section bg-white">
+          <Container>
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+              <div className="space-y-16 md:space-y-20 lg:col-span-8">
+                {project.beforeImage && coverImage && (
+                  <motion.div {...fadeUp}>
+                    <span className="eyebrow mb-4">Before and After</span>
+                    <h2 className="mb-6 font-serif text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
+                      See the difference
+                    </h2>
+                    <BeforeAfterSlider
+                      beforeImage={project.beforeImage}
+                      afterImage={coverImage}
+                      beforeAlt={`${project.title}, before`}
+                      afterAlt={`${project.title}, after`}
+                    />
+                  </motion.div>
+                )}
+                {chapters.map((c) => (
+                  <motion.div key={c.key} {...fadeUp}>
+                    <span className="eyebrow mb-4">{c.eyebrow}</span>
+                    <h2 className="mb-6 font-serif text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
+                      {c.title}
+                    </h2>
+                    <div className="space-y-5 text-[17px] leading-[1.8] text-ink-muted">{c.body}</div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <aside aria-labelledby="project-facts" className="lg:col-span-4">
+                <div className="card p-6 md:p-8 lg:sticky lg:top-28">
+                  <h2 id="project-facts" className="mb-6 font-serif text-xl font-semibold text-ink">Project facts</h2>
+                  <dl className="divide-y divide-line">
+                    <Fact icon={<Tag className="h-4 w-4" />} label="Category">
+                      <Link to={categoryHref} className={`link-underline ${tone.text}`}>{project.category}</Link>
+                    </Fact>
+                    {project.location && (
+                      <Fact icon={<MapPin className="h-4 w-4" />} label="Location">{project.location}</Fact>
+                    )}
+                    {project.state && <Fact icon={<MapIcon className="h-4 w-4" />} label="State">{project.state}</Fact>}
+                    {project.year && <Fact icon={<CalendarDays className="h-4 w-4" />} label="Year">{project.year}</Fact>}
+                    {project.investment && (
+                      <Fact icon={<Banknote className="h-4 w-4" />} label="Investment">{project.investment}</Fact>
+                    )}
+                    <Fact icon={<CheckCircle2 className="h-4 w-4" />} label="Status">
+                      <span className="text-primary">Completed</span>
+                    </Fact>
+                  </dl>
+                  {project.tags && project.tags.length > 0 && (
+                    <ul className="mt-6 flex flex-wrap gap-2 border-t border-line pt-6" aria-label="Tags">
+                      {project.tags.map((tag) => (
+                        <li
+                          key={tag}
+                          className="rounded-full border border-line px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted"
+                        >
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <ButtonLink to="/donate" variant="donate" className="mt-8 w-full">
+                    Support work like this
+                  </ButtonLink>
+                </div>
+              </aside>
+            </div>
+          </Container>
+        </section>
+
+        {/* 4. PROJECT GALLERY */}
+        {project.images && project.images.length > 0 && (
+          <section className="section bg-sand">
+            <Container>
+              <div className="mb-12 text-center md:mb-16">
+                <span className="eyebrow eyebrow-center mb-5">04 · Project Gallery</span>
+                <h2 className="display-title">Visual Documentation</h2>
+              </div>
+
+              <ul className="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-3">
+                {project.images.map((img, idx) => (
+                  <li key={img} className="group relative aspect-[4/3] overflow-hidden rounded-2xl bg-line">
+                    <a href={img} target="_blank" rel="noopener" aria-label={`Open ${project.title} photo ${idx + 1} in full size`}>
+                      <Img
+                        src={img}
+                        alt={`${project.title} gallery image ${idx + 1}`}
+                        width={800}
+                        height={600}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-premium group-hover:scale-[1.04]"
+                      />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Container>
+          </section>
+        )}
+      </article>
+
+      {/* 5. RELATED PROJECTS */}
+      {related.length > 0 && (
+        <section className="section bg-background" aria-labelledby="related-projects">
+          <Container>
+            <div className="mb-10 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between">
+              <div>
+                <span className="eyebrow mb-4">Keep Exploring</span>
+                <h2 id="related-projects" className="display-title">Related <em className="font-medium text-primary">Projects</em></h2>
+              </div>
+              <Link to="/projects" className="inline-flex items-center gap-2 text-sm font-semibold text-primary link-underline">
+                All projects <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <ul className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              {related.map((p) => (
+                <li key={p.id}>
+                  <Link to={`/projects/${p.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden bg-sand">
+                      {p.images?.[0] && (
+                        <Img
+                          src={p.images[0]}
+                          alt={p.title}
+                          width={800}
+                          height={600}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover transition-transform duration-700 ease-premium group-hover:scale-[1.04]"
+                        />
+                      )}
+                    </div>
+                    <div className="flex grow flex-col p-6">
+                      <span className="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-gold">{p.category}</span>
+                      <h3 className="font-serif text-xl font-semibold leading-snug text-ink transition-colors group-hover:text-primary">
+                        {p.title}
+                      </h3>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Container>
         </section>
       )}
 
-      {/* 5. CALL TO ACTION */}
-      <section className="py-24 bg-gradient-to-br from-[#054E38] to-[#0a382a] text-white text-center">
-        <Container>
-          <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">Support Work Like This</h2>
-          <p className="text-lg text-emerald-100 mb-10 max-w-2xl mx-auto">
+      {/* 6. CALL TO ACTION */}
+      <section className="section bg-primary-deep text-center text-white">
+        <Container className="max-w-3xl">
+          <h2 className="mb-6 font-serif text-3xl font-semibold tracking-tight md:text-5xl">Support Work Like This</h2>
+          <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/75 md:text-lg">
             Your contribution helps us continue delivering impactful projects to the communities that need it most.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/donate" className="bg-[#F43F5E] hover:bg-[#E11D48] text-white px-8 py-4 rounded-full font-bold transition-all shadow-[0_4px_14px_rgba(244,63,94,0.39)] hover:shadow-[0_6px_20px_rgba(244,63,94,0.23)] hover:-translate-y-0.5">
-              Make a Donation
-            </Link>
-            <Link to="/projects" className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-full font-bold transition-all backdrop-blur-sm">
-              Explore More Projects
-            </Link>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <ButtonLink to="/donate" variant="donate" size="lg">Make a Donation</ButtonLink>
+            <ButtonLink to="/projects" variant="ghost-light" size="lg">Explore More Projects</ButtonLink>
           </div>
         </Container>
       </section>
-
     </div>
   );
 };
+
+const Fact = ({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) => (
+  <div className="flex items-start justify-between gap-4 py-3.5 first:pt-0 last:pb-0">
+    <dt className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-ink-muted">
+      <span className="text-ink-muted/80" aria-hidden="true">{icon}</span>
+      {label}
+    </dt>
+    <dd className="text-right text-[15px] font-semibold text-ink">{children}</dd>
+  </div>
+);

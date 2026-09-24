@@ -1,90 +1,71 @@
+import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import type { Variants } from 'framer-motion';
+import { SplitWords } from './SplitWords';
 
 interface SectionHeadingProps {
-  title: string;
+  /** Main heading. Pass a node to italicise/colour part of it, e.g. <>Our <em>Impact</em></> */
+  title: ReactNode;
+  /** Small uppercase label above the title. */
+  eyebrow?: string;
+  /**
+   * Legacy prop: short labels render as the eyebrow, longer sentences render
+   * as the lead paragraph under the title.
+   */
   subtitle?: string;
-  alignment?: 'left' | 'center' | 'right';
+  /** Supporting paragraph below the title. */
+  description?: ReactNode;
+  alignment?: 'left' | 'center';
   dark?: boolean;
+  as?: 'h1' | 'h2';
+  className?: string;
 }
 
-export const SectionHeading: React.FC<SectionHeadingProps> = ({ 
-  title, 
-  subtitle, 
+export const SectionHeading = ({
+  title,
+  eyebrow,
+  subtitle,
+  description,
   alignment = 'center',
-  dark = false
-}) => {
-  const alignmentClasses = {
-    left: 'text-left',
-    center: 'text-center mx-auto',
-    right: 'text-right ml-auto'
-  };
-
-  // Split title into words for kinetic animation
-  const words = title.split(' ');
-
-  const container: Variants = {
-    hidden: { opacity: 0 },
-    visible: (i = 1) => ({
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.04 * i },
-    }),
-  };
-
-  const child: Variants = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 40,
-      rotateX: -90,
-      transition: {
-        type: 'spring',
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-  };
+  dark = false,
+  as = 'h2',
+  className = '',
+}: SectionHeadingProps) => {
+  const subtitleIsLabel = subtitle && subtitle.split(' ').length <= 6;
+  const label = eyebrow ?? (subtitleIsLabel ? subtitle : undefined);
+  const lead = description ?? (!subtitleIsLabel ? subtitle : undefined);
+  const centered = alignment === 'center';
+  const Heading = as;
 
   return (
-    <div className={`mb-12 md:mb-16 max-w-3xl ${alignmentClasses[alignment]}`}>
-      {subtitle && (
-        <motion.span 
-          initial={{ opacity: 0, y: 10 }}
+    <div className={`mb-10 md:mb-12 max-w-3xl ${centered ? 'mx-auto text-center' : 'text-left'} ${className}`}>
+      {label && (
+        <motion.span
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          className={`block text-sm font-bold tracking-[0.2em] uppercase mb-4 ${dark ? 'text-emerald-400' : 'text-[#054E38]'}`}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className={`eyebrow mb-5 ${centered ? 'eyebrow-center' : ''} ${dark ? '!text-gold-soft' : ''}`}
         >
-          {subtitle}
+          {label}
         </motion.span>
       )}
-      <motion.h2 
-        variants={container}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-        className={`text-4xl md:text-5xl lg:text-6xl font-serif font-bold ${dark ? 'text-white' : 'text-gray-900'} flex flex-wrap gap-x-3 gap-y-2 justify-${alignment === 'center' ? 'center' : alignment === 'right' ? 'end' : 'start'}`}
-        style={{ perspective: "1000px" }}
+      <Heading
+        data-reveal="words"
+        className={`display-title [&_em]:italic [&_em]:font-medium [&_em]:text-primary ${dark ? '!text-white [&_em]:!text-gold-soft' : ''}`}
       >
-        {words.map((word, index) => (
-          <motion.span 
-            variants={child} 
-            key={index}
-            style={{ transformOrigin: 'bottom center' }}
-            className="inline-block"
-          >
-            {word}
-          </motion.span>
-        ))}
-      </motion.h2>
+        <SplitWords>{title}</SplitWords>
+      </Heading>
+      {lead && (
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+          className={`lead mt-5 ${centered ? 'mx-auto max-w-2xl' : 'max-w-2xl'} ${dark ? '!text-white/70' : ''}`}
+        >
+          {lead}
+        </motion.p>
+      )}
     </div>
   );
 };

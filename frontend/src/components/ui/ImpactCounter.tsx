@@ -1,74 +1,115 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useInView, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 
 interface ImpactCounterProps {
   value: string | number;
   label: string;
+  prefix?: string;
   suffix?: string;
   icon?: ReactNode;
+  /** Render for a dark (primary-deep) band. */
+  dark?: boolean;
 }
 
-export const ImpactCounter: React.FC<ImpactCounterProps> = ({ value, label, suffix = '', icon }) => {
+const format = (n: number) => Math.floor(n).toLocaleString('en-IN');
+
+// Progress ring around the icon (viewBox 0 0 48 48).
+const RING_R = 22.5;
+const RING_C = 2 * Math.PI * RING_R;
+
+export const ImpactCounter: React.FC<ImpactCounterProps> = ({
+  value,
+  label,
+  prefix = '',
+  suffix = '',
+  icon,
+  dark = false,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  
-  const numericValue = typeof value === 'string' 
-    ? parseInt(value.replace(/,/g, ''), 10) 
-    : value;
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const reduceMotion = useReducedMotion();
+
+  const numericValue = typeof value === 'string' ? parseInt(value.replace(/,/g, ''), 10) || 0 : value;
 
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { 
-    damping: 60, 
-    stiffness: 100, 
-    mass: 1 
-  });
-  
-  const [display, setDisplay] = useState("0");
+  const springValue = useSpring(motionValue, { damping: 60, stiffness: 100, mass: 1 });
+  const [display, setDisplay] = useState(() => format(0));
+  // The ring fills in step with the count-up and ends fully closed.
+  const ringOffset = useTransform(springValue, (v) =>
+    numericValue > 0 ? RING_C * (1 - Math.min(Math.max(v / numericValue, 0), 1)) : 0,
+  );
 
   useEffect(() => {
-    if (isInView) {
-      motionValue.set(numericValue);
-    }
-  }, [isInView, numericValue, motionValue]);
+    if (reduceMotion) return;
+    if (isInView) motionValue.set(numericValue);
+  }, [isInView, numericValue, motionValue, reduceMotion]);
 
-  useEffect(() => {
-    return springValue.on("change", (latest) => {
-      setDisplay(Math.floor(latest).toString());
-    });
-  }, [springValue]);
+  useEffect(() => springValue.on('change', (latest) => setDisplay(format(latest))), [springValue]);
+
+  // Reduced motion: show the final value immediately, no counting.
+  const shown = reduceMotion ? format(numericValue) : display;
+  const finalText = `${prefix}${format(numericValue)}${suffix}`;
 
   return (
-    <motion.div 
+    <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="flex flex-col items-center mt-10 p-8 pt-14 text-center relative bg-white/80 backdrop-blur-md rounded-[32px] border border-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-500 group"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col items-center text-center px-4 py-6"
     >
-      {/* Top Overlapping Icon Circle */}
       {icon && (
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-[0_8px_20px_rgba(0,0,0,0.06)] border border-gray-50 group-hover:-translate-y-2 transition-transform duration-500">
-          <div className="w-[66px] h-[66px] rounded-full border border-gray-100 flex items-center justify-center bg-gray-50/30">
-            {icon}
-          </div>
+        <div
+          className={`relative mb-5 flex h-12 w-12 items-center justify-center rounded-full ${
+            dark ? 'text-gold-soft' : 'text-primary'
+          }`}
+          aria-hidden="true"
+        >
+          <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r={RING_R} strokeWidth="1.5" className={dark ? 'stroke-white/15' : 'stroke-line'} />
+            <motion.circle
+              cx="24"
+              cy="24"
+              r={RING_R}
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeDasharray={RING_C}
+              style={{ strokeDashoffset: reduceMotion ? 0 : ringOffset }}
+              className={dark ? 'stroke-gold-soft' : 'stroke-primary'}
+            />
+          </svg>
+          {icon}
         </div>
       )}
-      
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center w-full">
-        {/* Number */}
-        <div className="text-4xl md:text-5xl lg:text-[54px] font-serif font-black text-[#0f172a] mb-4 tracking-tight flex items-baseline justify-center whitespace-nowrap">
-          {display}
-          <span className="text-3xl md:text-4xl text-[#d97706] ml-1 font-serif">{suffix}</span>
-        </div>
-        
-        {/* Orange Divider */}
-        <div className="w-8 h-[2px] bg-[#d97706] mb-5 rounded-full group-hover:w-16 transition-all duration-300" />
-        
-        {/* Label */}
-        <div className="text-[12px] font-bold text-slate-500 uppercase tracking-[0.2em] leading-relaxed max-w-[150px]">
-          {label}
-        </div>
+
+      {/* Screen readers get the final value only */}
+      <span className="sr-only">
+        {finalText} {label}
+      </span>
+
+      <div
+        aria-hidden="true"
+        className={`font-serif font-semibold tracking-tight leading-none whitespace-nowrap tabular-nums text-5xl md:text-6xl ${
+          dark ? 'text-white' : 'text-ink'
+        }`}
+      >
+        {prefix && <span className="mr-0.5">{prefix}</span>}
+        {shown}
+        {suffix && (
+          <span className={`ml-1 text-2xl md:text-3xl font-medium ${dark ? 'text-gold-soft' : 'text-gold'}`}>
+            {suffix}
+          </span>
+        )}
+      </div>
+
+      <div
+        aria-hidden="true"
+        className={`mt-5 text-xs md:text-[13px] font-semibold uppercase tracking-[0.12em] leading-relaxed max-w-[200px] ${
+          dark ? 'text-white/75' : 'text-ink-muted'
+        }`}
+      >
+        {label}
       </div>
     </motion.div>
   );

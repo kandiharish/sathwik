@@ -1,208 +1,123 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Users, BookOpen, HeartPulse, Leaf, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Users, BookOpen, HeartPulse, Leaf, ArrowRight } from 'lucide-react';
 import { Container } from '../layout/Container';
+import { SectionHeading } from './SectionHeading';
+import { Img } from '../common/Img';
+import { tones, type Tone } from '../../lib/tones';
 
 const areas = [
   {
-    num: "01",
-    title: "Empowerment",
-    desc: "SRAYI Association provides skill development, vocational training, and employment opportunities, helping youth become economically self-sufficient and community leaders.",
-    color: "bg-[#054E38]",
-    textColor: "text-[#054E38]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#054E38]/80 group-hover:to-[#054E38]/20",
-    icon: <Users className="w-5 h-5" />,
-    image: "/empowerment_rural.webp"
+    num: '01',
+    title: 'Empowerment',
+    to: '/programs/youth-and-women-empowerment',
+    desc: 'SRAYI Association provides skill development, vocational training, and employment opportunities, helping youth become economically self-sufficient and community leaders.',
+    tone: 'green' as Tone,
+    icon: Users,
+    image: '/real-focus/empowerment_real.webp',
   },
   {
-    num: "02",
-    title: "Education and Literacy",
-    desc: "By establishing learning centers and literacy programs, SRAYI Association ensures access to quality education, focusing on academic and life skills to empower individuals in making informed life choices.",
-    color: "bg-[#B84018]",
-    textColor: "text-[#B84018]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#B84018]/80 group-hover:to-[#B84018]/20",
-    icon: <BookOpen className="w-5 h-5" />,
-    image: "/education_rural.webp"
+    num: '02',
+    title: 'Education and Literacy',
+    to: '/programs/education-and-infrastructure',
+    desc: 'By establishing learning centers and literacy programs, SRAYI Association ensures access to quality education, focusing on academic and life skills to empower individuals in making informed life choices.',
+    tone: 'indigo' as Tone,
+    icon: BookOpen,
+    image: '/real-focus/education_real.webp',
   },
   {
-    num: "03",
-    title: "Healthcare & Wellness",
-    desc: "SRAYI Association promotes preventive healthcare, nutrition, and sanitation awareness through health camps and partnerships with healthcare professionals, improving community well-being.",
-    color: "bg-[#1C4E52]",
-    textColor: "text-[#1C4E52]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#1C4E52]/80 group-hover:to-[#1C4E52]/20",
-    icon: <HeartPulse className="w-5 h-5" />,
-    image: "/healthcare_rural.webp"
+    num: '03',
+    title: 'Healthcare & Wellness',
+    to: '/programs/healthcare-and-wellness',
+    desc: 'SRAYI Association promotes preventive healthcare, nutrition, and sanitation awareness through health camps and partnerships with healthcare professionals, improving community well-being.',
+    tone: 'red' as Tone,
+    icon: HeartPulse,
+    image: '/real-focus/healthcare_real.webp',
   },
   {
-    num: "04",
-    title: "Environmental Sustainability",
-    desc: "Through initiatives in tree planting, waste management, and clean energy adoption, SRAYI Association encourages eco-friendly practices to preserve natural resources and promote sustainable community growth.",
-    color: "bg-[#064E3B]",
-    textColor: "text-[#064E3B]",
-    glowColor: "group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-[#064E3B]/80 group-hover:to-[#064E3B]/20",
-    icon: <Leaf className="w-5 h-5" />,
-    image: "/environment_rural.webp"
-  }
+    num: '04',
+    title: 'Environmental Sustainability',
+    to: '/programs/environmental-sustainability',
+    desc: 'Through initiatives in tree planting, waste management, and clean energy adoption, SRAYI Association encourages eco-friendly practices to preserve natural resources and promote sustainable community growth.',
+    tone: 'teal' as Tone,
+    icon: Leaf,
+    image: '/real-focus/environment_real.webp',
+  },
 ];
 
 export const AreasOfFocus = () => {
-  const [startIndex, setStartIndex] = useState(0);
-
-  // Infinite Loop Logic
-  const nextSlide = () => {
-    setStartIndex((prev) => (prev + 1) % areas.length);
-  };
-
-  const prevSlide = () => {
-    setStartIndex((prev) => (prev - 1 + areas.length) % areas.length);
-  };
-
-  // Auto-play carousel
-  useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 4500); // 4.5 seconds
-    return () => clearInterval(timer);
-  }, []);
-
-  // On desktop, map exactly 3 sequential cards starting from startIndex and wrapping around
-  const displayedAreas = typeof window !== 'undefined' && window.innerWidth < 768 
-    ? areas 
-    : [0, 1, 2].map(i => areas[(startIndex + i) % areas.length]);
-
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden bg-[#FAFAF8] z-10">
-      {/* ABSTRACT BACKGROUND IMAGE WITH SEAMLESS FADES */}
-      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-end flex-col">
-        {/* Massive Top Fade to create solid space for the stylish header */}
-        <div className="absolute top-0 left-0 w-full h-[40vh] bg-gradient-to-b from-[#FAFAF8] via-[#FAFAF8] to-transparent z-10 pointer-events-none" />
-        
-        <img 
-          src="/image%20copy%207.webp" 
-          alt="Abstract Areas of Focus Background" 
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover object-center opacity-80"
+    <section className="section relative overflow-hidden bg-sand">
+      {/* Decorative background photo, very low opacity */}
+      <Img
+        src="/image%20copy%207.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.12]"
+      />
+
+      <Container className="relative">
+        <SectionHeading
+          eyebrow="Key Areas of Focus"
+          title={<>Promoting Rural <em>Growth &amp; Development</em></>}
+          description="Sathwik Rural and Youth Integrated Association (SRAYI) works across key sectors to build stronger, self-reliant rural communities."
         />
-        <div className="absolute inset-0 bg-white/40 z-0" />
-        
-        {/* Bottom Fade */}
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#FAFAF8] to-transparent z-10 pointer-events-none" />
-      </div>
-      
-      <Container className="relative z-10">
-        {/* Stylish Inter-Section Space Heading */}
-        <div className="flex flex-col items-center text-center mb-20 mt-0 w-full relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="w-full"
-          >
-            <h2 
-              className="text-6xl md:text-8xl text-green-700/10 tracking-tight leading-none mb-4"
-              style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
-            >
-              Key Areas of Focus
-            </h2>
-            <h3 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-black text-[#1d1d1f] tracking-tight -mt-10 md:-mt-12 mb-4">
-              Promoting Rural <span className="text-[#B84018]">Growth & Development</span>
-            </h3>
-            <p className="text-gray-600 font-medium text-[15px] max-w-2xl mx-auto">
-              Sathwik Rural and Youth Integrated Association (SRAYI) works across
-              key sectors to build stronger, self-reliant rural communities.
-            </p>
-          </motion.div>
-        </div>
 
-        {/* Dynamic Grid Layout with Side Controls */}
-        <div className="relative w-full z-10 group/slider">
-          
-          {/* Left Arrow (Desktop Only) */}
-          <button 
-            onClick={prevSlide}
-            className="hidden md:flex absolute -left-6 lg:-left-12 top-[45%] -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-gray-200 shadow-md items-center justify-center bg-white text-gray-500 hover:bg-green-50 hover:text-[#054E38] transition-all duration-300 opacity-0 group-hover/slider:opacity-100"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          
-          {/* Right Arrow (Desktop Only) */}
-          <button 
-            onClick={nextSlide}
-            className="hidden md:flex absolute -right-6 lg:-right-12 top-[45%] -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-gray-200 shadow-md items-center justify-center bg-white text-gray-500 hover:bg-green-50 hover:text-[#054E38] transition-all duration-300 opacity-0 group-hover/slider:opacity-100"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 pt-4 pl-4 min-h-[380px]">
-            <AnimatePresence mode="popLayout">
-              {displayedAreas.map((area) => (
-                <motion.div
-                  layout
-                  key={area.num}
-                  initial={{ opacity: 0, scale: 0.9, x: 50 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, x: -50 }}
-                  transition={{ duration: 0.5, type: 'spring', bounce: 0.15 }}
-                  className="relative group h-full"
-                >
-                  {/* Colored decorative block behind the card (Top Left) */}
-                  <div 
-                    className={`absolute top-0 left-0 w-[40%] h-[40%] rounded-tl-[1.5rem] rounded-br-[1.5rem] ${area.color} z-0`} 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
+          {areas.map((area, i) => {
+            const Icon = area.icon;
+            const tone = tones[area.tone];
+            return (
+              <motion.div
+                key={area.num}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+              <Link
+                to={area.to}
+                className="card card-hover group relative flex h-full flex-col overflow-hidden"
+              >
+                <div data-reveal="wipe" className="relative aspect-[4/3] overflow-hidden bg-primary-soft">
+                  <Img
+                    src={area.image}
+                    alt={area.title}
+                    width={600}
+                    height={450}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
                   />
-                  
-                  {/* Main Card (Ultra Compact & Premium) */}
-                  <div className="relative z-10 bg-white rounded-[1.5rem] rounded-tl-[2rem] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col h-full border border-gray-100/50 transition-shadow duration-500">
-                    
-                    {/* Image Section */}
-                    <div className="h-[140px] overflow-hidden relative rounded-t-[1.5rem] rounded-tl-[2rem]">
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
-                      <img 
-                        src={area.image} 
-                        alt={area.title}
-                        className="w-full h-full object-cover" 
-                      />
-                    </div>
+                  <span className={`absolute bottom-0 left-0 h-1 w-full ${tone.bg}`} aria-hidden="true" />
+                </div>
 
-                    {/* Circular Overlapping Icon */}
-                    <div className="absolute top-[140px] left-5 -translate-y-1/2 w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center shadow-md z-20">
-                      <div className={`w-[85%] h-[85%] rounded-full border-[1.5px] ${area.textColor.replace('text-', 'border-')} flex items-center justify-center bg-white`}>
-                        <div className={area.textColor}>
-                          {area.icon}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Text Content */}
-                    <div className="pt-8 pb-5 px-5 relative flex-1 flex flex-col bg-white">
-                      
-                      {/* Flex row for Number and Title */}
-                      <div className="flex items-center gap-3 mb-3">
-                        <span className={`text-[38px] font-sans font-black text-gray-200/60 leading-none transition-all duration-500 origin-left select-none ${area.glowColor}`}>
-                          {area.num}
-                        </span>
-                        <h3 className={`text-[14px] font-bold leading-snug relative z-10 ${area.textColor}`}>
-                          {area.title}
-                        </h3>
-                      </div>
-                      
-                      <p className="text-gray-500 text-[11.5px] leading-[1.7] relative z-10 font-medium">
-                        {area.desc}
-                      </p>
-                      
-                      {/* Dotted decorative pattern at bottom left */}
-                      <div className="mt-5 pt-3 relative z-10 opacity-30">
-                        <div className="w-10 h-5" style={{ backgroundImage: 'radial-gradient(circle, #054E38 1px, transparent 1px)', backgroundSize: '5px 5px' }} />
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
+                <div className="relative flex flex-1 flex-col px-6 pt-9 pb-7">
+                  <span
+                    className={`absolute -top-6 left-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white shadow-sm ${tone.soft} ${tone.text}`}
+                    aria-hidden="true"
+                  >
+                    <Icon className="h-5 w-5" strokeWidth={1.6} />
+                  </span>
+                  <span className={`mb-1 text-[13px] font-semibold ${tone.text}`} aria-hidden="true">
+                    {area.num}
+                  </span>
+                  <h3 className="font-serif text-xl font-semibold leading-snug text-ink mb-3">{area.title}</h3>
+                  <p className="text-[15px] leading-relaxed text-ink-muted">{area.desc}</p>
+                  <span className={`mt-auto inline-flex items-center gap-1.5 pt-6 text-[14px] font-semibold ${tone.text}`}>
+                    Explore program
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transition-none"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </div>
+              </Link>
+              </motion.div>
+            );
+          })}
         </div>
       </Container>
     </section>

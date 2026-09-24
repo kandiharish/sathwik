@@ -14,8 +14,8 @@ export const FounderMessage = () => {
         />
         <div className="absolute inset-0 w-full h-full bg-[#e2e2e2] z-0 block md:hidden" />
 
-        {/* Left Side - Portrait Image */}
-        <div className="relative z-10 w-full md:w-[45%] min-h-[300px] md:min-h-[500px] flex items-end justify-center pt-6 md:pt-12 bg-white md:bg-transparent overflow-hidden">
+        {/* Left Side - Portrait Image (Perfect Fit & Proportion) */}
+        <div className="relative z-10 w-full md:w-[48%] min-h-[360px] md:min-h-[540px] flex items-end justify-center pt-6 md:pt-10 pb-0 bg-white md:bg-transparent overflow-hidden">
           <motion.img 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -25,12 +25,12 @@ export const FounderMessage = () => {
             alt="CH. RAMESH"
             loading="lazy"
             decoding="async"
-            className="w-full h-full max-h-[560px] object-contain object-bottom grayscale contrast-125 hover:grayscale-0 hover:contrast-100 transition-all duration-700 cursor-pointer"
+            className="w-full h-full max-h-[540px] md:max-h-[600px] lg:max-h-[660px] object-contain object-bottom scale-100 md:scale-102 origin-bottom grayscale contrast-120 hover:grayscale-0 hover:contrast-100 transition-all duration-700 cursor-pointer"
           />
         </div>
 
         {/* Right Side - Editorial Content */}
-        <div className="relative z-10 w-full md:w-[55%] flex flex-col justify-center px-6 sm:px-10 md:px-16 py-8 md:py-16">
+        <div className="relative z-10 w-full md:w-[50%] flex flex-col justify-center px-6 sm:px-8 md:px-14 py-8 md:py-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -46,7 +46,7 @@ export const FounderMessage = () => {
             </h3>
             
             <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#666] uppercase mb-4 md:mb-6">
-              Founder & President, SRAYI Association
+              FOUNDER & PRESIDENT, SRAYI ASSOCIATION
             </p>
 
             {/* Body Text - completely visible, no scrollbar, clean and decent */}
@@ -62,13 +62,15 @@ export const FounderMessage = () => {
               </p>
             </div>
             
-            {/* Signature at bottom left */}
-            <div className="mt-4 md:mt-8 flex flex-col items-start opacity-100 shrink-0">
-              <span 
-                className="text-2xl md:text-4xl text-[#111] inline-block -rotate-2 drop-shadow-sm" 
-                style={{ fontFamily: '"Brush Script MT", "Great Vibes", cursive' }}
-              >
-                CH. RAMESH
+            {/* Professional Signature Lockup - Non-italic, descent, institutional */}
+            <div className="mt-6 md:mt-10 pt-5 border-t border-[#d8d8d8] flex flex-col items-start select-none">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl sm:text-3xl md:text-4xl font-serif font-semibold tracking-wider text-[#111] uppercase not-italic">
+                  CH. RAMESH
+                </span>
+              </div>
+              <span className="text-[11px] sm:text-xs font-bold tracking-[0.2em] text-primary uppercase mt-1 not-italic">
+                Founder & President, SRAYI Association
               </span>
             </div>
           </motion.div>

@@ -1,52 +1,45 @@
 import type { ButtonHTMLAttributes } from 'react';
-import { motion } from 'framer-motion';
-import type { HTMLMotionProps } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
+type Variant = 'primary' | 'secondary' | 'donate' | 'outline' | 'ghost' | 'light' | 'ghost-light';
+
 interface BaseProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: Variant;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
 
-type ButtonProps = BaseProps & HTMLMotionProps<"button"> & ButtonHTMLAttributes<HTMLButtonElement> & { children: React.ReactNode };
+type ButtonProps = BaseProps & ButtonHTMLAttributes<HTMLButtonElement> & { children: React.ReactNode };
 type LinkProps = BaseProps & React.ComponentPropsWithoutRef<typeof Link> & { to: string; children: React.ReactNode };
 
 export const buttonStyles = ({ variant = 'primary', size = 'md', className = '' }: BaseProps) => {
-  const base = "inline-flex items-center justify-center font-medium transition-all duration-300 rounded focus:outline-none focus:ring-2 focus:ring-offset-2";
-  
-  const variants = {
-    primary: "bg-primary text-white hover:bg-[#043d2e] focus:ring-primary shadow-sm",
-    secondary: "bg-secondary text-white hover:bg-[#a1360a] focus:ring-secondary shadow-sm",
-    outline: "border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary",
-    ghost: "text-primary hover:bg-primary/10 focus:ring-primary",
+  const variants: Record<Variant, string> = {
+    primary: 'btn-primary',
+    secondary: 'btn-donate',
+    donate: 'btn-donate',
+    outline: 'btn-outline',
+    ghost: 'text-primary hover:bg-primary-soft',
+    light: 'btn-light',
+    'ghost-light': 'btn-ghost-light',
   };
-  
+
   const sizes = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg",
+    sm: '!px-4 !py-2 !text-xs',
+    md: '',
+    lg: '!px-8 !py-4 !text-base',
   };
 
-  return `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+  return `btn ${variants[variant]} ${sizes[size]} ${className}`;
 };
 
-export const Button: React.FC<ButtonProps> = ({ variant, size, className, children, ...props }) => {
-  return (
-    <motion.button 
-      whileTap={{ scale: 0.98 }}
-      className={buttonStyles({ variant, size, className })} 
-      {...props}
-    >
-      {children}
-    </motion.button>
-  );
-};
+export const Button: React.FC<ButtonProps> = ({ variant, size, className, children, ...props }) => (
+  <button className={buttonStyles({ variant, size, className })} {...props}>
+    {children}
+  </button>
+);
 
-export const ButtonLink: React.FC<LinkProps> = ({ variant, size, className, children, to, ...props }) => {
-  return (
-    <Link to={to} className={buttonStyles({ variant, size, className })} {...props}>
-      {children}
-    </Link>
-  );
-};
+export const ButtonLink: React.FC<LinkProps> = ({ variant, size, className, children, to, ...props }) => (
+  <Link to={to} className={buttonStyles({ variant, size, className })} {...props}>
+    {children}
+  </Link>
+);

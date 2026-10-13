@@ -37,6 +37,7 @@ const Impact = page(() => import('./pages/Impact'), 'Impact');
 const ImpactMap = page(() => import('./pages/ImpactMap'), 'ImpactMap');
 const Stories = page(() => import('./pages/Stories'), 'Stories');
 const StoryDetail = page(() => import('./pages/StoryDetail'), 'StoryDetail');
+const Reports = page(() => import('./pages/Reports'), 'Reports');
 const Gallery = page(() => import('./pages/Gallery'), 'Gallery');
 const FAQ = page(() => import('./pages/FAQ'), 'FAQ');
 const Contact = page(() => import('./pages/Contact'), 'Contact');
@@ -91,6 +92,7 @@ function App() {
             <Route path="impact/map" element={<ImpactMap />} />
             <Route path="stories" element={<Stories />} />
             <Route path="stories/:slug" element={<StoryDetail />} />
+            <Route path="reports" element={<Reports />} />
             <Route path="gallery" element={<Gallery />} />
             <Route path="faq" element={<FAQ />} />
             <Route path="contact" element={<Contact />} />

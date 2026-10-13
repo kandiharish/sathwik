@@ -9,19 +9,6 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export const IntroductionSection = () => {
   return (
     <section className="section relative overflow-hidden bg-background">
-      {/* Subtle background photo */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <Img
-          src="/image%20copy%206.webp"
-          alt=""
-          width={1024}
-          height={606}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover object-center opacity-[0.1]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background" />
-      </div>
 
       <Container className="relative">
         <SectionHeading

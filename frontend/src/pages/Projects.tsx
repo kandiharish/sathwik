@@ -4,7 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Container } from '../components/layout/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { projects } from '../data/projects';
-import { ArrowRight, MapPin, ChevronDown } from 'lucide-react';
+import { ArrowRight, MapPin, ChevronDown, FileText } from 'lucide-react';
 import { Img } from '../components/common/Img';
 
 const ALL_CATEGORIES = 'All Categories';
@@ -22,8 +22,11 @@ export const Projects = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // The URL is the single source of truth for the filters.
-  const activeCategory = searchParams.get('category') || ALL_CATEGORIES;
-  const activeState = searchParams.get('state') || ALL_STATES;
+  // Unknown values (old or mistyped links) fall back to "all" instead of an empty grid.
+  const categoryParam = searchParams.get('category');
+  const stateParam = searchParams.get('state');
+  const activeCategory = categoryParam && categories.includes(categoryParam) ? categoryParam : ALL_CATEGORIES;
+  const activeState = stateParam && states.includes(stateParam) ? stateParam : ALL_STATES;
 
   const updateFilters = (category: string, state: string) => {
     const params = new URLSearchParams();
@@ -64,6 +67,16 @@ export const Projects = () => {
             alignment="left"
             className="!mb-0"
           />
+          <Link
+            to="/reports"
+            className="group mt-8 inline-flex items-center gap-3 rounded-full border border-line bg-white py-1.5 pl-1.5 pr-4 text-[14px] font-medium text-ink shadow-[var(--shadow-soft)] transition-colors hover:border-primary/30"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft text-primary">
+              <FileText className="h-4 w-4" aria-hidden="true" />
+            </span>
+            Browse our photographic project reports
+            <ArrowRight className="h-4 w-4 text-primary transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+          </Link>
         </Container>
       </section>
 

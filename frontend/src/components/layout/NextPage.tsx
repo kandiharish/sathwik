@@ -9,6 +9,7 @@ const sequence: { path: string; label: string }[] = [
   { path: '/about', label: 'About Us' },
   { path: '/programs', label: 'Our Programs' },
   { path: '/projects', label: 'Our Projects' },
+  { path: '/reports', label: 'Project Reports' },
   { path: '/impact', label: 'Our Impact' },
   { path: '/stories', label: 'Stories' },
   { path: '/gallery', label: 'Gallery' },

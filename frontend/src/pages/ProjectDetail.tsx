@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, MapPin, Tag, Banknote, CheckCircle2, CalendarDays, Map as MapIcon } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, Tag, Banknote, CheckCircle2, CalendarDays, Map as MapIcon, FileText, Download, Handshake, Newspaper } from 'lucide-react';
 import { Container } from '../components/layout/Container';
 import { ButtonLink } from '../components/ui/Button';
 import { projects } from '../data/projects';
@@ -8,6 +8,7 @@ import { usePageMeta, breadcrumbs } from '../lib/seo';
 import { Img } from '../components/common/Img';
 import { BeforeAfterSlider } from '../components/ui/BeforeAfterSlider';
 import { tones, toneFor } from '../lib/tones';
+import { reportForProject } from '../data/reports';
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -59,6 +60,7 @@ export const ProjectDetail = () => {
   }
 
   const coverImage = project.images?.[0];
+  const report = reportForProject(project.slug);
   const tone = tones[toneFor(project.category)];
   const categoryHref = `/projects?category=${encodeURIComponent(project.category)}`;
   const related = [
@@ -222,6 +224,7 @@ export const ProjectDetail = () => {
                       <Fact icon={<MapPin className="h-4 w-4" />} label="Location">{project.location}</Fact>
                     )}
                     {project.state && <Fact icon={<MapIcon className="h-4 w-4" />} label="State">{project.state}</Fact>}
+                    {project.partner && <Fact icon={<Handshake className="h-4 w-4" />} label="CSR Partner">{project.partner}</Fact>}
                     {project.year && <Fact icon={<CalendarDays className="h-4 w-4" />} label="Year">{project.year}</Fact>}
                     {project.investment && (
                       <Fact icon={<Banknote className="h-4 w-4" />} label="Investment">{project.investment}</Fact>
@@ -241,6 +244,50 @@ export const ProjectDetail = () => {
                         </li>
                       ))}
                     </ul>
+                  )}
+                  {report && (
+                    <div className="mt-6 rounded-2xl border border-line bg-background p-5">
+                      <div className="flex items-start gap-4">
+                        <span className="flex h-12 w-10 shrink-0 items-center justify-center rounded-md border border-line bg-white text-secondary shadow-[var(--shadow-soft)]">
+                          <FileText className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-[14px] font-semibold text-ink">Full project report</p>
+                          <p className="text-[13px] text-ink-muted">
+                            {report.pages}-page photographic report
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex items-center gap-3">
+                        <a href={report.pdf} target="_blank" rel="noopener" className="btn btn-primary !px-4 !py-2 !text-[13px]">
+                          Read report
+                        </a>
+                        <a href={report.pdf} download className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:underline">
+                          <Download className="h-4 w-4" aria-hidden="true" /> Download
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                  {project.pressNote && (
+                    <div className="mt-6 rounded-2xl border border-line bg-background p-5">
+                      <div className="flex items-start gap-4">
+                        <span className="flex h-12 w-10 shrink-0 items-center justify-center rounded-md border border-line bg-white text-secondary shadow-[var(--shadow-soft)]">
+                          <Newspaper className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-muted">Press note · {project.pressNote.date}</p>
+                          <p className="mt-1 text-[14px] font-semibold leading-snug text-ink">{project.pressNote.title}</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex items-center gap-3">
+                        <a href={project.pressNote.pdf} target="_blank" rel="noopener" className="btn btn-primary !px-4 !py-2 !text-[13px]">
+                          Read press note
+                        </a>
+                        <a href={project.pressNote.pdf} download className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:underline">
+                          <Download className="h-4 w-4" aria-hidden="true" /> Download
+                        </a>
+                      </div>
+                    </div>
                   )}
                   <ButtonLink to="/donate" variant="donate" className="mt-8 w-full">
                     Support work like this

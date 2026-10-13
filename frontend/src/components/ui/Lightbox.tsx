@@ -32,9 +32,20 @@ const Dialog = ({ images, index, onClose, onIndexChange }: LightboxProps & { ind
   const image = images[index];
 
   // Keep the latest callbacks without re-binding listeners each render.
-  const stateRef = useRef({ index, total, onClose, onIndexChange });
+  // Once closing starts the dialog stays mounted for its exit fade; ignore input meanwhile
+  // so a late arrow key or click can't reopen it.
+  const closingRef = useRef(false);
+  const requestClose = () => {
+    if (closingRef.current) return;
+    closingRef.current = true;
+    onClose();
+  };
+  const changeIndex = (i: number) => {
+    if (!closingRef.current) onIndexChange(i);
+  };
+  const stateRef = useRef({ index, total, onClose: requestClose, onIndexChange: changeIndex });
   useEffect(() => {
-    stateRef.current = { index, total, onClose, onIndexChange };
+    stateRef.current = { index, total, onClose: requestClose, onIndexChange: changeIndex };
   });
 
   // Scroll lock (page + Lenis), initial focus and focus return.
@@ -99,7 +110,7 @@ const Dialog = ({ images, index, onClose, onIndexChange }: LightboxProps & { ind
       transition={{ duration: 0.3, ease: EASE }}
       className="fixed inset-0 z-[200] flex flex-col bg-ink/90 backdrop-blur-sm"
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) requestClose();
       }}
     >
       {/* Top bar */}
@@ -107,7 +118,7 @@ const Dialog = ({ images, index, onClose, onIndexChange }: LightboxProps & { ind
         <span className="text-[13px] font-semibold tabular-nums text-white/80" aria-live="polite">
           {index + 1} / {total}
         </span>
-        <button ref={closeRef} type="button" onClick={onClose} className={iconBtn} aria-label="Close photo viewer">
+        <button ref={closeRef} type="button" onClick={requestClose} className={iconBtn} aria-label="Close photo viewer">
           <X className="h-5 w-5" aria-hidden="true" />
         </button>
       </div>
@@ -116,7 +127,7 @@ const Dialog = ({ images, index, onClose, onIndexChange }: LightboxProps & { ind
       <div
         className="relative flex min-h-0 flex-1 items-center justify-center px-4 md:px-20"
         onClick={(e) => {
-          if (e.target === e.currentTarget) onClose();
+          if (e.target === e.currentTarget) requestClose();
         }}
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -147,7 +158,7 @@ const Dialog = ({ images, index, onClose, onIndexChange }: LightboxProps & { ind
           <>
             <button
               type="button"
-              onClick={() => onIndexChange((index - 1 + total) % total)}
+              onClick={() => changeIndex((index - 1 + total) % total)}
               className={`${iconBtn} absolute left-3 top-1/2 -translate-y-1/2 md:left-6`}
               aria-label="Previous photo"
             >
@@ -155,7 +166,7 @@ const Dialog = ({ images, index, onClose, onIndexChange }: LightboxProps & { ind
             </button>
             <button
               type="button"
-              onClick={() => onIndexChange((index + 1) % total)}
+              onClick={() => changeIndex((index + 1) % total)}
               className={`${iconBtn} absolute right-3 top-1/2 -translate-y-1/2 md:right-6`}
               aria-label="Next photo"
             >

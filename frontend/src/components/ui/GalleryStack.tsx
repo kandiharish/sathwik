@@ -114,15 +114,6 @@ export const GalleryStack = () => {
 
   return (
     <section className="section relative overflow-hidden bg-background">
-      {/* Decorative background photo, very low opacity */}
-      <Img
-        src="/image%20copy%208.webp"
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-[0.12]"
-      />
 
       <Container className="relative">
         <SectionHeading

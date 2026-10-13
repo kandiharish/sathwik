@@ -57,6 +57,9 @@ export interface Project {
   state?: string;
   year?: string;
   investment?: string;
+  partner?: string;
+  /** Press note announcing the project (PDF in /public/reports/pdf). */
+  pressNote?: { title: string; date: string; pdf: string };
   summary: string;
   problem?: string;
   response?: string;

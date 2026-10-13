@@ -65,8 +65,8 @@ export const JoinUsCTA = () => {
                 </Link>
               </div>
 
-              {/* Stats - Single line layout without any vertical lines */}
-              <div className="flex flex-row items-center gap-x-4 sm:gap-x-6 lg:gap-x-7 pt-2">
+              {/* Stats: wrap onto two lines on narrow phones */}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-3 sm:gap-x-6 lg:gap-x-7 pt-2">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <div className="bg-primary-soft p-1.5 sm:p-2 rounded-lg text-primary shrink-0">
                     <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />

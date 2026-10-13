@@ -67,9 +67,9 @@ const DesktopDropdown = ({ item }: { item: NavItem }) => {
   return (
     <div
       className="relative"
-      onMouseEnter={show}
-      onMouseLeave={hide}
-      onFocus={show}
+      onPointerEnter={(e) => e.pointerType === 'mouse' && show()}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && hide()}
+      onFocus={(e) => e.target.matches(':focus-visible') && show()}
       onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node) && hide()}
       onKeyDown={(e) => e.key === 'Escape' && setOpen(false)}
     >
@@ -82,7 +82,10 @@ const DesktopDropdown = ({ item }: { item: NavItem }) => {
           aria-label={`${item.name} menu`}
           aria-expanded={open}
           aria-haspopup="true"
-          onClick={() => setOpen((o) => !o)}
+          onClick={() => {
+            window.clearTimeout(closeTimer.current);
+            setOpen((o) => !o);
+          }}
           className="-ml-2 p-1 text-ink-muted hover:text-primary"
         >
           <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
@@ -136,6 +139,19 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [programsOpen, setProgramsOpen] = useState(false);
   const { pathname } = useLocation();
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerBottom, setHeaderBottom] = useState(76);
+
+  // The drawer starts below the header, whose height changes with the utility bar.
+  useEffect(() => {
+    if (!isOpen || !headerRef.current) return;
+    const el = headerRef.current;
+    const measure = () => setHeaderBottom(el.getBoundingClientRect().bottom);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [isOpen]);
 
   useEffect(() => {
     let ticking = false;
@@ -171,13 +187,14 @@ export const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50">
+    <header ref={headerRef} className="fixed top-0 inset-x-0 z-50">
       <style>{`
-        .nav-link { position: relative; display: inline-flex; padding: 0.5rem 0.7rem; font-size: 14px; font-weight: 500; color: var(--color-ink); transition: color .25s; }
+        .nav-link { position: relative; display: inline-flex; white-space: nowrap; padding: 0.5rem 0.5rem; font-size: 13.5px; font-weight: 500; color: var(--color-ink); transition: color .25s; }
         .nav-link:hover, .nav-link.is-active { color: var(--color-primary); }
-        .nav-link::after { content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.2rem; height: 1.5px; background: var(--color-gold); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease-premium); }
+        .nav-link::after { content: ""; position: absolute; left: 0.5rem; right: 0.5rem; bottom: 0.2rem; height: 1.5px; background: var(--color-gold); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease-premium); }
         .nav-link:hover::after, .nav-link.is-active::after { transform: scaleX(1); }
-        @media (min-width: 1280px) { .nav-link { padding: 0.5rem 0.95rem; } .nav-link::after { left: .95rem; right: .95rem; } }
+        @media (min-width: 1150px) { .nav-link { padding: 0.5rem 0.7rem; font-size: 14px; } .nav-link::after { left: .7rem; right: .7rem; } }
+        @media (min-width: 1360px) { .nav-link { padding: 0.5rem 0.95rem; } .nav-link::after { left: .95rem; right: .95rem; } }
       `}</style>
 
       {/* Utility bar */}
@@ -218,11 +235,11 @@ export const Navbar = () => {
           <Logo />
 
           <nav aria-label="Main" className="hidden lg:flex items-center">
-            {navLinks.slice(1).map((link) =>
+            {navLinks.map((link) =>
               link.children ? (
                 <DesktopDropdown key={link.path} item={link} />
               ) : (
-                <NavLink key={link.path} to={link.path} className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}>
+                <NavLink key={link.path} to={link.path} end={link.path === '/'} className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}>
                   {link.name}
                 </NavLink>
               ),
@@ -258,7 +275,8 @@ export const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden absolute inset-x-0 top-full h-[calc(100dvh-76px)] overflow-y-auto bg-background border-t border-line"
+            className="lg:hidden fixed inset-x-0 bottom-0 overflow-y-auto overscroll-contain bg-background border-t border-line"
+            style={{ top: headerBottom }}
           >
             <nav aria-label="Mobile" className="px-5 py-4">
               <ul className="divide-y divide-line">
@@ -267,7 +285,10 @@ export const Navbar = () => {
                     {link.children ? (
                       <>
                         <div className="flex items-center justify-between">
-                          <NavLink to={link.path} end className="flex-1 py-4 font-serif text-xl text-ink">
+                          <NavLink
+                            to={link.path}
+                            className={({ isActive }) => `flex-1 py-4 font-serif text-xl ${isActive ? 'text-primary' : 'text-ink'}`}
+                          >
                             {link.name}
                           </NavLink>
                           <button

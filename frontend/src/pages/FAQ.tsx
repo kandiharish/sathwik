@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: "How can I volunteer with SATHWIK?",
-    answer: "You can apply to volunteer through our Contact page. We are always looking for passionate individuals to help with on-ground implementations, teaching, and medical camps."
+    answer: "You can apply on our Volunteer page. We are always looking for passionate individuals to help with on-ground implementations, teaching, and medical camps."
   },
   {
     question: "Where do you operate?",

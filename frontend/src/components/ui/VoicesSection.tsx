@@ -75,13 +75,13 @@ export const VoicesSection = () => {
 
             {/* Floating counter badge */}
             <div className="absolute -bottom-6 right-6 z-10 flex h-24 w-24 flex-col items-center justify-center rounded-full bg-secondary text-white shadow-[var(--shadow-lift)] md:h-28 md:w-28">
-              <span className="font-serif text-3xl leading-none md:text-4xl">0{index + 1}</span>
-              <span className="mt-1 text-[10px] uppercase tracking-[0.2em] text-white/80">of 0{voices.length}</span>
+              <span className="font-serif text-3xl leading-none md:text-4xl">{String(index + 1).padStart(2, '0')}</span>
+              <span className="mt-1 text-[10px] uppercase tracking-[0.2em] text-white/80">of {String(voices.length).padStart(2, '0')}</span>
             </div>
           </div>
 
           {/* Quote */}
-          <div className="relative" aria-live="polite">
+          <div className="relative" aria-live={paused || reduceMotion ? 'polite' : 'off'}>
             <Quote className="h-14 w-14 text-gold/40" strokeWidth={1} aria-hidden="true" />
             <AnimatePresence mode="wait">
               <motion.figure
@@ -104,7 +104,12 @@ export const VoicesSection = () => {
             </AnimatePresence>
 
             {/* Person selector with timed progress */}
-            <div className="mt-12 grid grid-cols-3 gap-3" role="tablist" aria-label="Choose a story">
+            <div
+              className="mt-10 grid gap-3 md:mt-12"
+              style={{ gridTemplateColumns: `repeat(${Math.min(voices.length, 3)}, minmax(0, 1fr))` }}
+              role="tablist"
+              aria-label="Choose a story"
+            >
               {voices.map((v, i) => {
                 const selected = i === index;
                 return (
@@ -115,20 +120,20 @@ export const VoicesSection = () => {
                     aria-selected={selected}
                     aria-label={v.quote!.role}
                     onClick={() => go(i)}
-                    className={`group relative overflow-hidden rounded-2xl border p-3 text-left transition-colors duration-300 ${
+                    className={`group relative min-h-16 overflow-hidden rounded-2xl border p-2.5 text-left sm:p-3 transition-colors duration-300 ${
                       selected ? 'border-gold/50 bg-white' : 'border-line bg-white/50 hover:bg-white'
                     }`}
                   >
-                    <span className="flex items-center gap-3">
+                    <span className="flex items-center gap-2 sm:gap-3">
                       <Img
                         src={v.heroImage}
                         alt=""
                         width={40}
                         height={40}
                         sizes="40px"
-                        className={`h-10 w-10 shrink-0 rounded-full object-cover transition duration-500 ${selected ? '' : 'grayscale-[60%] group-hover:grayscale-0'}`}
+                        className={`h-8 w-8 shrink-0 rounded-full object-cover sm:h-10 sm:w-10 transition duration-500 ${selected ? '' : 'grayscale-[60%] group-hover:grayscale-0'}`}
                       />
-                      <span className="hidden min-w-0 truncate text-sm font-semibold text-ink sm:block">{v.category}</span>
+                      <span className="min-w-0 text-[12.5px] font-semibold leading-tight text-ink line-clamp-2 break-words sm:truncate sm:text-sm">{v.category}</span>
                     </span>
                     <span className="absolute inset-x-0 bottom-0 h-[3px] bg-line/60" aria-hidden="true">
                       {selected && (

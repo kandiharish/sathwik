@@ -48,15 +48,6 @@ const areas = [
 export const AreasOfFocus = () => {
   return (
     <section className="section relative overflow-hidden bg-sand">
-      {/* Decorative background photo, very low opacity */}
-      <Img
-        src="/image%20copy%207.webp"
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.12]"
-      />
 
       <Container className="relative">
         <SectionHeading

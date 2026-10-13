@@ -12,6 +12,7 @@ const GalleryStack = lazy(() => import('../components/ui/GalleryStack').then(m =
 const EditorialCarousel = lazy(() => import('../components/ui/EditorialCarousel').then(m => ({ default: m.EditorialCarousel })));
 const FounderMessage = lazy(() => import('../components/ui/FounderMessage').then(m => ({ default: m.FounderMessage })));
 const VoicesSection = lazy(() => import('../components/ui/VoicesSection').then(m => ({ default: m.VoicesSection })));
+const ReportsTeaser = lazy(() => import('../components/ui/ReportsTeaser').then(m => ({ default: m.ReportsTeaser })));
 const PartnerLogos = lazy(() => import('../components/ui/PartnerLogos').then(m => ({ default: m.PartnerLogos })));
 
 import { Container } from '../components/layout/Container';
@@ -22,7 +23,6 @@ import { projects } from '../data/projects';
 import { impactStats } from '../data/impact';
 import { ArrowRight, Users, HandCoins, CalendarDays, MapPin } from 'lucide-react';
 import { JoinUsCTA } from '../components/ui/JoinUsCTA';
-import { Img } from '../components/common/Img';
 
 /** Neutral placeholder that reserves space while a lazy section loads (no dark flash). */
 const SectionFallback = ({ minH = 'min-h-[600px]', bg = 'bg-background' }: { minH?: string; bg?: string }) => (
@@ -49,14 +49,6 @@ export const Home = () => {
 
       {/* IMPACT, BY THE NUMBERS */}
       <section id="impact" className="section relative overflow-hidden bg-primary-deep text-white">
-        <Img
-          src="/image%20copy%209.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-[0.12]"
-        />
         <Container className="relative">
           <SectionHeading eyebrow="By the Numbers" title={<>Our Collective <em>Impact</em></>} dark />
 
@@ -120,6 +112,13 @@ export const Home = () => {
       <div className="cv-auto">
         <Suspense fallback={<SectionFallback minH="min-h-[760px]" bg="bg-sand" />}>
           <VoicesSection />
+        </Suspense>
+      </div>
+
+      {/* PROJECT REPORTS */}
+      <div className="cv-auto">
+        <Suspense fallback={<SectionFallback minH="min-h-[720px]" bg="bg-white" />}>
+          <ReportsTeaser />
         </Suspense>
       </div>
 

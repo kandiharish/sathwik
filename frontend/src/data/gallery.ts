@@ -292,11 +292,6 @@ export const galleryImages: GalleryImage[] = [
     category: "ALL"
   },
   {
-    url: encodeURI("/inaugral_files/T_xj3a3ApC9.webp"),
-    caption: "inaugral_files",
-    category: "ALL"
-  },
-  {
     url: encodeURI("/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.06 PM (1).webp"),
     caption: "Karnataka ro plant",
     category: "ALL"

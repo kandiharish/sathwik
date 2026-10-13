@@ -124,18 +124,6 @@ export const InteractiveTunnel = () => {
 
   return (
     <section className="section relative bg-sand" aria-labelledby="focus-areas-heading">
-      {/* Subtle background photo */}
-      <Img
-        src="/image%20copy.webp"
-        alt=""
-        aria-hidden="true"
-        width={1777}
-        height={885}
-        loading="lazy"
-        decoding="async"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[70vh] w-full object-cover object-center opacity-15"
-      />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[70vh] bg-gradient-to-b from-sand/40 via-sand/70 to-sand" />
 
       <Container className="relative">
         <div id="focus-areas-heading">

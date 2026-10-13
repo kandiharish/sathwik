@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Users, ShieldPlus, FileSearch, Sprout, Recycle, Handshake } from 'lucide-react';
 import { Container } from '../layout/Container';
 import { SectionHeading } from './SectionHeading';
-import { Img } from '../common/Img';
 import { tones, type Tone } from '../../lib/tones';
 
 const commitments = [
@@ -11,19 +10,16 @@ const commitments = [
     title: 'Community-Centric Approach',
     desc: 'SRAYI Association prioritizes empowerment, offering skills and resources that enable individuals to achieve lasting self-reliance rather than dependency.',
     Icon: Users,
-    symbol: '/symbols/community.webp',
   },
   {
     title: 'Improving Health Through Water',
     desc: 'SRAYI Association is improving public health by installing RO plants in schools, developing healthcare facilities, and providing essential medical equipment.',
     Icon: ShieldPlus,
-    symbol: '/symbols/health.webp',
   },
   {
     title: 'Transparency & Accountability',
     desc: 'With a commitment to integrity, SRAYI Association maintains transparency across operations, ensuring stakeholders are well-informed about program impacts.',
     Icon: FileSearch,
-    symbol: '/symbols/transparency.webp',
   },
 ];
 
@@ -72,17 +68,6 @@ const CommitmentPanel = () => (
       return (
         <motion.div key={card.title} {...reveal(idx)}>
           <article className="card card-hover group relative flex h-full flex-col overflow-hidden p-8 lg:p-10">
-            {/* Faint watermark symbol */}
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-multiply transition-opacity duration-700 group-hover:opacity-[0.08]"
-              style={{
-                backgroundImage: `url(${card.symbol})`,
-                backgroundSize: '150%',
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
-              }}
-              aria-hidden="true"
-            />
             <div className="relative mb-8 flex items-start justify-between">
               <span className={`font-serif text-4xl font-bold leading-none tabular-nums ${tone.text}`} aria-hidden="true">
                 {String(idx + 1).padStart(2, '0')}
@@ -157,19 +142,6 @@ export const CommitmentStrategy = () => {
 
   return (
     <section className="section relative overflow-hidden bg-background">
-      {/* Subtle background photo */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <Img
-          src="/image%20copy%205.webp"
-          alt=""
-          width={1717}
-          height={916}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover object-center opacity-[0.12]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
-      </div>
 
       <Container className="relative">
         <SectionHeading eyebrow="Our Approach" title={<>Building a Stronger, <em>Healthier Tomorrow</em></>} />

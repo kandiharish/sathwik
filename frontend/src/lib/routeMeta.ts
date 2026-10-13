@@ -22,6 +22,11 @@ export const routeMeta: Record<string, Omit<PageMeta, 'path'>> = {
     description:
       'Verified track record of CSR projects executed with GAIL, NTPC, HAL and other PSUs across Andhra Pradesh, Telangana, Karnataka, Bihar, Jharkhand, Gujarat and Uttar Pradesh.',
   },
+  '/reports': {
+    title: 'Project Reports | Field Documentation | SATHWIK',
+    description:
+      'Photographic project reports from SRAYI Association: MGM Hospital Warangal medical equipment, GAIL CSR college buildings at Thorrur and Jangaon, school toilets, relief drives and more.',
+  },
   '/impact': {
     title: 'Impact | Measurable Change by the Numbers | SATHWIK',
     description:

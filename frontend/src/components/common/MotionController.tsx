@@ -35,7 +35,7 @@ export const MotionController = () => {
 
     // A wipe target starts fully clipped, and Chrome counts an element's own clip-path
     // when computing intersection, so we watch its (unclipped) parent instead.
-    const pending = new Map<Element, Element[]>();
+    const pending = new WeakMap<Element, Element[]>();
     const revealIO = new IntersectionObserver(
       (entries) => {
         for (const { target, isIntersecting } of entries) {

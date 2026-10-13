@@ -136,7 +136,7 @@ export const programs: Program[] = [
     // No separate challenge/approach copy exists for this programme yet, left empty and hidden in the UI.
     challenge: '',
     approach: '',
-    coverImage: '/about/about_hero_bg.webp',
+    coverImage: '/reports/jangaon-college/07.webp',
     initiativesHeading: 'Promoting Sustainable Practices',
     initiatives: [
       {

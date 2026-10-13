@@ -4,7 +4,6 @@ import { Container } from '../layout/Container';
 import { SectionHeading } from './SectionHeading';
 import { MapPin, Droplets, HeartPulse, GraduationCap, Building2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Img } from '../common/Img';
 
 interface ProjectHotspot {
   id: string;
@@ -31,8 +30,8 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹3.00 Crore',
     impact: '15,000+ Village Residents',
     description: 'Flagship multi-sectoral initiative featuring community RO drinking water plants, solar installations, and primary healthcare infrastructure.',
-    x: 46.5,
-    y: 71.5,
+    x: 35.3,
+    y: 73,
     icon: Building2
   },
   {
@@ -44,8 +43,8 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹1.00 Crore',
     impact: '10,000+ Patients Monthly',
     description: 'Equipped government hospitals with critical care monitors, patient stretchers, phototherapy units, and maternity diagnostic devices.',
-    x: 45.2,
-    y: 63.8,
+    x: 35.3,
+    y: 67,
     icon: HeartPulse
   },
   {
@@ -57,7 +56,7 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹1.00 Crore',
     impact: '8,500+ Daily Beneficiaries',
     description: 'High-capacity RO purification plant providing free, tested potable water to government school students and surrounding rural families.',
-    x: 48.8,
+    x: 40.4,
     y: 76.2,
     icon: Droplets
   },
@@ -70,8 +69,8 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹75 Lakhs',
     impact: '4,000+ Children & Families',
     description: 'State-of-the-art multi-stage water filtration and cooling plant deployed in underserved communities to eliminate waterborne fluorosis.',
-    x: 47.0,
-    y: 61.5,
+    x: 38.4,
+    y: 64.6,
     icon: Droplets
   },
   {
@@ -83,8 +82,8 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹50 Lakhs',
     impact: '3,200+ Mothers & Infants',
     description: 'Distribution of Poshan healthcare and micro-nutrient kits to pregnant women and lactating mothers, with medical checkup camps.',
-    x: 55.6,
-    y: 51.5,
+    x: 58.6,
+    y: 47.9,
     icon: HeartPulse
   },
   {
@@ -96,8 +95,8 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹50 Lakhs',
     impact: '5,000+ Students Daily',
     description: 'Clean drinking water plants established across rural government schools to secure student health and improve daily attendance.',
-    x: 54.0,
-    y: 44.5,
+    x: 64.1,
+    y: 42.8,
     icon: Droplets
   },
   {
@@ -109,8 +108,8 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹1.00 Crore',
     impact: '800+ Youth Trained',
     description: 'Dedicated vocational training complex empowering rural youths with market-aligned job skills, digital literacy, and entrepreneurship tools.',
-    x: 50.8,
-    y: 68.0,
+    x: 47.2,
+    y: 69.9,
     icon: GraduationCap
   },
   {
@@ -122,8 +121,8 @@ const HOTSPOTS: ProjectHotspot[] = [
     outlay: '₹1.00 Crore',
     impact: '7,000+ Rural Patients',
     description: 'Comprehensive medical equipment and hospital upgrades delivered to rural primary health centers to modernize patient diagnosis.',
-    x: 48.5,
-    y: 39.5,
+    x: 43.7,
+    y: 36.3,
     icon: HeartPulse
   }
 ];
@@ -165,7 +164,12 @@ export const GeographicFootprint = () => {
               <button
                 key={s.key}
                 type="button"
-                onClick={() => setActiveSector(s.key)}
+                onClick={() => {
+                  setActiveSector(s.key);
+                  // Keep the spotlight on a pin that is still visible under the new filter.
+                  const visible = s.key === 'all' ? HOTSPOTS : HOTSPOTS.filter(h => h.sector === s.key);
+                  if (visible.length && !visible.some(h => h.id === selectedId)) setSelectedId(visible[0].id);
+                }}
                 aria-pressed={isActive}
                 className={`px-4 py-2 rounded-full text-[13px] font-medium transition-colors duration-300 border ${
                   isActive
@@ -187,15 +191,16 @@ export const GeographicFootprint = () => {
               <span className="text-sm font-semibold text-ink">5+ States &bull; 10+ Flagship Clusters</span>
             </div>
 
-            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] overflow-hidden rounded-xl bg-sand/60">
-              <Img
-                src="/india_map_footprint.webp"
-                alt="Map of India highlighting SRAYI project footprint"
-                width={1600}
-                height={900}
+            {/* Real map (state outlines); pins are placed by latitude and longitude */}
+            <div className="relative mx-auto w-full max-w-[460px] aspect-[612/696]">
+              <img
+                src="/maps/india-footprint.svg"
+                alt="Map of India with the seven states where SRAYI works highlighted"
+                width={612}
+                height={696}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 w-full h-full object-contain object-center select-none pointer-events-none"
+                className="absolute inset-0 h-full w-full select-none pointer-events-none"
               />
 
               {filteredHotspots.map((spot) => {
@@ -205,11 +210,11 @@ export const GeographicFootprint = () => {
                     key={spot.id}
                     type="button"
                     onClick={() => setSelectedId(spot.id)}
-                    onMouseEnter={() => setSelectedId(spot.id)}
+                    onPointerEnter={(e) => e.pointerType === 'mouse' && setSelectedId(spot.id)}
                     aria-label={`View ${spot.name}`}
                     aria-pressed={isSelected}
                     style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 z-30 group cursor-pointer"
+                    className="absolute -translate-x-1/2 -translate-y-1/2 z-30 group cursor-pointer before:absolute before:-inset-2.5 before:content-['']"
                   >
                     {isSelected && (
                       <span className="absolute -inset-2 rounded-full border border-primary/40 bg-primary/10 pointer-events-none" aria-hidden="true" />
@@ -238,8 +243,9 @@ export const GeographicFootprint = () => {
             </div>
 
             <p className="mt-4 text-center text-[12px] text-ink-muted">
-              Click or hover over any glowing pin on the map to inspect project investments and on-ground impact.
+              Click or hover over any pin on the map to see project investments and on-ground impact.
             </p>
+            <p className="mt-1 text-center text-[11px] text-ink-muted/70">Map data: svg-maps (CC BY 4.0)</p>
           </div>
 
           {/* Spotlight card */}

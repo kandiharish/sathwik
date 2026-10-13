@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /** Production origin used for canonical URLs, Open Graph and the sitemap. */
-export const SITE_URL = 'https://sathwikassociation.org';
+export const SITE_URL = 'https://sathwikrural.org';
 export const SITE_NAME = 'SATHWIK | Rural and Youth Integrated Association';
 export const DEFAULT_IMAGE = '/og-cover.jpg';
 

@@ -11,6 +11,7 @@ const columns = [
     links: [
       { name: 'About Us', to: '/about' },
       { name: 'Projects', to: '/projects' },
+      { name: 'Project Reports', to: '/reports' },
       { name: 'Impact', to: '/impact' },
       { name: 'Stories of Change', to: '/stories' },
       { name: 'Gallery', to: '/gallery' },

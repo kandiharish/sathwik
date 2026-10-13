@@ -1,13 +1,82 @@
 import type { Project } from '../types/content';
 import { projectsList } from './projectsList';
+import { reports } from './reports';
 
-// Helper to find images for a project
-const getImages = (folderKeywords: string[]) => {
-  const folder = projectsList.find(p => folderKeywords.some(kw => p.images[0]?.toLowerCase().includes(kw.toLowerCase())));
+// Helper to find a project's images by its exact folder name under /public
+const getImages = (folderNames: string[]) => {
+  const wanted = folderNames.map((n) => n.toLowerCase());
+  const folder = projectsList.find((p) => wanted.includes(p.images[0]?.split('/')[1]?.toLowerCase() ?? ''));
   return folder ? folder.images : [];
 };
 
 export const projects: Project[] = [
+  {
+    id: 'proj-18',
+    slug: 'ambulances-mahabubabad',
+    programId: 'prog-health',
+    title: 'Patient Transport Ambulances, Mahabubabad',
+    category: 'Healthcare',
+    location: 'Gudur, Mahabubabad District',
+    state: 'Telangana',
+    year: '2026',
+    investment: '₹1 Crore',
+    partner: 'ONGC',
+    summary: 'Four new patient transport ambulances, funded by ONGC under its CSR initiative, to strengthen emergency healthcare for rural and tribal communities across Mahabubabad district.',
+    problem: 'Rural and tribal communities in Mahabubabad district depend on timely transport to reach hospitals in an emergency, and referrals from local health centres to larger hospitals need reliable vehicles.',
+    response: 'A ₹1 crore CSR project, funded by Oil and Natural Gas Corporation (ONGC) and implemented by SRYIA, to add four ambulances for emergency patient transportation and referrals across the district.',
+    implementation: 'The four ambulances were inaugurated on 9 September 2026 at the Government General Hospital, Gudur, by Shri Jatothu Hussain Naik, Member, National Commission for Scheduled Tribes, in the presence of Dr. Burkya Ravi Rathod Goud, DM&HO Mahabubabad; Dr. Veeranna Naik Goud, Superintendent, CHC–Gudur; M. Srinivas Goud, DGM (HR), ONGC; KVK Raju Rao, ASM, ONGC; and Ch. Ramesh Goud, President, SRYIA.',
+    impact: [
+      'Four ambulances in service for emergency patient transport',
+      'Faster referrals from rural health centres to hospitals',
+      'Better emergency care for rural and tribal communities',
+    ],
+    pressNote: {
+      title: 'Four Ambulances Inaugurated in Mahabubabad Under ₹1 Crore CSR Initiative',
+      date: '9 September 2026',
+      pdf: '/reports/pdf/ambulances-mahabubabad-press-note.pdf',
+    },
+    images: [
+      '/ambulances-mahabubabad/03.webp',
+      '/ambulances-mahabubabad/08.webp',
+      '/ambulances-mahabubabad/10.webp',
+      '/ambulances-mahabubabad/01.webp',
+      '/ambulances-mahabubabad/02.webp',
+      '/ambulances-mahabubabad/04.webp',
+      '/ambulances-mahabubabad/05.webp',
+      '/ambulances-mahabubabad/06.webp',
+      '/ambulances-mahabubabad/07.webp',
+      '/ambulances-mahabubabad/09.webp'
+    ],
+    tags: ['Healthcare', 'Ambulance', 'ONGC CSR', 'Tribal Communities']
+  },
+  {
+    id: 'proj-19',
+    slug: 'cycles-for-girls-gudur',
+    programId: 'prog-education',
+    title: 'Bicycles for Girl Students, Gudur',
+    category: 'Education',
+    location: 'Gudur, Mahabubabad District',
+    state: 'Telangana',
+    year: '2026',
+    partner: 'GAIL (India) Limited',
+    summary: 'Bicycles distributed to girl students in Gudur, Mahabubabad, under GAIL (India) Limited’s CSR programme, so the journey to school is no longer a reason to miss class.',
+    problem: 'For girl students in rural Gudur, the daily journey to school can be long and tiring, and getting there on time affects whether they keep attending.',
+    response: 'With GAIL (India) Limited’s CSR support, SRYIA provided new bicycles to girl students so they can travel to school safely and on time.',
+    implementation: 'The distribution was launched on 18 September 2026 at the school in Gudur by Shri Jatothu Hussain Naik, Member, National Commission for Scheduled Tribes, alongside GAIL officials and SRYIA.',
+    impact: [
+      'Girl students given their own bicycles to ride to school',
+      'Shorter, safer daily journeys to class',
+      'Support for regular attendance and continued education for girls',
+    ],
+    images: [
+      '/cycles-gudur/01.webp',
+      '/cycles-gudur/03.webp',
+      '/cycles-gudur/04.webp',
+      '/cycles-gudur/02.webp',
+      '/cycles-gudur/05.webp'
+    ],
+    tags: ['Education', 'Girl Child', 'Mobility', 'GAIL CSR']
+  },
   {
     id: 'proj-0',
     slug: 'andhra-pradesh-medical-equipment',
@@ -42,7 +111,6 @@ export const projects: Project[] = [
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
     images: getImages(['Bihar ro plant 50 lakhs']),
-    beforeImage: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).webp',
     tags: ['Water', 'RO Plant', 'Sanitation']
   },
   {
@@ -152,7 +220,7 @@ export const projects: Project[] = [
   {
     id: 'proj-8',
     slug: 'nandhyala-project',
-    programId: 'prog-community',
+    programId: 'prog-education',
     title: 'Nandhyala Project',
     category: 'Community Development',
     location: 'Andhra Pradesh',
@@ -223,7 +291,7 @@ export const projects: Project[] = [
   {
     id: 'proj-12',
     slug: 'open-air-gym-hyderabad',
-    programId: 'prog-community',
+    programId: 'prog-health',
     title: 'Open Air Gym Hyderabad',
     category: 'Community Development',
     location: 'Hyderabad',
@@ -324,4 +392,20 @@ export const projects: Project[] = [
     images: getImages(['Up medical equipment 1 crore']),
     tags: ['Healthcare', 'Medical Equipment']
   },
+  // Projects documented in the PDF project reports (see data/reports.ts)
+  ...reports
+    .filter((r) => !r.existingProject)
+    .map((r, i): Project => ({
+      id: `proj-report-${i + 1}`,
+      slug: r.project,
+      programId: r.programId,
+      title: r.title,
+      category: r.category,
+      location: r.location,
+      state: r.state,
+      summary: r.summary,
+      impact: r.highlights,
+      images: r.photos,
+      tags: r.tags,
+    })),
 ];

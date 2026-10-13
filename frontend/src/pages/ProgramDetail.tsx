@@ -446,7 +446,7 @@ const ProgramSubNav = ({ items }: { items: SubNavItem[] }) => {
                     e.preventDefault();
                     setActive(item.id);
                     scrollToElement(document.getElementById(item.id), -NAV_OFFSET + 8);
-                    window.history.replaceState(null, '', `#${item.id}`);
+                    window.history.replaceState(window.history.state, '', `#${item.id}`);
                   }}
                   className={`relative block whitespace-nowrap px-3 py-3.5 text-[13px] font-medium transition-colors md:text-[14px] ${
                     isActive ? 'text-primary' : 'text-ink-muted hover:text-ink'

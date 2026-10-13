@@ -35,26 +35,7 @@ export const stories: Story[] = [
       author: 'Raju',
       role: 'Student, ZPHS Rural School'
     },
-    relatedProjectId: 'proj-ro-water',
-    relatedProgramId: 'prog-health'
-  },
-  {
-    id: 'story-dr-sharma',
-    slug: 'dr-sharma-rural-healthcare',
-    title: 'Elevating Rural Healthcare Diagnostics',
-    category: 'Healthcare',
-    heroImage: '/blind school porject/WhatsApp Image 2026-08-19 at 11.13.24 PM (1).webp',
-    situation: 'The local Primary Health Center served 15 surrounding villages but lacked basic diagnostic equipment.',
-    challenge: 'Doctors were forced to refer patients to city hospitals 50km away for routine tests, which many patients could not afford to travel to.',
-    action: 'SRAYI Association supplied BP monitors, an ECG machine, and emergency ward beds to the health center.',
-    change: 'The center is now fully equipped to handle basic diagnostics and stabilize emergency patients.',
-    impact: 'Hundreds of patients now receive timely, accurate diagnoses locally, saving both money and lives.',
-    quote: {
-      text: 'The medical equipment supplied by SRAYI Association has allowed us to perform basic diagnostic tests locally. We are saving lives by catching illnesses early.',
-      author: 'Dr. Sharma',
-      role: 'Medical Officer, Rural Health Center'
-    },
-    relatedProjectId: 'proj-med-equip',
+    relatedProjectId: 'proj-14',
     relatedProgramId: 'prog-health'
   }
 ];

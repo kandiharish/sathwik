@@ -23,7 +23,7 @@ const items = galleryImages.map((img) => {
   const folder = dirname(raw);
   const project =
     projects.find((p) => p.images.includes(raw)) ??
-    projects.find((p) => p.images[0] && folder.startsWith(dirname(p.images[0])));
+    projects.find((p) => p.images[0] && folder === dirname(p.images[0]));
   const category = img.category && img.category !== 'ALL' ? img.category : project?.category ?? 'Other';
   return {
     ...img,

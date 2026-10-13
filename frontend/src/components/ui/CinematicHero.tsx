@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Play, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useInView, useReducedMotion } from 'framer-motion';
+import { Play, Pause, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Img } from '../common/Img';
+import { scrollToElement } from '../../lib/lenis';
 
 const AnimatedNumber = ({ value }: { value: number }) => {
   const motionValue = useMotionValue(0);
@@ -101,6 +102,11 @@ const slides = [
 export const CinematicHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const currentSlideRef = useRef(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef);
+  const reduceMotion = useReducedMotion();
+  const [paused, setPaused] = useState(false);
+  const [tabHidden, setTabHidden] = useState(false);
 
   const nextSlide = useCallback(() => {
     const next = (currentSlideRef.current + 1) % slides.length;
@@ -109,15 +115,26 @@ export const CinematicHero = () => {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      nextSlide();
-    }, SLIDE_DURATION);
+    const onVisibility = () => setTabHidden(document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
 
+  // Only rotate while the hero is on screen, the tab is visible and the visitor hasn't paused it.
+  const autoplay = inView && !tabHidden && !paused && !reduceMotion;
+  useEffect(() => {
+    if (!autoplay) return;
+    const timer = setTimeout(nextSlide, SLIDE_DURATION);
     return () => clearTimeout(timer);
-  }, [currentSlide, nextSlide]);
+  }, [currentSlide, nextSlide, autoplay]);
+
+  const goTo = (i: number) => {
+    currentSlideRef.current = i;
+    setCurrentSlide(i);
+  };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black text-white">
+    <section ref={sectionRef} aria-roledescription="carousel" aria-label="Featured initiatives" className="relative h-[100svh] min-h-[600px] w-full overflow-hidden bg-black text-white">
       {/* Video Backgrounds */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence initial={false} mode="sync">
@@ -131,7 +148,7 @@ export const CinematicHero = () => {
             style={{ transformOrigin: slides[currentSlide].transformOrigin }}
           >
               <video
-                src={slides[currentSlide].video}
+                src={inView ? slides[currentSlide].video : undefined}
                 poster={slides[currentSlide].image}
                 autoPlay
                 loop
@@ -151,7 +168,7 @@ export const CinematicHero = () => {
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center -mt-32">
         
         {/* Animated Title */}
-        <div className="h-[120px] md:h-[150px] flex items-center justify-center">
+        <div className="h-[130px] md:h-[150px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -162,7 +179,7 @@ export const CinematicHero = () => {
               className="max-w-5xl"
             >
               <h1 
-                className="text-xl md:text-2xl lg:text-4xl font-serif font-normal leading-snug tracking-wide whitespace-pre-line text-white"
+                className="text-[1.65rem] sm:text-3xl lg:text-[2.75rem] font-serif font-normal leading-snug tracking-wide whitespace-pre-line text-white"
                 style={{ textShadow: '0 4px 40px rgba(0,0,0,0.8)' }}
               >
                 {slides[currentSlide].description}
@@ -173,18 +190,14 @@ export const CinematicHero = () => {
 
         <div className="flex flex-col items-center gap-5 mt-4">
           <div className="flex flex-col sm:flex-row items-center gap-3 mt-4">
-            <Link to="/programs" className="bg-[#009966] hover:bg-[#008855] text-white px-5 py-2 rounded-full font-bold text-[11px] tracking-wide transition-all shadow-[0_4px_20px_rgba(0,153,102,0.4)] flex items-center justify-center gap-2 whitespace-nowrap">
+            <Link to="/programs" className="bg-[#009966] hover:bg-[#008855] text-white min-h-11 px-6 py-3 rounded-full font-semibold text-[13px] tracking-wide transition-all shadow-[0_4px_20px_rgba(0,153,102,0.4)] flex items-center justify-center gap-2 whitespace-nowrap">
               Explore Programs 
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <button 
-              onClick={() => {
-                const element = document.getElementById('impact');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="bg-transparent border border-white/40 hover:bg-white/10 text-white px-5 py-2 rounded-full font-bold text-[11px] tracking-wide transition-all flex items-center justify-center gap-2 backdrop-blur-sm whitespace-nowrap"
+              type="button"
+              onClick={() => scrollToElement(document.getElementById('impact'))}
+              className="bg-transparent border border-white/40 hover:bg-white/10 text-white min-h-11 px-6 py-3 rounded-full font-semibold text-[13px] tracking-wide transition-all flex items-center justify-center gap-2 backdrop-blur-sm whitespace-nowrap"
             >
               <Play className="w-3.5 h-3.5" fill="currentColor" /> Watch Our Impact
             </button>
@@ -223,8 +236,12 @@ export const CinematicHero = () => {
           const isL2 = distance === -2;
 
           return (
-            <motion.div
+            <motion.button
+              type="button"
               key={slide.id}
+              aria-label={`Show ${slide.title}`}
+              aria-current={isActive}
+              tabIndex={Math.abs(distance) > 1 ? -1 : 0}
               initial={false}
               animate={{
                 x: isActive ? "0%" : isL1 ? "-90%" : isR1 ? "90%" : isL2 ? "-165%" : "165%",
@@ -235,18 +252,18 @@ export const CinematicHero = () => {
                 rotateZ: isActive ? 0 : isL1 ? -6 : isR1 ? 6 : isL2 ? -12 : 12,
               }}
               transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-              className={`absolute w-[85%] max-w-[260px] md:max-w-[320px] lg:max-w-[380px] aspect-[16/9] rounded-2xl overflow-hidden border origin-bottom pointer-events-auto cursor-pointer group transition-colors duration-500`}
+              className={`absolute w-[85%] max-w-[260px] md:max-w-[320px] lg:max-w-[380px] aspect-[16/9] rounded-2xl overflow-hidden border origin-bottom pointer-events-auto cursor-pointer group text-left focus-visible:outline-2 focus-visible:outline-white transition-colors duration-500`}
               style={{
                 boxShadow: isActive 
                   ? '0 30px 60px -10px rgba(0,0,0,0.8), 0 0 30px rgba(255,255,255,0.15)' 
                   : '0 20px 40px rgba(0,0,0,0.6)',
                 borderColor: isActive ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.1)'
               }}
-              onClick={() => { currentSlideRef.current = i; setCurrentSlide(i); }}
+              onClick={() => goTo(i)}
             >
               <Img 
                 src={slide.image} 
-                alt={slide.title} 
+                alt="" 
                 className="w-full h-full object-cover transform"
                 style={{ transform: isActive ? 'scale(1.05)' : 'scale(1)' }}
               />
@@ -260,10 +277,19 @@ export const CinematicHero = () => {
                   Featured Initiative
                 </p>
               </div>
-            </motion.div>
+            </motion.button>
           );
         })}
       </div>
+
+      <button
+        type="button"
+        onClick={() => setPaused((p) => !p)}
+        aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
+        className="absolute bottom-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white/90 backdrop-blur-sm transition-colors hover:bg-black/50 md:bottom-6 md:right-6"
+      >
+        {paused ? <Play className="h-4 w-4" fill="currentColor" /> : <Pause className="h-4 w-4" fill="currentColor" />}
+      </button>
     </section>
   );
 };

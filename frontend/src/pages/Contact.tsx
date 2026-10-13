@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { MapPin, Mail, Phone, Clock, ArrowRight, CheckCircle2, MessageCircle, Handshake, HeartHandshake, Heart } from 'lucide-react';
+import { MapPin, Mail, Phone, Clock, ArrowRight, MessageCircle, Handshake, HeartHandshake, Heart } from 'lucide-react';
 import { Container } from '../components/layout/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { siteSettings } from '../data/settings';
+import { MailtoSent, mailtoHref, type ComposedMail } from '../components/common/MailtoSent';
 import { tones, type Tone } from '../lib/tones';
 
 const TOPICS = ['Donations', 'Volunteering', 'Partnerships', 'General Inquiry'] as const;
@@ -45,7 +46,7 @@ const inputBase =
   'w-full rounded-xl border bg-background px-4 py-3 text-[15px] text-ink placeholder:text-ink-muted/60 outline-none transition-colors focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15';
 
 export const Contact = () => {
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<ComposedMail | null>(null);
   const {
     register,
     handleSubmit,
@@ -70,9 +71,10 @@ export const Contact = () => {
       if (data.role) details.push(`Role: ${data.role}`);
     }
     const body = `${details.join('\n')}\n\n${data.message}`;
-    window.location.assign(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-    setSent(true);
-    reset();
+    const mail = { subject, body };
+    window.location.assign(mailtoHref(email, mail));
+    // Keep the form filled in (no reset) until the visitor chooses to start over.
+    setSent(mail);
   };
 
   const fieldClass = (hasError: boolean) => `${inputBase} ${hasError ? 'border-secondary' : 'border-line'}`;
@@ -115,7 +117,7 @@ export const Contact = () => {
               <div>
                 <h2 className="mb-4 font-serif text-3xl font-semibold tracking-tight">Contact Information</h2>
                 <p className="mb-10 text-[15px] leading-relaxed text-white/75">
-                  Fill out the form and our dedicated team will get back to you within 24 hours.
+                  Send us a message and our team will get back to you, usually within one working day.
                 </p>
 
                 <ul className="space-y-8">
@@ -142,19 +144,16 @@ export const Contact = () => {
             {/* Form */}
             <div className="card p-8 md:p-12">
               {sent ? (
-                <div role="status" className="flex h-full flex-col items-center justify-center py-12 text-center">
-                  <span className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft text-primary">
-                    <CheckCircle2 className="h-8 w-8" aria-hidden="true" />
-                  </span>
-                  <h2 className="mb-3 font-serif text-3xl font-semibold text-ink">Thank you</h2>
-                  <p className="mb-8 max-w-md text-[15px] leading-relaxed text-ink-muted">
-                    Your email app should now open with your message ready to send. If it didn't, write to us directly at{' '}
-                    <a href={`mailto:${email}`} className="font-semibold text-primary link-underline">{email}</a>.
-                  </p>
-                  <button type="button" onClick={() => setSent(false)} className="btn btn-outline">
-                    Send another message
-                  </button>
-                </div>
+                <MailtoSent
+                  to={email}
+                  mail={sent}
+                  title="Almost there"
+                  backLabel="Send another message"
+                  onBack={() => {
+                    reset();
+                    setSent(null);
+                  }}
+                />
               ) : (
                 <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6" aria-label="Contact form">
                   <fieldset>

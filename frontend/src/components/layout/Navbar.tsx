@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, Mail, MapPin, Heart, ChevronDown, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,7 +12,7 @@ const firstSentence = (text: string) => text.split(/(?<=[.!?])\s/)[0];
 
 type NavItem = { name: string; path: string; children?: { name: string; path: string }[] };
 
-export const navLinks: NavItem[] = [
+const navLinks: NavItem[] = [
   { name: 'Home', path: '/' },
   { name: 'About Us', path: '/about' },
   {
@@ -32,11 +32,30 @@ export const navLinks: NavItem[] = [
   { name: 'Contact', path: '/contact' },
 ];
 
+/**
+ * Open/closed state that closes itself on navigation: it remembers the path it was
+ * opened on, so a route change closes it without an extra render from an effect.
+ */
+const useOpenUntilNavigate = () => {
+  const { pathname } = useLocation();
+  const [openAt, setOpenAt] = useState<string | null>(null);
+  const open = openAt === pathname;
+  const setOpen = useCallback(
+    (next: boolean | ((current: boolean) => boolean)) =>
+      setOpenAt((prev) => {
+        const value = typeof next === 'function' ? next(prev === pathname) : next;
+        return value ? pathname : null;
+      }),
+    [pathname],
+  );
+  return [open, setOpen] as const;
+};
+
 const telHref = `tel:${siteSettings.contact.phone.replace(/\s+/g, '')}`;
 
 const Logo = () => (
   <Link to="/" className="flex items-center gap-3 shrink-0" aria-label="Sathwik Rural and Youth Integrated Association, home">
-    <Img src="/logo.webp" alt="" width={68} height={68} loading="eager" fetchPriority="high" className="h-12 w-auto md:h-14 lg:h-[60px] object-contain" />
+    <Img src="/images/brand/logo.webp" alt="" width={68} height={68} loading="eager" fetchPriority="high" className="h-12 w-auto md:h-14 lg:h-[60px] object-contain" />
     <span className="flex flex-col justify-center">
       <span className="font-sans font-black text-[19px] lg:text-[21px] leading-none tracking-tight text-[#0000B3]">Sathwik</span>
       <span className="font-sans font-bold text-[9px] lg:text-[9.5px] leading-tight mt-1 text-[#009966]">
@@ -49,12 +68,10 @@ const Logo = () => (
 );
 
 const DesktopDropdown = ({ item }: { item: NavItem }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useOpenUntilNavigate();
   const { pathname } = useLocation();
   const closeTimer = useRef<number | undefined>(undefined);
   const active = pathname.startsWith(item.path);
-
-  useEffect(() => setOpen(false), [pathname]);
 
   const show = () => {
     window.clearTimeout(closeTimer.current);
@@ -82,9 +99,11 @@ const DesktopDropdown = ({ item }: { item: NavItem }) => {
           aria-label={`${item.name} menu`}
           aria-expanded={open}
           aria-haspopup="true"
-          onClick={() => {
+          onClick={(e) => {
             window.clearTimeout(closeTimer.current);
-            setOpen((o) => !o);
+            // A mouse has already opened it on hover, so a click keeps it open; touch and keyboard toggle.
+            const mouse = (e.nativeEvent as PointerEvent).pointerType === 'mouse';
+            setOpen((o) => (mouse ? true : !o));
           }}
           className="-ml-2 p-1 text-ink-muted hover:text-primary"
         >
@@ -135,10 +154,9 @@ const DesktopDropdown = ({ item }: { item: NavItem }) => {
 };
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useOpenUntilNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [programsOpen, setProgramsOpen] = useState(false);
-  const { pathname } = useLocation();
   const headerRef = useRef<HTMLElement>(null);
   const [headerBottom, setHeaderBottom] = useState(76);
 
@@ -146,9 +164,8 @@ export const Navbar = () => {
   useEffect(() => {
     if (!isOpen || !headerRef.current) return;
     const el = headerRef.current;
-    const measure = () => setHeaderBottom(el.getBoundingClientRect().bottom);
-    measure();
-    const ro = new ResizeObserver(measure);
+    // ResizeObserver reports once immediately on observe(), then on every size change.
+    const ro = new ResizeObserver(() => setHeaderBottom(el.getBoundingClientRect().bottom));
     ro.observe(el);
     return () => ro.disconnect();
   }, [isOpen]);
@@ -168,9 +185,6 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close the drawer on navigation.
-  useEffect(() => setIsOpen(false), [pathname]);
-
   // Lock page scroll while the mobile drawer is open.
   useEffect(() => {
     if (!isOpen) return;
@@ -184,7 +198,7 @@ export const Navbar = () => {
       lenisRef.current?.start();
       window.removeEventListener('keydown', onKey);
     };
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   return (
     <header ref={headerRef} className="fixed top-0 inset-x-0 z-50">

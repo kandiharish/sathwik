@@ -15,7 +15,7 @@ export const programs: Program[] = [
       'Health and hygiene awareness camps'
     ],
     communitiesServed: 'Rural villages, Anganwadi centers, and primary schools across multiple districts.',
-    coverImage: '/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.18 PM.webp',
+    coverImage: '/images/projects/medical-equipment-hyderabad/02.webp',
     impactStats: [
       { label: 'RO Plants Installed', value: '17', suffix: '+' },
       { label: 'Healthcare Centers Supported', value: '12', suffix: '+' }
@@ -48,7 +48,7 @@ export const programs: Program[] = [
       'Infrastructure repairs and school painting'
     ],
     communitiesServed: 'Government primary and high schools in underserved regions.',
-    coverImage: '/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.10 PM (2).webp',
+    coverImage: '/images/projects/bihar-ro-plant/11.webp',
     impactStats: [
       { label: 'Children Educated', value: '10,000', suffix: '+' },
       { label: 'Schools Supported', value: '45', suffix: '+' }
@@ -84,7 +84,7 @@ export const programs: Program[] = [
       'Leadership and life skills training'
     ],
     communitiesServed: 'Unemployed youth, young women, and aspiring rural entrepreneurs.',
-    coverImage: '/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.05 PM (2).webp',
+    coverImage: '/images/projects/skill-development-mamidikudhuru/08.webp',
     impactStats: [
       { label: 'Youth Trained', value: '500', suffix: '+' },
       { label: 'Entrepreneurs Supported', value: '100', suffix: '+' }

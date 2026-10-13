@@ -26,8 +26,10 @@ export const Programs = () => {
     if (!tabParam || !programs.some((p) => p.id === tabParam)) return;
     const el = document.getElementById(tabParam);
     if (!el) return;
-    const frame = requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-    setHighlighted(tabParam);
+    const frame = requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setHighlighted(tabParam);
+    });
     const timer = window.setTimeout(() => setHighlighted(null), 2400);
     return () => {
       cancelAnimationFrame(frame);

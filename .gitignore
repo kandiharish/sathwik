@@ -1,0 +1,11 @@
+# Local working files (raw photos, notes): never committed
+_local/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Tooling output
+.playwright-mcp/

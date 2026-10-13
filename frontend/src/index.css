@@ -165,6 +165,25 @@
     transform: scale(1.045);
   }
 
+  /* Cursor spotlight: a soft teal glow follows the pointer inside the card (mouse only).
+     --mx / --my are set by a single delegated listener in MainLayout. */
+  @media (hover: hover) and (pointer: fine) {
+    .card-hover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--color-primary) 9%, transparent), transparent 65%);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-premium);
+      pointer-events: none;
+      z-index: 4;
+    }
+    .card-hover:hover::after {
+      opacity: 1;
+    }
+  }
+
   /* Buttons: pill shape, flat colour, no glow */
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold whitespace-nowrap select-none;
@@ -185,6 +204,31 @@
   }
   .btn-donate {
     @apply bg-secondary text-white hover:bg-secondary-dark;
+  }
+
+  /* Light sheen that sweeps across solid buttons on hover */
+  .btn-primary,
+  .btn-donate {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .btn-primary::after,
+  .btn-donate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .btn-primary:hover::after,
+    .btn-donate:hover::after {
+      transform: translateX(120%);
+      transition: transform 0.85s var(--ease-premium);
+    }
   }
   .btn-outline {
     @apply border border-primary/35 text-primary bg-transparent hover:bg-primary hover:text-white hover:border-primary;

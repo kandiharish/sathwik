@@ -12,7 +12,7 @@ interface BaseProps {
 type ButtonProps = BaseProps & ButtonHTMLAttributes<HTMLButtonElement> & { children: React.ReactNode };
 type LinkProps = BaseProps & React.ComponentPropsWithoutRef<typeof Link> & { to: string; children: React.ReactNode };
 
-export const buttonStyles = ({ variant = 'primary', size = 'md', className = '' }: BaseProps) => {
+const buttonStyles = ({ variant = 'primary', size = 'md', className = '' }: BaseProps) => {
   const variants: Record<Variant, string> = {
     primary: 'btn-primary',
     secondary: 'btn-donate',

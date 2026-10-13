@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { Container } from '../components/layout/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import { GeographicFootprint } from '../components/ui/GeographicFootprint';
+import { GeographicFootprint } from '../components/about/GeographicFootprint';
 import { projects } from '../data/projects';
 import { Img } from '../components/common/Img';
 
@@ -173,7 +173,7 @@ export const About = () => {
             >
               <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 bg-primary-dark">
                 <Img
-                  src="/about/about_hero.webp"
+                  src="/images/about/about_hero.webp"
                   alt="Students and community members empowered by SRAYI"
                   width={900}
                   height={1125}
@@ -218,7 +218,7 @@ export const About = () => {
             <motion.div {...fadeUp} className="lg:col-span-6 relative pb-12 sm:pb-16">
               <div data-reveal="wipe" className="relative aspect-[4/3] sm:aspect-[5/4] rounded-2xl overflow-hidden border border-line bg-sand">
                 <Img
-                  src="/about/about_story.webp"
+                  src="/images/about/about_story.webp"
                   alt="School development and student support program"
                   width={1000}
                   height={800}
@@ -305,7 +305,7 @@ export const About = () => {
               />
               <motion.figure {...fadeUp} className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 bg-primary-dark lg:sticky lg:top-28">
                 <Img
-                  src="/about/about_mission.webp"
+                  src="/images/about/about_mission.webp"
                   alt="Rural community healthcare and mobile clinic engagement"
                   width={900}
                   height={1125}
@@ -476,7 +476,7 @@ export const About = () => {
               <div className="md:col-span-4">
                 <div data-reveal="wipe" className="relative w-full max-w-[300px] aspect-[3/4] rounded-2xl overflow-hidden border border-line bg-sand">
                   <Img
-                    src="/about/about_founder.webp"
+                    src="/images/about/about_founder.webp"
                     alt="CH. Ramesh - Founder & President"
                     width={600}
                     height={800}

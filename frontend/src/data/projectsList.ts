@@ -7,287 +7,287 @@ export const projectsList: ProjectFolder[] = [
   {
     "name": "Andhra Pradesh Medical Equipment",
     "images": [
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.19 PM (1).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.19 PM (2).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.19 PM.webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.20 PM (1).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.20 PM (2).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.20 PM.webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.21 PM (1).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.21 PM (2).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.21 PM (3).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.21 PM.webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.22 PM (1).webp",
-      "/Ap medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.18.22 PM.webp"
+      "/images/projects/ap-medical-equipment/05.webp",
+      "/images/projects/ap-medical-equipment/06.webp",
+      "/images/projects/ap-medical-equipment/01.webp",
+      "/images/projects/ap-medical-equipment/07.webp",
+      "/images/projects/ap-medical-equipment/08.webp",
+      "/images/projects/ap-medical-equipment/02.webp",
+      "/images/projects/ap-medical-equipment/09.webp",
+      "/images/projects/ap-medical-equipment/10.webp",
+      "/images/projects/ap-medical-equipment/11.webp",
+      "/images/projects/ap-medical-equipment/03.webp",
+      "/images/projects/ap-medical-equipment/12.webp",
+      "/images/projects/ap-medical-equipment/04.webp"
     ]
   },
   {
     "name": "Andhra Pradesh Medical Equipment Project",
     "images": [
-      "/Ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.17.32 PM.webp",
-      "/Ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.17.33 PM (1).webp",
-      "/Ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.17.33 PM (2).webp",
-      "/Ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.17.33 PM.webp"
+      "/images/projects/ap-medical-equipment-2/01.webp",
+      "/images/projects/ap-medical-equipment-2/03.webp",
+      "/images/projects/ap-medical-equipment-2/04.webp",
+      "/images/projects/ap-medical-equipment-2/02.webp"
     ]
   },
   {
     "name": "Bihar Ro Plant",
     "images": [
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.09 PM (1).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.09 PM.webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.10 PM (1).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.10 PM (2).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.10 PM.webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.11 PM (1).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.11 PM (2).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.11 PM.webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.12 PM (1).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.12 PM (2).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.12 PM.webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.13 PM (1).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.13 PM (2).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.13 PM.webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.14 PM (1).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.14 PM (2).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.14 PM.webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.15 PM (1).webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.15 PM.webp",
-      "/Bihar ro plant 50 lakhs/WhatsApp Image 2026-08-19 at 11.17.16 PM.webp"
+      "/images/projects/bihar-ro-plant/09.webp",
+      "/images/projects/bihar-ro-plant/01.webp",
+      "/images/projects/bihar-ro-plant/10.webp",
+      "/images/projects/bihar-ro-plant/11.webp",
+      "/images/projects/bihar-ro-plant/02.webp",
+      "/images/projects/bihar-ro-plant/12.webp",
+      "/images/projects/bihar-ro-plant/13.webp",
+      "/images/projects/bihar-ro-plant/03.webp",
+      "/images/projects/bihar-ro-plant/14.webp",
+      "/images/projects/bihar-ro-plant/15.webp",
+      "/images/projects/bihar-ro-plant/04.webp",
+      "/images/projects/bihar-ro-plant/16.webp",
+      "/images/projects/bihar-ro-plant/17.webp",
+      "/images/projects/bihar-ro-plant/05.webp",
+      "/images/projects/bihar-ro-plant/18.webp",
+      "/images/projects/bihar-ro-plant/19.webp",
+      "/images/projects/bihar-ro-plant/06.webp",
+      "/images/projects/bihar-ro-plant/20.webp",
+      "/images/projects/bihar-ro-plant/07.webp",
+      "/images/projects/bihar-ro-plant/08.webp"
     ]
   },
   {
     "name": "Blind School Project",
     "images": [
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM (1).webp",
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.06 PM.webp",
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.21 PM.webp",
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.22 PM.webp",
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.23 PM.webp",
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.24 PM (1).webp",
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.24 PM (2).webp",
-      "/blind school porject/WhatsApp Image 2026-08-19 at 11.13.24 PM.webp"
+      "/images/projects/blind-school/06.webp",
+      "/images/projects/blind-school/01.webp",
+      "/images/projects/blind-school/02.webp",
+      "/images/projects/blind-school/03.webp",
+      "/images/projects/blind-school/04.webp",
+      "/images/projects/blind-school/07.webp",
+      "/images/projects/blind-school/08.webp",
+      "/images/projects/blind-school/05.webp"
     ]
   },
   {
     "name": "Cycle Project Karimnagar",
     "images": [
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.06 PM (2).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.07 PM (1).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.07 PM (2).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.07 PM.webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.08 PM (1).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.08 PM (2).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.08 PM.webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.09 PM (1).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.09 PM (2).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.09 PM.webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.10 PM (1).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.10 PM (2).webp",
-      "/Cycle project karimnagar/WhatsApp Image 2026-08-19 at 11.13.10 PM.webp"
+      "/images/projects/cycles-karimnagar/05.webp",
+      "/images/projects/cycles-karimnagar/06.webp",
+      "/images/projects/cycles-karimnagar/07.webp",
+      "/images/projects/cycles-karimnagar/01.webp",
+      "/images/projects/cycles-karimnagar/08.webp",
+      "/images/projects/cycles-karimnagar/09.webp",
+      "/images/projects/cycles-karimnagar/02.webp",
+      "/images/projects/cycles-karimnagar/10.webp",
+      "/images/projects/cycles-karimnagar/11.webp",
+      "/images/projects/cycles-karimnagar/03.webp",
+      "/images/projects/cycles-karimnagar/12.webp",
+      "/images/projects/cycles-karimnagar/13.webp",
+      "/images/projects/cycles-karimnagar/04.webp"
     ]
   },
   {
     "name": "Karnataka Ro Plant",
     "images": [
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.06 PM (1).webp",
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.06 PM.webp",
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.07 PM (1).webp",
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.07 PM (2).webp",
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.07 PM.webp",
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.08 PM (1).webp",
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.08 PM.webp",
-      "/Karnataka ro plant/WhatsApp Image 2026-08-19 at 11.17.09 PM.webp"
+      "/images/projects/karnataka-ro-plant/05.webp",
+      "/images/projects/karnataka-ro-plant/01.webp",
+      "/images/projects/karnataka-ro-plant/06.webp",
+      "/images/projects/karnataka-ro-plant/07.webp",
+      "/images/projects/karnataka-ro-plant/02.webp",
+      "/images/projects/karnataka-ro-plant/08.webp",
+      "/images/projects/karnataka-ro-plant/03.webp",
+      "/images/projects/karnataka-ro-plant/04.webp"
     ]
   },
   {
     "name": "Medical Equipment Ghatkesar Hyderabad",
     "images": [
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.11 PM.webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.12 PM (1).webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.12 PM (2).webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.12 PM.webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.13 PM (1).webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.13 PM (2).webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.13 PM.webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.14 PM (1).webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.14 PM (2).webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.14 PM.webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.15 PM (1).webp",
-      "/Medical equipment ghatkesar hyd 1 crore/WhatsApp Image 2026-08-19 at 11.19.15 PM.webp"
+      "/images/projects/medical-equipment-ghatkesar/01.webp",
+      "/images/projects/medical-equipment-ghatkesar/06.webp",
+      "/images/projects/medical-equipment-ghatkesar/07.webp",
+      "/images/projects/medical-equipment-ghatkesar/02.webp",
+      "/images/projects/medical-equipment-ghatkesar/08.webp",
+      "/images/projects/medical-equipment-ghatkesar/09.webp",
+      "/images/projects/medical-equipment-ghatkesar/03.webp",
+      "/images/projects/medical-equipment-ghatkesar/10.webp",
+      "/images/projects/medical-equipment-ghatkesar/11.webp",
+      "/images/projects/medical-equipment-ghatkesar/04.webp",
+      "/images/projects/medical-equipment-ghatkesar/12.webp",
+      "/images/projects/medical-equipment-ghatkesar/05.webp"
     ]
   },
   {
     "name": "Medical Equipment Hyderabad",
     "images": [
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.17 PM (1).webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.17 PM.webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.18 PM (1).webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.18 PM.webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.19 PM (1).webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.19 PM.webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.31 PM (1).webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.31 PM (2).webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.31 PM.webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.32 PM (1).webp",
-      "/Medical equipment hyd 1 crore/WhatsApp Image 2026-08-19 at 11.12.32 PM.webp"
+      "/images/projects/medical-equipment-hyderabad/06.webp",
+      "/images/projects/medical-equipment-hyderabad/01.webp",
+      "/images/projects/medical-equipment-hyderabad/07.webp",
+      "/images/projects/medical-equipment-hyderabad/02.webp",
+      "/images/projects/medical-equipment-hyderabad/08.webp",
+      "/images/projects/medical-equipment-hyderabad/03.webp",
+      "/images/projects/medical-equipment-hyderabad/09.webp",
+      "/images/projects/medical-equipment-hyderabad/10.webp",
+      "/images/projects/medical-equipment-hyderabad/04.webp",
+      "/images/projects/medical-equipment-hyderabad/11.webp",
+      "/images/projects/medical-equipment-hyderabad/05.webp"
     ]
   },
   {
     "name": "Medical Equipment Karimnagar",
     "images": [
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.25 PM.webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.26 PM (1).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.26 PM (2).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.26 PM (3).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.26 PM (4).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.26 PM.webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.27 PM (1).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.27 PM (2).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.27 PM.webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.28 PM (1).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.28 PM (2).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.28 PM.webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.29 PM (1).webp",
-      "/Medical equipment karimnagar/WhatsApp Image 2026-08-19 at 11.11.29 PM.webp"
+      "/images/projects/medical-equipment-karimnagar/01.webp",
+      "/images/projects/medical-equipment-karimnagar/06.webp",
+      "/images/projects/medical-equipment-karimnagar/07.webp",
+      "/images/projects/medical-equipment-karimnagar/08.webp",
+      "/images/projects/medical-equipment-karimnagar/09.webp",
+      "/images/projects/medical-equipment-karimnagar/02.webp",
+      "/images/projects/medical-equipment-karimnagar/10.webp",
+      "/images/projects/medical-equipment-karimnagar/11.webp",
+      "/images/projects/medical-equipment-karimnagar/03.webp",
+      "/images/projects/medical-equipment-karimnagar/12.webp",
+      "/images/projects/medical-equipment-karimnagar/13.webp",
+      "/images/projects/medical-equipment-karimnagar/04.webp",
+      "/images/projects/medical-equipment-karimnagar/14.webp",
+      "/images/projects/medical-equipment-karimnagar/05.webp"
     ]
   },
   {
     "name": "Nandhyala Project",
     "images": [
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.41 PM (1).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.41 PM.webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.42 PM (1).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.42 PM (2).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.42 PM.webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.43 PM (1).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.43 PM (2).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.43 PM.webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.44 PM (1).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.44 PM (2).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.44 PM.webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (1).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM (2).webp",
-      "/nandhyala project 3cr/WhatsApp Image 2026-08-19 at 11.12.45 PM.webp"
+      "/images/projects/nandhyala/06.webp",
+      "/images/projects/nandhyala/01.webp",
+      "/images/projects/nandhyala/07.webp",
+      "/images/projects/nandhyala/08.webp",
+      "/images/projects/nandhyala/02.webp",
+      "/images/projects/nandhyala/09.webp",
+      "/images/projects/nandhyala/10.webp",
+      "/images/projects/nandhyala/03.webp",
+      "/images/projects/nandhyala/11.webp",
+      "/images/projects/nandhyala/12.webp",
+      "/images/projects/nandhyala/04.webp",
+      "/images/projects/nandhyala/13.webp",
+      "/images/projects/nandhyala/14.webp",
+      "/images/projects/nandhyala/05.webp"
     ]
   },
   {
     "name": "Nellore Andhra Pradesh Medical Equipment Project",
     "images": [
-      "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.48 PM (1).webp",
-      "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.48 PM.webp",
-      "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM (1).webp",
-      "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM (2).webp",
-      "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.49 PM.webp",
-      "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.50 PM (1).webp",
-      "/Nellore ap medical equipment 1 crore project/WhatsApp Image 2026-08-19 at 11.16.50 PM.webp"
+      "/images/projects/nellore-medical-equipment/04.webp",
+      "/images/projects/nellore-medical-equipment/01.webp",
+      "/images/projects/nellore-medical-equipment/05.webp",
+      "/images/projects/nellore-medical-equipment/06.webp",
+      "/images/projects/nellore-medical-equipment/02.webp",
+      "/images/projects/nellore-medical-equipment/07.webp",
+      "/images/projects/nellore-medical-equipment/03.webp"
     ]
   },
   {
     "name": "Nellore Waterplant Project",
     "images": [
-      "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM (1).webp",
-      "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM (2).webp",
-      "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.29 PM.webp",
-      "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.30 PM (1).webp",
-      "/nellore waterplant project 1cr/WhatsApp Image 2026-08-19 at 11.16.30 PM.webp"
+      "/images/projects/nellore-water-plant/03.webp",
+      "/images/projects/nellore-water-plant/04.webp",
+      "/images/projects/nellore-water-plant/01.webp",
+      "/images/projects/nellore-water-plant/05.webp",
+      "/images/projects/nellore-water-plant/02.webp"
     ]
   },
   {
     "name": "Nutrition Kits In Hyderabad",
     "images": [
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.46 PM.webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM (1).webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM (2).webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.47 PM.webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.48 PM (1).webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.48 PM.webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM (1).webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM (2).webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.49 PM.webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.50 PM (1).webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.50 PM (2).webp",
-      "/Nutrition kits in hyd/WhatsApp Image 2026-08-19 at 11.15.50 PM.webp"
+      "/images/projects/nutrition-kits-hyderabad/01.webp",
+      "/images/projects/nutrition-kits-hyderabad/06.webp",
+      "/images/projects/nutrition-kits-hyderabad/07.webp",
+      "/images/projects/nutrition-kits-hyderabad/02.webp",
+      "/images/projects/nutrition-kits-hyderabad/08.webp",
+      "/images/projects/nutrition-kits-hyderabad/03.webp",
+      "/images/projects/nutrition-kits-hyderabad/09.webp",
+      "/images/projects/nutrition-kits-hyderabad/10.webp",
+      "/images/projects/nutrition-kits-hyderabad/04.webp",
+      "/images/projects/nutrition-kits-hyderabad/11.webp",
+      "/images/projects/nutrition-kits-hyderabad/12.webp",
+      "/images/projects/nutrition-kits-hyderabad/05.webp"
     ]
   },
   {
     "name": "Open Air Gym In Hyderabad",
     "images": [
-      "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM (1).webp",
-      "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.20 PM.webp",
-      "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM (1).webp",
-      "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM (2).webp",
-      "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.21 PM.webp",
-      "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.22 PM (1).webp",
-      "/Open air gym in hyd/WhatsApp Image 2026-08-19 at 11.15.22 PM.webp"
+      "/images/projects/open-air-gym-hyderabad/04.webp",
+      "/images/projects/open-air-gym-hyderabad/01.webp",
+      "/images/projects/open-air-gym-hyderabad/05.webp",
+      "/images/projects/open-air-gym-hyderabad/06.webp",
+      "/images/projects/open-air-gym-hyderabad/02.webp",
+      "/images/projects/open-air-gym-hyderabad/07.webp",
+      "/images/projects/open-air-gym-hyderabad/03.webp"
     ]
   },
   {
     "name": "Ranchi Nutrition Project",
     "images": [
-      "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM (1).webp",
-      "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM (2).webp",
-      "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.51 PM.webp",
-      "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.52 PM (1).webp",
-      "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.52 PM.webp",
-      "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.53 PM.webp",
-      "/ranchi nutrition porject/WhatsApp Image 2026-08-19 at 11.13.54 PM.webp"
+      "/images/projects/ranchi-nutrition/05.webp",
+      "/images/projects/ranchi-nutrition/06.webp",
+      "/images/projects/ranchi-nutrition/01.webp",
+      "/images/projects/ranchi-nutrition/07.webp",
+      "/images/projects/ranchi-nutrition/02.webp",
+      "/images/projects/ranchi-nutrition/03.webp",
+      "/images/projects/ranchi-nutrition/04.webp"
     ]
   },
   {
     "name": "Ro Plant Janaagama",
     "images": [
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.51 PM.webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (1).webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (2).webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM (3).webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.52 PM.webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.53 PM (1).webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.53 PM (2).webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.53 PM.webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.54 PM (1).webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.54 PM (2).webp",
-      "/RO plant janaagama/WhatsApp Image 2026-08-19 at 11.17.54 PM.webp"
+      "/images/projects/ro-plant-janaagama/01.webp",
+      "/images/projects/ro-plant-janaagama/05.webp",
+      "/images/projects/ro-plant-janaagama/06.webp",
+      "/images/projects/ro-plant-janaagama/07.webp",
+      "/images/projects/ro-plant-janaagama/02.webp",
+      "/images/projects/ro-plant-janaagama/08.webp",
+      "/images/projects/ro-plant-janaagama/09.webp",
+      "/images/projects/ro-plant-janaagama/03.webp",
+      "/images/projects/ro-plant-janaagama/10.webp",
+      "/images/projects/ro-plant-janaagama/11.webp",
+      "/images/projects/ro-plant-janaagama/04.webp"
     ]
   },
   {
     "name": "Sathanapally Andhra Pradesh Medical Equipment",
     "images": [
-      "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.09 PM.webp",
-      "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM.webp",
-      "/Sathanapally ap medical equipment/WhatsApp Image 2026-08-19 at 11.15.08 PM (1).webp"
+      "/images/projects/sathanapally-medical-equipment/02.webp",
+      "/images/projects/sathanapally-medical-equipment/01.webp",
+      "/images/projects/sathanapally-medical-equipment/03.webp"
     ]
   },
   {
     "name": "Skill Development Mamidikudhuru Andhra Pradesh",
     "images": [
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (1).webp",
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (2).webp",
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM (3).webp",
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.04 PM.webp",
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.05 PM (1).webp",
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.05 PM (2).webp",
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.05 PM.webp",
-      "/Skill development Mamidikudhuru ap 1 cr/WhatsApp Image 2026-08-19 at 11.16.06 PM.webp"
+      "/images/projects/skill-development-mamidikudhuru/04.webp",
+      "/images/projects/skill-development-mamidikudhuru/05.webp",
+      "/images/projects/skill-development-mamidikudhuru/06.webp",
+      "/images/projects/skill-development-mamidikudhuru/01.webp",
+      "/images/projects/skill-development-mamidikudhuru/07.webp",
+      "/images/projects/skill-development-mamidikudhuru/08.webp",
+      "/images/projects/skill-development-mamidikudhuru/02.webp",
+      "/images/projects/skill-development-mamidikudhuru/03.webp"
     ]
   },
   {
     "name": "Uttar Pradesh Medical Equipment",
     "images": [
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.54 PM (1).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.54 PM.webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.55 PM (1).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.55 PM (2).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.55 PM.webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.56 PM (1).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.56 PM (2).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.56 PM.webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.57 PM (1).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.57 PM (2).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.57 PM.webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.58 PM (1).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.58 PM (2).webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.58 PM.webp",
-      "/Up medical equipment 1 crore/WhatsApp Image 2026-08-19 at 11.11.59 PM.webp"
+      "/images/projects/up-medical-equipment/07.webp",
+      "/images/projects/up-medical-equipment/01.webp",
+      "/images/projects/up-medical-equipment/08.webp",
+      "/images/projects/up-medical-equipment/09.webp",
+      "/images/projects/up-medical-equipment/02.webp",
+      "/images/projects/up-medical-equipment/10.webp",
+      "/images/projects/up-medical-equipment/11.webp",
+      "/images/projects/up-medical-equipment/03.webp",
+      "/images/projects/up-medical-equipment/12.webp",
+      "/images/projects/up-medical-equipment/13.webp",
+      "/images/projects/up-medical-equipment/04.webp",
+      "/images/projects/up-medical-equipment/14.webp",
+      "/images/projects/up-medical-equipment/15.webp",
+      "/images/projects/up-medical-equipment/05.webp",
+      "/images/projects/up-medical-equipment/06.webp"
     ]
   }
 ];

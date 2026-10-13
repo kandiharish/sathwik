@@ -8,7 +8,8 @@ import { MapPin, Mail, Phone, Clock, ArrowRight, MessageCircle, Handshake, Heart
 import { Container } from '../components/layout/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { siteSettings } from '../data/settings';
-import { MailtoSent, mailtoHref, type ComposedMail } from '../components/common/MailtoSent';
+import { MailtoSent } from '../components/common/MailtoSent';
+import { mailtoHref, type ComposedMail } from '../lib/mailto';
 import { tones, type Tone } from '../lib/tones';
 
 const TOPICS = ['Donations', 'Volunteering', 'Partnerships', 'General Inquiry'] as const;

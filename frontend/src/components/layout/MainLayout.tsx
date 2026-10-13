@@ -1,10 +1,11 @@
-import { Suspense, useLayoutEffect } from 'react';
+import { Suspense, useEffect, useLayoutEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { NextPage } from './NextPage';
 import { MotionController } from '../common/MotionController';
+import { BackToTop } from './BackToTop';
 import { scrollToTop } from '../../lib/lenis';
 
 const PageFallback = () => (
@@ -21,6 +22,20 @@ export const MainLayout = () => {
   useLayoutEffect(() => {
     if (!hash) scrollToTop();
   }, [pathname, hash]);
+
+  // Feed the pointer position to whichever .card-hover is under a mouse (spotlight effect).
+  useEffect(() => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const onMove = (e: PointerEvent) => {
+      const card = (e.target as Element | null)?.closest?.<HTMLElement>('.card-hover');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    };
+    document.addEventListener('pointermove', onMove, { passive: true });
+    return () => document.removeEventListener('pointermove', onMove);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen relative bg-background">
@@ -45,6 +60,7 @@ export const MainLayout = () => {
       </main>
       <NextPage key={pathname} pathname={pathname} />
       <Footer />
+      <BackToTop />
       <MotionController />
     </div>
   );

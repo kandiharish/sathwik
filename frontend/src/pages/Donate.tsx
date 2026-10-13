@@ -32,7 +32,7 @@ export const Donate = () => {
         eyebrow="Donate"
         title={<>Your gift builds a <em>brighter</em> rural India</>}
         description="Your support allows us to continue providing vital resources, education, and healthcare to rural communities. Become a part of the change today."
-        image="/real-cta/donation_handover.webp"
+        image="/images/cta/donation_handover.webp"
       >
         <a href="#ways-to-give" className="btn btn-donate !px-7 !py-3.5">Ways to Give</a>
         <Link to="/contact" className="btn btn-ghost-light !px-7 !py-3.5">Talk to Us</Link>

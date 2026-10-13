@@ -4,6 +4,7 @@ import { Container } from './Container';
 import { SocialLinks } from './SocialLinks';
 import { siteSettings } from '../../data/settings';
 import { Img } from '../common/Img';
+import { FooterWordmark } from './FooterWordmark';
 
 const columns = [
   {
@@ -108,7 +109,7 @@ export const Footer = () => {
           <div className="flex flex-col gap-6">
             <Link to="/" className="flex items-center gap-4" aria-label="SRAYI Association, home">
               <span className="rounded-2xl bg-white p-2">
-                <Img src="/logo.webp" alt="" width={56} height={56} loading="lazy" className="h-14 w-14 object-contain" />
+                <Img src="/images/brand/logo.webp" alt="" width={56} height={56} loading="lazy" className="h-14 w-14 object-contain" />
               </span>
               <span className="flex flex-col">
                 <span className="font-serif text-xl font-semibold tracking-[-0.02em] text-white">SRAYI Association</span>
@@ -166,12 +167,8 @@ export const Footer = () => {
         </div>
       </Container>
 
-      {/* Oversized wordmark, cropped at the bottom edge */}
-      <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden="true">
-        <p className="-mb-[0.22em] text-center font-serif text-[22vw] font-semibold leading-none tracking-[-0.06em] text-white/[0.04] md:text-[18vw]">
-          SATHWIK
-        </p>
-      </div>
+      {/* Signature wordmark */}
+      <FooterWordmark />
     </footer>
   );
 };

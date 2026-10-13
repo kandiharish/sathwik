@@ -2,12 +2,9 @@ import type { Project } from '../types/content';
 import { projectsList } from './projectsList';
 import { reports } from './reports';
 
-// Helper to find a project's images by its exact folder name under /public
-const getImages = (folderNames: string[]) => {
-  const wanted = folderNames.map((n) => n.toLowerCase());
-  const folder = projectsList.find((p) => wanted.includes(p.images[0]?.split('/')[1]?.toLowerCase() ?? ''));
-  return folder ? folder.images : [];
-};
+// A project's photos live in /public/images/projects/<folder>/ (listed in projectsList.ts)
+const getImages = (folder: string) =>
+  projectsList.find((p) => p.images[0]?.startsWith(`/images/projects/${folder}/`))?.images ?? [];
 
 export const projects: Project[] = [
   {
@@ -36,16 +33,16 @@ export const projects: Project[] = [
       pdf: '/reports/pdf/ambulances-mahabubabad-press-note.pdf',
     },
     images: [
-      '/ambulances-mahabubabad/03.webp',
-      '/ambulances-mahabubabad/08.webp',
-      '/ambulances-mahabubabad/10.webp',
-      '/ambulances-mahabubabad/01.webp',
-      '/ambulances-mahabubabad/02.webp',
-      '/ambulances-mahabubabad/04.webp',
-      '/ambulances-mahabubabad/05.webp',
-      '/ambulances-mahabubabad/06.webp',
-      '/ambulances-mahabubabad/07.webp',
-      '/ambulances-mahabubabad/09.webp'
+      '/images/projects/ambulances-mahabubabad/03.webp',
+      '/images/projects/ambulances-mahabubabad/08.webp',
+      '/images/projects/ambulances-mahabubabad/10.webp',
+      '/images/projects/ambulances-mahabubabad/01.webp',
+      '/images/projects/ambulances-mahabubabad/02.webp',
+      '/images/projects/ambulances-mahabubabad/04.webp',
+      '/images/projects/ambulances-mahabubabad/05.webp',
+      '/images/projects/ambulances-mahabubabad/06.webp',
+      '/images/projects/ambulances-mahabubabad/07.webp',
+      '/images/projects/ambulances-mahabubabad/09.webp'
     ],
     tags: ['Healthcare', 'Ambulance', 'ONGC CSR', 'Tribal Communities']
   },
@@ -69,11 +66,11 @@ export const projects: Project[] = [
       'Support for regular attendance and continued education for girls',
     ],
     images: [
-      '/cycles-gudur/01.webp',
-      '/cycles-gudur/03.webp',
-      '/cycles-gudur/04.webp',
-      '/cycles-gudur/02.webp',
-      '/cycles-gudur/05.webp'
+      '/images/projects/cycles-gudur/01.webp',
+      '/images/projects/cycles-gudur/03.webp',
+      '/images/projects/cycles-gudur/04.webp',
+      '/images/projects/cycles-gudur/02.webp',
+      '/images/projects/cycles-gudur/05.webp'
     ],
     tags: ['Education', 'Girl Child', 'Mobility', 'GAIL CSR']
   },
@@ -92,7 +89,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Ap medical equipment 1 crore']),
+    images: getImages('ap-medical-equipment'),
     tags: ['Healthcare', 'Medical Equipment']
   },
   {
@@ -110,7 +107,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Bihar ro plant 50 lakhs']),
+    images: getImages('bihar-ro-plant'),
     tags: ['Water', 'RO Plant', 'Sanitation']
   },
   {
@@ -127,7 +124,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['blind school porject']),
+    images: getImages('blind-school'),
     tags: ['Education', 'Disability Support']
   },
   {
@@ -144,7 +141,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Cycle project karimnagar']),
+    images: getImages('cycles-karimnagar'),
     tags: ['Education', 'Mobility', 'Youth']
   },
   {
@@ -161,7 +158,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Karnataka ro plant']),
+    images: getImages('karnataka-ro-plant'),
     tags: ['Water', 'RO Plant', 'Sanitation']
   },
   {
@@ -179,7 +176,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Medical equipment ghatkesar hyd 1 crore']),
+    images: getImages('medical-equipment-ghatkesar'),
     tags: ['Healthcare', 'Medical Equipment']
   },
   {
@@ -197,7 +194,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Medical equipment hyd 1 crore']),
+    images: getImages('medical-equipment-hyderabad'),
     tags: ['Healthcare', 'Medical Equipment', 'Urban']
   },
   {
@@ -214,7 +211,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Medical equipment karimnagar']),
+    images: getImages('medical-equipment-karimnagar'),
     tags: ['Healthcare', 'Medical Equipment']
   },
   {
@@ -232,7 +229,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['nandhyala project 3cr']),
+    images: getImages('nandhyala'),
     tags: ['Community', 'Infrastructure']
   },
   {
@@ -250,7 +247,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Nellore ap medical equipment 1 crore project']),
+    images: getImages('nellore-medical-equipment'),
     tags: ['Healthcare', 'Medical Equipment']
   },
   {
@@ -268,7 +265,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['nellore waterplant project 1cr']),
+    images: getImages('nellore-water-plant'),
     tags: ['Water', 'Sanitation']
   },
   {
@@ -285,7 +282,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Nutrition kits in hyd']),
+    images: getImages('nutrition-kits-hyderabad'),
     tags: ['Nutrition', 'Women', 'Empowerment']
   },
   {
@@ -302,7 +299,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Open air gym in hyd']),
+    images: getImages('open-air-gym-hyderabad'),
     tags: ['Community', 'Infrastructure', 'Health']
   },
   {
@@ -319,7 +316,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['ranchi nutrition porject']),
+    images: getImages('ranchi-nutrition'),
     tags: ['Nutrition', 'Women', 'Empowerment']
   },
   {
@@ -336,7 +333,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['RO plant janaagama']),
+    images: getImages('ro-plant-janaagama'),
     tags: ['Water', 'RO Plant', 'Sanitation']
   },
   {
@@ -353,7 +350,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Sathanapally ap medical equipment']),
+    images: getImages('sathanapally-medical-equipment'),
     tags: ['Healthcare', 'Medical Equipment']
   },
   {
@@ -371,7 +368,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Skill development Mamidikudhuru ap 1 cr']),
+    images: getImages('skill-development-mamidikudhuru'),
     tags: ['Youth', 'Skill Development', 'Empowerment', 'Infrastructure']
   },
   {
@@ -389,7 +386,7 @@ export const projects: Project[] = [
     implementation: 'Collaborated with local authorities and stakeholders to deliver targeted interventions.',
     impact: ['Strengthened community resilience', 'Improved quality of life'],
     requiresConfirmation: true,
-    images: getImages(['Up medical equipment 1 crore']),
+    images: getImages('up-medical-equipment'),
     tags: ['Healthcare', 'Medical Equipment']
   },
   // Projects documented in the PDF project reports (see data/reports.ts)

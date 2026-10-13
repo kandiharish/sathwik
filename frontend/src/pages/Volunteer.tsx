@@ -6,7 +6,8 @@ import { PageHero } from '../components/layout/PageHero';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { siteSettings } from '../data/settings';
 import { Img } from '../components/common/Img';
-import { MailtoSent, mailtoHref, type ComposedMail } from '../components/common/MailtoSent';
+import { MailtoSent } from '../components/common/MailtoSent';
+import { mailtoHref, type ComposedMail } from '../lib/mailto';
 
 const areas = [
   {
@@ -61,7 +62,7 @@ export const Volunteer = () => {
         eyebrow="Volunteer"
         title={<>Become a <em>Volunteer</em></>}
         description="Join hands for change. Together, we can uplift and transform lives in rural areas through education, healthcare, skill development, and sustainable initiatives."
-        image="/real-cta/community_leaders.webp"
+        image="/images/cta/community_leaders.webp"
       >
         <a href="#apply" className="btn btn-light !px-7 !py-3.5">Apply Now</a>
       </PageHero>
@@ -100,7 +101,7 @@ export const Volunteer = () => {
               className="!mb-8"
             />
             <Img
-              src="/real-cta/women_empowerment.webp"
+              src="/images/cta/women_empowerment.webp"
               alt="Women nutrition and poshak distribution"
               loading="lazy"
               decoding="async"

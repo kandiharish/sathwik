@@ -1,19 +1,19 @@
 import { lazy, Suspense } from 'react';
-import { CinematicHero } from '../components/ui/CinematicHero';
+import { CinematicHero } from '../components/home/CinematicHero';
 
 // Lazy load below-the-fold sections
-const InteractiveTunnel = lazy(() => import('../components/ui/InteractiveTunnel').then(m => ({ default: m.InteractiveTunnel })));
-const WhoWeAre = lazy(() => import('../components/ui/WhoWeAre').then(m => ({ default: m.WhoWeAre })));
-const CommitmentStrategy = lazy(() => import('../components/ui/CommitmentStrategy').then(m => ({ default: m.CommitmentStrategy })));
-const IntroductionSection = lazy(() => import('../components/ui/IntroductionSection').then(m => ({ default: m.IntroductionSection })));
-const AreasOfFocus = lazy(() => import('../components/ui/AreasOfFocus').then(m => ({ default: m.AreasOfFocus })));
-const CurvedGallery = lazy(() => import('../components/ui/CurvedGallery').then(m => ({ default: m.CurvedGallery })));
-const GalleryStack = lazy(() => import('../components/ui/GalleryStack').then(m => ({ default: m.GalleryStack })));
-const EditorialCarousel = lazy(() => import('../components/ui/EditorialCarousel').then(m => ({ default: m.EditorialCarousel })));
-const FounderMessage = lazy(() => import('../components/ui/FounderMessage').then(m => ({ default: m.FounderMessage })));
-const VoicesSection = lazy(() => import('../components/ui/VoicesSection').then(m => ({ default: m.VoicesSection })));
-const ReportsTeaser = lazy(() => import('../components/ui/ReportsTeaser').then(m => ({ default: m.ReportsTeaser })));
-const PartnerLogos = lazy(() => import('../components/ui/PartnerLogos').then(m => ({ default: m.PartnerLogos })));
+const InteractiveTunnel = lazy(() => import('../components/home/InteractiveTunnel').then(m => ({ default: m.InteractiveTunnel })));
+const WhoWeAre = lazy(() => import('../components/home/WhoWeAre').then(m => ({ default: m.WhoWeAre })));
+const CommitmentStrategy = lazy(() => import('../components/home/CommitmentStrategy').then(m => ({ default: m.CommitmentStrategy })));
+const IntroductionSection = lazy(() => import('../components/home/IntroductionSection').then(m => ({ default: m.IntroductionSection })));
+const AreasOfFocus = lazy(() => import('../components/home/AreasOfFocus').then(m => ({ default: m.AreasOfFocus })));
+const CurvedGallery = lazy(() => import('../components/home/CurvedGallery').then(m => ({ default: m.CurvedGallery })));
+const GalleryStack = lazy(() => import('../components/home/GalleryStack').then(m => ({ default: m.GalleryStack })));
+const EditorialCarousel = lazy(() => import('../components/home/EditorialCarousel').then(m => ({ default: m.EditorialCarousel })));
+const FounderMessage = lazy(() => import('../components/home/FounderMessage').then(m => ({ default: m.FounderMessage })));
+const VoicesSection = lazy(() => import('../components/home/VoicesSection').then(m => ({ default: m.VoicesSection })));
+const ReportsTeaser = lazy(() => import('../components/home/ReportsTeaser').then(m => ({ default: m.ReportsTeaser })));
+const PartnerLogos = lazy(() => import('../components/home/PartnerLogos').then(m => ({ default: m.PartnerLogos })));
 
 import { Container } from '../components/layout/Container';
 import { ButtonLink } from '../components/ui/Button';
@@ -22,7 +22,7 @@ import { ImpactCounter } from '../components/ui/ImpactCounter';
 import { projects } from '../data/projects';
 import { impactStats } from '../data/impact';
 import { ArrowRight, Users, HandCoins, CalendarDays, MapPin } from 'lucide-react';
-import { JoinUsCTA } from '../components/ui/JoinUsCTA';
+import { JoinUsCTA } from '../components/home/JoinUsCTA';
 
 /** Neutral placeholder that reserves space while a lazy section loads (no dark flash). */
 const SectionFallback = ({ minH = 'min-h-[600px]', bg = 'bg-background' }: { minH?: string; bg?: string }) => (

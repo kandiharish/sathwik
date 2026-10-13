@@ -5,8 +5,8 @@ import { FileText, Images, ArrowRight, CheckCircle2, Download } from 'lucide-rea
 import { Container } from '../components/layout/Container';
 import { PageHero } from '../components/layout/PageHero';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import { ReportDossier } from '../components/ui/ReportDossier';
-import { ReportRail } from '../components/ui/ReportRail';
+import { ReportDossier } from '../components/reports/ReportDossier';
+import { ReportRail } from '../components/reports/ReportRail';
 import { Lightbox, type LightboxImage } from '../components/ui/Lightbox';
 import { Img } from '../components/common/Img';
 import { reports, type ProjectReport } from '../data/reports';

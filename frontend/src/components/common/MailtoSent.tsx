@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { CheckCircle2, Copy, Check, Mail } from 'lucide-react';
-
-export interface ComposedMail {
-  subject: string;
-  body: string;
-}
-
-export const mailtoHref = (to: string, { subject, body }: ComposedMail) =>
-  `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+import { mailtoHref, type ComposedMail } from '../../lib/mailto';
 
 interface Props {
   to: string;

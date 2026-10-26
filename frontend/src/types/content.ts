@@ -68,6 +68,8 @@ export interface Project {
   images: string[];
   beforeImage?: string;
   video?: string;
+  /** Still frame shown before the video plays. */
+  videoPoster?: string;
   tags?: string[];
   requiresConfirmation?: boolean; // Keep for safety
 }

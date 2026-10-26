@@ -8,6 +8,96 @@ const getImages = (folder: string) =>
 
 export const projects: Project[] = [
   {
+    id: 'proj-20',
+    slug: 'laptops-engineering-students-gudur',
+    programId: 'prog-education',
+    title: 'Laptops for Engineering Students, Gudur',
+    category: 'Education',
+    location: 'Gudur, Mahabubabad District',
+    state: 'Telangana',
+    year: '2026',
+    partner: 'State Bank of India',
+    summary: '83 laptops donated by State Bank of India, Hyderabad Circle, under its CSR programme to engineering students at Gudur, Mahabubabad District.',
+    problem: 'Many engineering students from rural families in Mahabubabad district have no computer of their own, which holds them back in coursework, coding practice and online learning.',
+    response: 'With CSR support from State Bank of India, Hyderabad Circle, SRYIA arranged the donation of 83 laptops so each student has a personal device for study.',
+    implementation: 'The laptops were handed over to the students at a programme in Gudur by Shri Jatothu Hussain Naik, Member, National Commission for Scheduled Tribes (Govt. of India), together with senior officials of SBI Hyderabad Circle.',
+    impact: [
+      '83 engineering students given a laptop of their own',
+      'Everyday access to coding, design software and online learning',
+      'Better preparation for placements and careers in technology',
+    ],
+    images: [
+      '/images/projects/laptops-gudur/01.webp',
+      '/images/projects/laptops-gudur/02.webp'
+    ],
+    tags: ['Education', 'Digital Access', 'SBI CSR', 'Tribal Communities']
+  },
+  {
+    id: 'proj-21',
+    slug: 'sewing-machines-women-gudur',
+    programId: 'prog-empowerment',
+    title: 'Sewing Machines for Women, Gudur',
+    category: 'Women Empowerment',
+    location: 'Gudur, Mahabubabad District',
+    state: 'Telangana',
+    year: '2026',
+    partner: 'Hindustan Aeronautics Limited (HAL)',
+    summary: 'Sewing machines distributed to women in Gudur, Mahabubabad, under Hindustan Aeronautics Limited’s CSR programme, so they can earn a steady income from tailoring at home.',
+    problem: 'Many women in rural Gudur have tailoring skills but no machine of their own, leaving them without a reliable way to earn from home.',
+    response: 'As part of HAL’s corporate social responsibility, SRYIA organised the distribution of sewing machines with stands to women from the area, giving each a tool to start or grow a tailoring livelihood.',
+    implementation: 'The sewing machine distribution was launched on 16 October 2026 on Narsampet Road, Gudur, by Shri Jatothu Hussain Naik, Member, National Commission for Scheduled Tribes, in the presence of HAL officials, local representatives and hundreds of women beneficiaries.',
+    impact: [
+      'Women given their own sewing machines with stands',
+      'A home-based tailoring livelihood and steady income',
+      'Greater financial independence for rural and tribal women',
+    ],
+    images: [
+      '/images/projects/sewing-machines-gudur/01.webp',
+      '/images/projects/sewing-machines-gudur/02.webp',
+      '/images/projects/sewing-machines-gudur/03.webp',
+      '/images/projects/sewing-machines-gudur/04.webp',
+      '/images/projects/sewing-machines-gudur/05.webp',
+      '/images/projects/sewing-machines-gudur/06.webp',
+      '/images/projects/sewing-machines-gudur/07.webp',
+      '/images/projects/sewing-machines-gudur/08.webp'
+    ],
+    video: '/videos/sewing-machines-gudur.mp4',
+    videoPoster: '/videos/sewing-machines-gudur-poster.webp',
+    tags: ['Women Empowerment', 'Livelihoods', 'HAL CSR', 'Tribal Communities']
+  },
+  {
+    id: 'proj-22',
+    slug: 'farm-sprayers-mahabubabad',
+    programId: 'prog-empowerment',
+    title: 'Power Sprayers and Tarpaulins for Farmers, Mahabubabad',
+    category: 'Rural Livelihoods',
+    location: 'Mahabubabad District',
+    state: 'Telangana',
+    year: '2026',
+    partner: 'Airports Authority of India (AAI)',
+    summary: 'Knapsack power sprayers and tarpaulin sheets distributed to farmers in Mahabubabad district under the Airports Authority of India’s CSR programme.',
+    problem: 'Small farmers in Mahabubabad spray fertiliser and pesticide by hand and often lose harvested grain to rain for want of a cover, costing them time, yield and income.',
+    response: 'With CSR support from the Airports Authority of India, SRYIA distributed engine-powered knapsack sprayers and tarpaulin sheets to farming families.',
+    implementation: 'The distribution was held at a public programme in Mahabubabad district attended by Shri Jatothu Hussain Naik, Member, National Commission for Scheduled Tribes, AAI officials, public representatives and a large gathering of farmers.',
+    impact: [
+      'Power sprayers that cut the time and effort of spraying crops',
+      'Tarpaulin sheets to dry and protect harvested produce from rain',
+      'Lower crop losses and better incomes for small farmers',
+    ],
+    images: [
+      '/images/projects/sprayers-mahabubabad/01.webp',
+      '/images/projects/sprayers-mahabubabad/02.webp',
+      '/images/projects/sprayers-mahabubabad/03.webp',
+      '/images/projects/sprayers-mahabubabad/04.webp',
+      '/images/projects/sprayers-mahabubabad/05.webp',
+      '/images/projects/sprayers-mahabubabad/06.webp',
+      '/images/projects/sprayers-mahabubabad/07.webp'
+    ],
+    video: '/videos/sprayers-mahabubabad.mp4',
+    videoPoster: '/videos/sprayers-mahabubabad-poster.webp',
+    tags: ['Agriculture', 'Farmers', 'AAI CSR', 'Livelihoods']
+  },
+  {
     id: 'proj-18',
     slug: 'ambulances-mahabubabad',
     programId: 'prog-health',

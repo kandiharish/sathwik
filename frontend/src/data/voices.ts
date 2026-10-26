@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Ambulance, Bike, Building2, Camera, Dumbbell, Droplets, GraduationCap, HeartPulse, Hammer, ShieldPlus, Sparkles, Toilet, Apple } from 'lucide-react';
+import { Ambulance, Bike, Building2, Camera, Dumbbell, Droplets, GraduationCap, HeartPulse, Hammer, Laptop, Scissors, ShieldPlus, Sparkles, Sprout, Toilet, Apple } from 'lucide-react';
 import { stories } from './stories';
 
 /**
@@ -59,6 +59,39 @@ export const voices: Voice[] = [
     text: 'Girl students in Gudur received new bicycles of their own for the daily journey to school.',
     attribution: 'Field note · GAIL (India) Limited CSR · September 2026',
     href: '/projects/cycles-for-girls-gudur',
+    cta: 'View project',
+  },
+  {
+    id: 'note-laptops',
+    kind: 'note',
+    service: 'Digital Learning',
+    icon: Laptop,
+    image: '/images/projects/laptops-gudur/01.webp',
+    text: '83 engineering students in Gudur received laptops of their own, donated by State Bank of India, Hyderabad Circle.',
+    attribution: 'Field note · SBI CSR · 2026',
+    href: '/projects/laptops-engineering-students-gudur',
+    cta: 'View project',
+  },
+  {
+    id: 'note-sewing',
+    kind: 'note',
+    service: 'Women’s Livelihoods',
+    icon: Scissors,
+    image: '/images/projects/sewing-machines-gudur/01.webp',
+    text: 'Women in Gudur received sewing machines with stands to earn a living from tailoring at home.',
+    attribution: 'Field note · HAL CSR · October 2026',
+    href: '/projects/sewing-machines-women-gudur',
+    cta: 'View project',
+  },
+  {
+    id: 'note-sprayers',
+    kind: 'note',
+    service: 'Farmer Support',
+    icon: Sprout,
+    image: '/images/projects/sprayers-mahabubabad/01.webp',
+    text: 'Farmers in Mahabubabad received power sprayers and tarpaulin sheets to tend their crops and protect the harvest.',
+    attribution: 'Field note · Airports Authority of India CSR · 2026',
+    href: '/projects/farm-sprayers-mahabubabad',
     cta: 'View project',
   },
   {

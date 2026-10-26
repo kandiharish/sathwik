@@ -307,6 +307,20 @@ export const ProjectDetail = () => {
                 <h2 className="display-title">Visual Documentation</h2>
               </div>
 
+              {project.video && (
+                <div className="mx-auto mb-8 max-w-4xl overflow-hidden rounded-2xl bg-ink md:mb-12">
+                  <video
+                    src={project.video}
+                    poster={project.videoPoster}
+                    controls
+                    playsInline
+                    preload="none"
+                    aria-label={`${project.title} event video`}
+                    className="mx-auto max-h-[75vh] w-full object-contain"
+                  />
+                </div>
+              )}
+
               <ul className="grid grid-cols-2 gap-3 md:gap-5 lg:grid-cols-3">
                 {project.images.map((img, idx) => (
                   <li key={img} className="group relative aspect-[4/3] overflow-hidden rounded-2xl bg-line">
